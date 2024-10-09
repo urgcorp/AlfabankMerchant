@@ -11,7 +11,7 @@ Support DI
         Password = "password",
         Token = "merchant_token"
     };
-    var client = new AlfabankRestClient(prodCfg);
+    var client = new AlfabankRestClient(cfg);
     
     var req = new RegisterOrderAction()
     {
