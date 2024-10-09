@@ -5,7 +5,7 @@ Target Framework - net6.0
 Support DI
 ## REST Client code example
 
-    var cfg = new AlfaBankConfiguration("https://tws.egopay.ru/api/ab")
+    var cfg = new AlfaBankConfiguration("https://tws.egopay.ru/api/ab/")
     {
         Login = "userName",
         Password = "password",
