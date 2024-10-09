@@ -2,7 +2,9 @@
 REST Client and API for Alfabank
 
 Target Framework - net6.0
+
 Support DI
+
 ## REST Client code example
 
     var cfg = new AlfaBankConfiguration("https://tws.egopay.ru/api/ab/")
