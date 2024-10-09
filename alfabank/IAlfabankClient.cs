@@ -1,25 +1,23 @@
-﻿namespace alfabank
+﻿using alfabank.ComponentModel;
+
+namespace alfabank
 {
     public interface IAlfabankClient
     {
         /// <summary>
-        /// Регистрация заказа с предавторизацией
+        /// Make call to server and return raw response (if HTTP Response is OK)
         /// </summary>
-        Task RegisterPreAuthAsync();
+        /// <param name="action">Action request</param>
+        /// <returns>Response body</returns>
+        Task<string> CallActionRawAsync(AlfabankAction action);
 
         /// <summary>
-        /// Регистрация заказа
+        /// Make call to server and return deserialized response or throw exception if error reported
         /// </summary>
-        Task RegisterAsync();
-
-        /// <summary>
-        /// Расширенный запрос состояния заказа
-        /// </summary>
-        Task GetOrderStatusExtended();
-
-        /// <summary>
-        /// Запрос статистики по платежам за период
-        /// </summary>
-        Task GetLastOrdersForMerchant();
+        /// <typeparam name="TResponse">Response type</typeparam>
+        /// <param name="action">Action request</param>
+        /// <returns>Deserialized response</returns>
+        /// <exception cref="AlfabankException"></exception>
+        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action) where TResponse : class;
     }
 }
