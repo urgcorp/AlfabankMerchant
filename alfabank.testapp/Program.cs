@@ -4,7 +4,15 @@ using alfabank.Exceptions;
 using alfabank.Models;
 using alfabank.Models.Response;
 using alfabank.RestClient;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+
+var builder = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .AddUserSecrets<Program>();
+
+IConfiguration appConfig = builder.Build();
 
 var loggerFactory = LoggerFactory.Create(builder =>
 {
@@ -13,19 +21,31 @@ var loggerFactory = LoggerFactory.Create(builder =>
 });
 var logger = loggerFactory.CreateLogger<AlfabankRestClient<AlfaBankConfiguration>>();
 
-var testCfg = new AlfaBankConfiguration()
+string env = appConfig["ENVIRONMENT"]!;
+AlfaBankConfiguration cfg = env switch
 {
-    Login = "userName",
-    Password = "password",
-    Token = "merchant_token"
+    "TEST" => new AlfaBankConfiguration(appConfig["AB_SERVER"]!)
+    {
+        Login = appConfig["AB_LOGIN"] ?? appConfig[$"{env}_AB_LOGIN"]!,
+        Password = appConfig["AB_PASS"] ?? appConfig[$"{env}_AB_PASS"]!,
+        Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!,
+        Merchant = appConfig["AB_MERCHANT"] ?? appConfig[$"{env}_AB_MERCHANT"]!
+    },
+    "PROD" => new AlfaBankConfiguration()
+    {
+        Login = appConfig["AB_LOGIN"] ?? appConfig[$"{env}_AB_LOGIN"]!,
+        Password = appConfig["AB_PASS"] ?? appConfig[$"{env}_AB_PASS"]!,
+        Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!,
+        Merchant = appConfig["AB_MERCHANT"] ?? appConfig[$"{env}_AB_MERCHANT"]!
+    },
+    _ => throw new NotImplementedException()
 };
 
-//var client = new AlfabankRestClient(logger, testCfg);
-var client = new AlfabankRestClient(logger, testCfg);
+var client = new AlfabankRestClient(logger, cfg);
 
-//var orders = await GetOrders(client);
+var orders = await GetOrders(client);
 
-var newOrder = await CreateOrder(client);
+//var newOrder = await CreateOrder(client);
 
 //var order = await GetOrderExtended(client, null, "");
 
@@ -74,17 +94,20 @@ static async Task<LastOrdersForMerchants> GetOrders(AlfabankRestClient client)
         TransactionStates = TransactionState.ALL
     };
 
-    _ = req.ValidateActionParams(out var errors);
+    if (req.ValidateActionParams(out var errors))
+    {
+        try
+        {
+            var res = await client.CallActionAsync(req);
+            return res;
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+    }
 
-    try
-    {
-        var res = await client.CallActionAsync(req);
-        return res;
-    }
-    catch (Exception ex)
-    {
-        throw;
-    }
+    throw new NotImplementedException();
 };
 
 static async Task<Order> GetOrderExtended(AlfabankRestClient client, string? orderId, string? orderNumber)

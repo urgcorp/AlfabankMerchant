@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "testapp: TEST": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT": "TEST"
+      }
+    },
+    "testapp: PROD": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT": "PROD"
+      }
+    }
+  }
+}
