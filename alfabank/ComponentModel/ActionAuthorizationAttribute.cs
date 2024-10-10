@@ -5,7 +5,7 @@ namespace alfabank.ComponentModel
     /// <summary>
     /// Authorization settings for action
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class ActionAuthorizationAttribute : Attribute
     {
         /// <summary>
