@@ -2,6 +2,9 @@
 
 namespace alfabank.ComponentModel
 {
+    /// <summary>
+    /// Authorization settings for action
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ActionAuthorizationAttribute : Attribute
     {
@@ -18,7 +21,30 @@ namespace alfabank.ComponentModel
         protected ActionAuthorizationAttribute()
         { }
 
-        public ActionAuthorizationAttribute(string[] allowed, string? priority = null)
+        /// <summary>
+        /// Allow authorization in any available method
+        /// <para>Available methods in <see cref="AuthMethod"/></para>
+        /// </summary>
+        /// <param name="priority">Preferable authorization method for action</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public ActionAuthorizationAttribute(string priority = AuthMethod.LOGIN_METHOD)
+        {
+            if (!AuthMethod.Exists(priority))
+                throw new ArgumentOutOfRangeException(nameof(priority));
+
+            Allowed = AuthMethod.AVAILABLE;
+            Priority = AuthMethod.Parse(priority);
+        }
+
+        /// <summary>
+        /// Allow authorization with defined methods
+        /// <para>Available methods in <see cref="AuthMethod"/></para>
+        /// </summary>
+        /// <param name="allowed"></param>
+        /// <param name="priority">Preferable authorization method for action</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public ActionAuthorizationAttribute(string[] allowed, string priority = AuthMethod.LOGIN_METHOD)
         {
             if (allowed == null)
                 throw new ArgumentNullException(nameof(allowed));
@@ -33,32 +59,6 @@ namespace alfabank.ComponentModel
                 Priority = AuthMethod.Parse(priority);
             }
             Allowed = allowed.Select(x => AuthMethod.Parse(x)).ToArray();
-        }
-    }
-
-    public class LoginAuthorizationAttribute : ActionAuthorizationAttribute
-    {
-        /// <summary></summary>
-        /// <param name="allowToken">Payment token can be used to authorize this action request</param>
-        public LoginAuthorizationAttribute(bool allowToken = false) : base()
-        {
-            if (allowToken)
-                Allowed = new[] { AuthMethod.LOGIN, AuthMethod.TOKEN };
-        }
-    }
-
-    public class TokenAuthorizationAttribute : ActionAuthorizationAttribute
-    {
-        /// <summary></summary>
-        /// <param name="allowLogin">Login and password can be used to authorize this action request</param>
-        public TokenAuthorizationAttribute(bool allowLogin = true) : base()
-        {
-            Priority = AuthMethod.TOKEN;
-
-            if (allowLogin)
-                Allowed = new[] { AuthMethod.LOGIN, AuthMethod.TOKEN};
-            else
-                Allowed = new[] { AuthMethod.TOKEN };
         }
     }
 }
