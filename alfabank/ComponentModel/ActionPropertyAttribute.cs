@@ -1,6 +1,6 @@
 ﻿namespace alfabank.ComponentModel
 {
-    [AttributeUsage(AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = true)]
     public class ActionPropertyAttribute : Attribute
     {
         /// <summary>
