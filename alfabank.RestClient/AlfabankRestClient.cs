@@ -10,7 +10,7 @@ using alfabank.ComponentModel;
 namespace alfabank.RestClient
 {
     /// <summary>
-    /// API client is mainly responible for making the HTTP call to the API backend.
+    /// Client is mainly responible for making the HTTP call to the REST API backend
     /// </summary>
     public class AlfabankRestClient<TConfig> : IAlfabankClient
         where TConfig : AlfaBankConfiguration

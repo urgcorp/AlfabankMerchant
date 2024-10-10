@@ -9,6 +9,7 @@ namespace alfabank
         /// </summary>
         /// <param name="action">Action request</param>
         /// <returns>Response body</returns>
+        /// <exception cref="HttpRequestException"></exception>
         Task<string> CallActionRawAsync(AlfabankAction action);
 
         /// <summary>
