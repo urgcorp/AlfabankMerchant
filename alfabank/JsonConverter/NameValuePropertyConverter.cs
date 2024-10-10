@@ -17,7 +17,7 @@ namespace alfabank.JsonConverter
             // Преобразование Dictionary в JSON-массив объектов NameValueProperty
             if (value != null)
             {
-                var nameValueList = value?.Select(kvp => new NameValueProperty { Name = kvp.Key, Value = kvp.Value }).ToList();
+                var nameValueList = value?.Select(kvp => new NameValueProperty(kvp.Key, kvp.Value)).ToList();
                 serializer.Serialize(writer, nameValueList);
             }
         }
