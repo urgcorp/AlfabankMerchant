@@ -28,15 +28,13 @@ AlfaBankConfiguration cfg = env switch
     {
         Login = appConfig["AB_LOGIN"] ?? appConfig[$"{env}_AB_LOGIN"]!,
         Password = appConfig["AB_PASS"] ?? appConfig[$"{env}_AB_PASS"]!,
-        Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!,
-        Merchant = appConfig["AB_MERCHANT"] ?? appConfig[$"{env}_AB_MERCHANT"]!
+        Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!
     },
     "PROD" => new AlfaBankConfiguration()
     {
         Login = appConfig["AB_LOGIN"] ?? appConfig[$"{env}_AB_LOGIN"]!,
         Password = appConfig["AB_PASS"] ?? appConfig[$"{env}_AB_PASS"]!,
-        Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!,
-        Merchant = appConfig["AB_MERCHANT"] ?? appConfig[$"{env}_AB_MERCHANT"]!
+        Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!
     },
     _ => throw new NotImplementedException()
 };
