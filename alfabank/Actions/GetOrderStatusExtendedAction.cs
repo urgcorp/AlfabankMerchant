@@ -3,6 +3,7 @@ using alfabank.Models;
 
 namespace alfabank.Actions
 {
+    [LoginAuthorization]
     public sealed class GetOrderStatusExtendedAction : AlfabankAction<Order>
     {
         public override string Action { get; set; } = AlfabankRestActions.GetOrderStatusExtended;

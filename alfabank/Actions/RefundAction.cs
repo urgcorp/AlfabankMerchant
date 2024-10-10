@@ -10,6 +10,7 @@ namespace alfabank.Actions
     /// <para>При выполнении возврата за оплаты жилищно-коммунальных услуг возможен только полный возврат</para>
     /// <para>Для выполнения операции возврата необходимоналичие соответствующих права в системе</para>
     /// </summary>
+    [LoginAuthorization]
     public sealed class RefundAction : AlfabankAction<RefundResponse>
     {
         public override string Action { get; set; } = AlfabankRestActions.Refund;

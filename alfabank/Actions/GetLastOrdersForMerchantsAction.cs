@@ -7,6 +7,7 @@ namespace alfabank.Actions
     /// <summary>
     /// Запрос получения статистики по платежам за определённый период
     /// </summary>
+    [LoginAuthorization]
     public sealed class GetLastOrdersForMerchantsAction : AlfabankAction<LastOrdersForMerchants>
     {
         public override string Action { get; set; } = AlfabankRestActions.GetLastOrdersForMerchants;

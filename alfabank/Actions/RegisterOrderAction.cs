@@ -6,6 +6,7 @@ namespace alfabank.Actions
     /// <summary>
     /// Запрос регистрации заказа
     /// </summary>
+    [LoginAuthorization(true)]
     public sealed class RegisterOrderAction : AlfabankAction<RegisterOrderResponse>
     {
         public override string Action { get; set; } = AlfabankRestActions.RegisterOrder;
