@@ -7,6 +7,6 @@ namespace alfabank.Actions
 {
     public class ReverseOrderAction : AlfabankAction
     {
-        public override string Action { get; set; } = AlfabankActions.ReverseOrder;
+        public override string Action { get; set; } = AlfabankRestActions.ReverseOrder;
     }
 }

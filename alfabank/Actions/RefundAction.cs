@@ -12,7 +12,7 @@ namespace alfabank.Actions
     /// </summary>
     public sealed class RefundAction : AlfabankAction<RefundResponse>
     {
-        public override string Action { get; set; } = AlfabankActions.Refund;
+        public override string Action { get; set; } = AlfabankRestActions.Refund;
 
         /// <summary>
         /// <para>Номер заказа в платёжной системе</para>

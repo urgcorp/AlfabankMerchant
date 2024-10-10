@@ -9,7 +9,7 @@ namespace alfabank.Actions
     /// </summary>
     public sealed class GetLastOrdersForMerchantsAction : AlfabankAction<LastOrdersForMerchants>
     {
-        public override string Action { get; set; } = AlfabankActions.GetLastOrdersForMerchants;
+        public override string Action { get; set; } = AlfabankRestActions.GetLastOrdersForMerchants;
 
         /// <summary>
         /// Язык в кодировке ISO 639-1. Если не указан, считается, что язык – русский.

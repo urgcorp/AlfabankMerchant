@@ -8,7 +8,7 @@ namespace alfabank.Actions
     /// </summary>
     public sealed class RegisterOrderAction : AlfabankAction<RegisterOrderResponse>
     {
-        public override string Action { get; set; } = AlfabankActions.RegisterOrder;
+        public override string Action { get; set; } = AlfabankRestActions.RegisterOrder;
 
         /// <summary>
         /// Номер (идентификатор) заказа в системе магазина, уникален для каждого магазина в пределах системы

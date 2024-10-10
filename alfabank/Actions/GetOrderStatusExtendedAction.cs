@@ -5,7 +5,7 @@ namespace alfabank.Actions
 {
     public sealed class GetOrderStatusExtendedAction : AlfabankAction<Order>
     {
-        public override string Action { get; set; } = AlfabankActions.GetOrderStatusExtended;
+        public override string Action { get; set; } = AlfabankRestActions.GetOrderStatusExtended;
 
         /// <summary>
         /// <para>Номер заказа в платёжной системе</para>

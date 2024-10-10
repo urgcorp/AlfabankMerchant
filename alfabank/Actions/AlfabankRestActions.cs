@@ -1,6 +1,6 @@
 ﻿namespace alfabank.Actions
 {
-    public static class AlfabankActions
+    public static class AlfabankRestActions
     {
         /// <summary>
         ///  Запросы, используемые при двухстадийной оплате

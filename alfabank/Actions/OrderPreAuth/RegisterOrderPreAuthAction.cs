@@ -7,6 +7,6 @@ namespace alfabank.Actions.OrderPreAuth
 {
     public class RegisterOrderPreAuthAction : AlfabankAction
     {
-        public override string Action { get; set; } = AlfabankActions.PreAuth.RegisterOrderPreAuth;
+        public override string Action { get; set; } = AlfabankRestActions.PreAuth.RegisterOrderPreAuth;
     }
 }
