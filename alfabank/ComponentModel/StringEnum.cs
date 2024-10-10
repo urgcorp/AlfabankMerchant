@@ -41,10 +41,10 @@ namespace alfabank.ComponentModel
             throw new ArgumentException($"Value \"{value}\" already registred");
         }
 
-        protected static bool Exists(string value)
+        public static bool Exists(string value)
             => _registredValues.ContainsKey(value);
 
-        protected TEnum Parse(string value)
+        public static TEnum Parse(string value)
         {
             if (value == null)
                 throw new ArgumentNullException();
@@ -55,7 +55,7 @@ namespace alfabank.ComponentModel
             throw new ArgumentOutOfRangeException();
         }
 
-        protected bool TryParse(string value, out TEnum res)
+        public static bool TryParse(string value, out TEnum res)
         {
             if (Exists(value))
             {
