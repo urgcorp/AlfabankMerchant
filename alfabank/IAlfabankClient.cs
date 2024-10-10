@@ -10,7 +10,7 @@ namespace alfabank
         /// <param name="action">Action request</param>
         /// <returns>Response body</returns>
         /// <exception cref="HttpRequestException"></exception>
-        Task<string> CallActionRawAsync(AlfabankAction action);
+        Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null);
 
         /// <summary>
         /// Make call to server and return deserialized response or throw exception if error reported
@@ -19,6 +19,6 @@ namespace alfabank
         /// <param name="action">Action request</param>
         /// <returns>Deserialized response</returns>
         /// <exception cref="AlfabankException"></exception>
-        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action) where TResponse : class;
+        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null) where TResponse : class;
     }
 }

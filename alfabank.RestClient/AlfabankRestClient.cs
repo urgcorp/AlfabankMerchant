@@ -43,32 +43,16 @@ namespace alfabank.RestClient
             };
         }
 
-        protected void SetAuthorizationData(AlfabankAction action)
-        {
-            if (string.IsNullOrEmpty(action.Token))
-            {
-                // Token not provided
-                if (string.IsNullOrEmpty(action.Login))
-                {
-                    action.Login = _config.Login;
-                    action.Password = _config.Password;
-                    action.Token = _config.Token;
-                    // Credentials not provided as well
-                    //if (string.IsNullOrEmpty(_config.Token))
-                    //{
-                    //}
-                    //else
-                }
-            }
-        }
-
-        public async Task<string> CallActionRawAsync(AlfabankAction action)
+        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null)
         {
             _logger?.LogTrace("Calling \"{action}\"", action.Action);
 
-            SetAuthorizationData(action);
-
-            Dictionary<string, string> queryParams = action.GetActionQueryParams();
+            Dictionary<string, string> queryParams = action.GetActionParams(authentication ?? new AuthParams()
+            {
+                Login = _config.Login,
+                Password = _config.Password,
+                Token = _config.Token
+            });
             var content = new FormUrlEncodedContent(queryParams);
 
             var response = await _client.PostAsync(action.Action, content)
@@ -83,10 +67,10 @@ namespace alfabank.RestClient
         /// <summary></summary>
         /// <param name="action">Request</param>
         /// <exception cref="AlfabankException"></exception>
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action)
+        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null)
             where TResponse : class
         {
-            var respJson = await CallActionRawAsync(action).ConfigureAwait(false);
+            var respJson = await CallActionRawAsync(action, authentication).ConfigureAwait(false);
             var errorMatch = _errorRegex.Match(respJson);
             if (errorMatch.Success && errorMatch.Groups[1].Value != "0")
                 throw new AlfabankException(int.Parse(errorMatch.Groups[1].Value), errorMatch.Groups[2].Value);
