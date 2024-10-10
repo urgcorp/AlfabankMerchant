@@ -61,4 +61,20 @@ namespace alfabank.ComponentModel
             Allowed = allowed.Select(x => AuthMethod.Parse(x)).ToArray();
         }
     }
+
+    /// <summary>
+    /// Authorization settings for action that prioritize login and password to authorize
+    /// </summary>
+    public class LoginAuthorizationAttribute : ActionAuthorizationAttribute
+    {
+        /// <summary>
+        /// Allow authorization preferring login method
+        /// </summary>
+        /// <param name="allowToken">Allow to authorize using token with this action</param>
+        public LoginAuthorizationAttribute(bool allowToken = false) : base()
+        {
+            if (allowToken)
+                Allowed = new[] { AuthMethod.LOGIN, AuthMethod.TOKEN };
+        }
+    }
 }
