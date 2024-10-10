@@ -7,17 +7,55 @@ namespace alfabank.ComponentModel
     {
         public abstract string Action { get; set; }
 
-        public Dictionary<string, string> GetActionQueryParams()
+        public ActionAuthorizationAttribute? GetAuthorizationConfig() => (ActionAuthorizationAttribute?)Attribute.GetCustomAttribute(GetType(), typeof(ActionAuthorizationAttribute));
+
+        /// <summary></summary>
+        /// <param name="authorization">Override authorization properties</param>
+        /// <returns>Set or parameters to send with request</returns>
+        public Dictionary<string, string> GetActionParams(AuthParams? authorization = null)
         {
+            var authAttribute = GetAuthorizationConfig();
             var queryParams = new Dictionary<string, string>();
 
             var properties = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
             foreach (var property in properties)
             {
                 var propAttr = property.GetCustomAttribute<ActionPropertyAttribute>();
                 if (propAttr != null)
                 {
+                    if (authAttribute != null)
+                    {
+                        if (propAttr.Name == "token")
+                        {
+                            if (!authAttribute.Allowed.Contains(AuthParams.AuthMethod.TOKEN))
+                                continue;
+                            if (!string.IsNullOrEmpty(authorization?.Token))
+                            {
+                                if (authAttribute.Priority == AuthParams.AuthMethod.LOGIN && !string.IsNullOrEmpty(authorization.Login))
+                                    continue;
+
+                                queryParams[propAttr.Name] = authorization.Token;
+                                continue;
+                            }
+
+                        }
+                        else if (propAttr.Name == "userName" || propAttr.Name == "password")
+                        {
+                            if (!authAttribute.Allowed.Contains(AuthParams.AuthMethod.LOGIN))
+                                continue;
+                            if (!string.IsNullOrEmpty(authorization?.Login))
+                            {
+                                if (authAttribute.Priority == AuthParams.AuthMethod.TOKEN && !string.IsNullOrEmpty(authorization.Token))
+                                    continue;
+
+                                if (propAttr.Name == "userName")
+                                    queryParams[propAttr.Name] = authorization.Login;
+                                else
+                                    queryParams[propAttr.Name] = authorization.Password ?? "";
+                            }
+                        }
+                    }
+
                     var value = property.GetValue(this);
                     if (value != null)
                     {
@@ -71,17 +109,17 @@ namespace alfabank.ComponentModel
         }
 
         [ActionProperty("userName", Type = "AN..30")]
-        public string? Login { get; set; }
+        protected string? Login { get; set; }
 
         [ActionProperty("password", Type = "AN..30")]
-        public string? Password { get; set; }
+        protected string? Password { get; set; }
 
         /// <summary>
         /// Открытый ключ, который можно использовать для регистрации заказа.
         /// <para>Если для аутентификации при регистрации заказа используются логин и пароль, параметр token передавать не нужно</para>
         /// </summary>
         [ActionProperty("token", Type = "AN..30")]
-        public string? Token { get; set; }
+        protected string? Token { get; set; }
 
         /// <summary>
         /// yyyyMMddHHmmss DateTime format
