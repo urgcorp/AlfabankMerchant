@@ -41,9 +41,9 @@ AlfabankConfiguration cfg = env switch
 
 var client = new AlfabankRestClient(logger, cfg);
 
-var orders = await GetOrders(client);
+var newOrder = await CreateOrder(client, 5000);
 
-//var newOrder = await CreateOrder(client);
+var orders = await GetOrders(client);
 
 //var order = await GetOrderExtended(client, null, "");
 
@@ -51,13 +51,13 @@ var orders = await GetOrders(client);
 
 Console.WriteLine("Exit");
 
-static async Task<RegisterOrderResponse> CreateOrder(AlfabankRestClient client)
+static async Task<RegisterOrderResponse> CreateOrder(AlfabankRestClient client, int amount)
 {
     //int orderId = 1;
     var req = new RegisterOrderAction()
     {
         OrderNumber = $"0-0001",
-        Amount = 100,
+        Amount = amount,
         ReturnUrl = "",
         Email = "",
         Description = "Тестовый заказ созданный через API",
