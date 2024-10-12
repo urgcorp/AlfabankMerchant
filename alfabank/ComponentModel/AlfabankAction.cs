@@ -5,7 +5,20 @@ namespace alfabank.ComponentModel
 {
     public abstract class AlfabankAction
     {
-        public abstract string Action { get; set; }
+        public string? FindDefaultActionUrl(string clientType)
+        {
+            if (!string.IsNullOrEmpty(ActionUrl))
+                return ActionUrl;
+
+            var attributes = Attribute.GetCustomAttributes(GetType(), typeof(ActionUrlAttribute)).Cast<ActionUrlAttribute>()
+                .Cast<ActionUrlAttribute>();
+            if (attributes.Any())
+                return (attributes.FirstOrDefault(x => x.ClientType.Equals(clientType, StringComparison.OrdinalIgnoreCase)))?.Url;
+
+            return null;
+        }
+
+        public virtual string? ActionUrl { get; set; }
 
         public ActionAuthorizationAttribute? GetAuthorizationConfig() => (ActionAuthorizationAttribute?)Attribute.GetCustomAttribute(GetType(), typeof(ActionAuthorizationAttribute));
 

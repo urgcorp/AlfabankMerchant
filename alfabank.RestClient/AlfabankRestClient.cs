@@ -15,6 +15,8 @@ namespace alfabank.RestClient
     public class AlfabankRestClient<TConfig> : IAlfabankClient
         where TConfig : AlfaBankConfiguration
     {
+        protected const string CLIENT_TYPE = "REST";
+
         private readonly ILogger? _logger;
         private readonly TConfig _config;
 
@@ -45,7 +47,11 @@ namespace alfabank.RestClient
 
         public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null)
         {
-            _logger?.LogTrace("Calling \"{action}\"", action.Action);
+            var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
+            if (string.IsNullOrEmpty(actionUrl))
+                throw new NotImplementedException("Unable to determine action URL to call for");
+
+            _logger?.LogTrace("Calling \"{action}\"", actionUrl);
 
             Dictionary<string, string> queryParams = action.GetActionParams(authentication ?? new AuthParams()
             {
@@ -55,7 +61,7 @@ namespace alfabank.RestClient
             });
             var content = new FormUrlEncodedContent(queryParams);
 
-            var response = await _client.PostAsync(action.Action, content)
+            var response = await _client.PostAsync(actionUrl, content)
                 .ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync()

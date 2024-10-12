@@ -11,10 +11,10 @@ namespace alfabank.Actions
     /// <para>Для выполнения операции возврата необходимоналичие соответствующих права в системе</para>
     /// </summary>
     [LoginAuthorization]
+    [RestUrl("rest/refund.do")]
+    [WSUrl("soap/merchant-ws")]
     public sealed class RefundAction : AlfabankAction<RefundResponse>
     {
-        public override string Action { get; set; } = AlfabankRestActions.Refund;
-
         /// <summary>
         /// <para>Номер заказа в платёжной системе</para>
         /// <para>Уникален в пределах системы</para>

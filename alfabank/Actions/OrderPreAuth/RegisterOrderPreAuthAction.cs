@@ -6,8 +6,9 @@ using alfabank.ComponentModel;
 namespace alfabank.Actions
 {
     [LoginAuthorization(true)]
+    [RestUrl("rest/registerPreAuth.do")]
     public class RegisterOrderPreAuthAction : AlfabankAction
     {
-        public override string Action { get; set; } = AlfabankRestActions.PreAuth.RegisterOrderPreAuth;
+
     }
 }

@@ -4,10 +4,10 @@ using alfabank.Models;
 namespace alfabank.Actions
 {
     [LoginAuthorization]
+    [RestUrl("rest/getOrderStatusExtended.do")]
+    [WSUrl("soap/merchant-ws")]
     public sealed class GetOrderStatusExtendedAction : AlfabankAction<Order>
     {
-        public override string Action { get; set; } = AlfabankRestActions.GetOrderStatusExtended;
-
         /// <summary>
         /// <para>Номер заказа в платёжной системе</para>
         /// <para>Уникален в пределах системы</para>

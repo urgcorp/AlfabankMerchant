@@ -8,10 +8,10 @@ namespace alfabank.Actions
     /// Запрос получения статистики по платежам за определённый период
     /// </summary>
     [LoginAuthorization]
+    [RestUrl("rest/getLastOrdersForMerchants.do")]
+    [WSUrl("soap/merchant-ws")]
     public sealed class GetLastOrdersForMerchantsAction : AlfabankAction<LastOrdersForMerchants>
     {
-        public override string Action { get; set; } = AlfabankRestActions.GetLastOrdersForMerchants;
-
         /// <summary>
         /// Язык в кодировке ISO 639-1. Если не указан, считается, что язык – русский.
         /// <para></para>Сообщение ошибке будет возвращено именно на этом языке.
