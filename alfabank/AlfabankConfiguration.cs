@@ -1,6 +1,6 @@
 ﻿namespace alfabank
 {
-    public class AlfaBankConfiguration
+    public class AlfabankConfiguration
     {
         public const string REQUEST_SEND_DATETIME_FORMAT = "yyyyMMddHHmmss";
 
