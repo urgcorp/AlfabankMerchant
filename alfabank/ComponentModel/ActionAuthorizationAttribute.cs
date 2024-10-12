@@ -1,6 +1,4 @@
-﻿using static alfabank.AuthParams;
-
-namespace alfabank.ComponentModel
+﻿namespace alfabank.ComponentModel
 {
     /// <summary>
     /// Authorization settings for action

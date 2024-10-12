@@ -27,11 +27,11 @@ namespace alfabank.ComponentModel
                     {
                         if (propAttr.Name == "token")
                         {
-                            if (!authAttribute.Allowed.Contains(AuthParams.AuthMethod.TOKEN))
+                            if (!authAttribute.Allowed.Contains(AuthMethod.TOKEN))
                                 continue;
                             if (!string.IsNullOrEmpty(authorization?.Token))
                             {
-                                if (authAttribute.Priority == AuthParams.AuthMethod.LOGIN && !string.IsNullOrEmpty(authorization.Login))
+                                if (authAttribute.Priority == AuthMethod.LOGIN && !string.IsNullOrEmpty(authorization.Login))
                                     continue;
 
                                 queryParams[propAttr.Name] = authorization.Token;
@@ -41,11 +41,11 @@ namespace alfabank.ComponentModel
                         }
                         else if (propAttr.Name == "userName" || propAttr.Name == "password")
                         {
-                            if (!authAttribute.Allowed.Contains(AuthParams.AuthMethod.LOGIN))
+                            if (!authAttribute.Allowed.Contains(AuthMethod.LOGIN))
                                 continue;
                             if (!string.IsNullOrEmpty(authorization?.Login))
                             {
-                                if (authAttribute.Priority == AuthParams.AuthMethod.TOKEN && !string.IsNullOrEmpty(authorization.Token))
+                                if (authAttribute.Priority == AuthMethod.TOKEN && !string.IsNullOrEmpty(authorization.Token))
                                     continue;
 
                                 if (propAttr.Name == "userName")
