@@ -5,6 +5,8 @@ namespace alfabank.ComponentModel
 {
     public abstract class AlfabankAction
     {
+        public const string REQUEST_SEND_DATETIME_FORMAT = "yyyyMMddHHmmss";
+
         public string? FindDefaultActionUrl(string clientType)
         {
             if (!string.IsNullOrEmpty(ActionUrl))
@@ -137,7 +139,7 @@ namespace alfabank.ComponentModel
         /// <summary>
         /// yyyyMMddHHmmss DateTime format
         /// </summary>
-        protected static string? GetDTParamValue(DateTime? val) => val.HasValue ? val.Value.ToString(AlfaBankConfiguration.REQUEST_SEND_DATETIME_FORMAT) : null;
+        protected static string? GetDTParamValue(DateTime? val) => val.HasValue ? val.Value.ToString(REQUEST_SEND_DATETIME_FORMAT) : null;
 
         protected static string? GetBoolParamVal(bool? val) => val.HasValue ? val.Value ? "true" : "false" : null;
 

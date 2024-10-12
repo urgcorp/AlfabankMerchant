@@ -19,18 +19,18 @@ var loggerFactory = LoggerFactory.Create(builder =>
     builder.AddConsole();  // Добавляем логирование в консоль
     builder.SetMinimumLevel(LogLevel.Trace);
 });
-var logger = loggerFactory.CreateLogger<AlfabankRestClient<AlfaBankConfiguration>>();
+var logger = loggerFactory.CreateLogger<AlfabankRestClient<AlfabankConfiguration>>();
 
 string env = appConfig["ENVIRONMENT"]!;
-AlfaBankConfiguration cfg = env switch
+AlfabankConfiguration cfg = env switch
 {
-    "TEST" => new AlfaBankConfiguration(appConfig["AB_SERVER"]!)
+    "TEST" => new AlfabankConfiguration(appConfig["AB_SERVER"]!)
     {
         Login = appConfig["AB_LOGIN"] ?? appConfig[$"{env}_AB_LOGIN"]!,
         Password = appConfig["AB_PASS"] ?? appConfig[$"{env}_AB_PASS"]!,
         Token = appConfig["AB_TOKEN"] ?? appConfig[$"{env}_AB_TOKEN"]!
     },
-    "PROD" => new AlfaBankConfiguration()
+    "PROD" => new AlfabankConfiguration("https://ecom.alfabank.ru/api/")
     {
         Login = appConfig["AB_LOGIN"] ?? appConfig[$"{env}_AB_LOGIN"]!,
         Password = appConfig["AB_PASS"] ?? appConfig[$"{env}_AB_PASS"]!,

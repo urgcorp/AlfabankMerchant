@@ -13,7 +13,7 @@ namespace alfabank.RestClient
     /// Client is mainly responible for making the HTTP call to the REST API backend
     /// </summary>
     public class AlfabankRestClient<TConfig> : IAlfabankClient
-        where TConfig : AlfaBankConfiguration
+        where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "REST";
 
@@ -85,12 +85,12 @@ namespace alfabank.RestClient
         }
     }
 
-    public class AlfabankRestClient : AlfabankRestClient<AlfaBankConfiguration>
+    public class AlfabankRestClient : AlfabankRestClient<AlfabankConfiguration>
     {
-        public AlfabankRestClient(AlfaBankConfiguration config) : base(config)
+        public AlfabankRestClient(AlfabankConfiguration config) : base(config)
         { }
 
-        public AlfabankRestClient(ILogger<AlfabankRestClient<AlfaBankConfiguration>> logger, AlfaBankConfiguration config)
+        public AlfabankRestClient(ILogger<AlfabankRestClient<AlfabankConfiguration>> logger, AlfabankConfiguration config)
             : base(logger, config)
         { }
     }
