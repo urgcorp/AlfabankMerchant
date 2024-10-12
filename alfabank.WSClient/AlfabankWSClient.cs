@@ -24,6 +24,8 @@ namespace alfabank.WSClient
 
         private readonly HttpClient _client;
 
+        public string? Merchant => _config.Merchant;
+
         public AlfabankWSClient(TConfig config)
         {
             _config = config;

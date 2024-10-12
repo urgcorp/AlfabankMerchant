@@ -1,8 +1,9 @@
-﻿using alfabank.ComponentModel;
+﻿using alfabank.Abstractions;
+using alfabank.ComponentModel;
 
 namespace alfabank
 {
-    public interface IAlfabankClient
+    public interface IAlfabankClient : IAlfabankMerchantService
     {
         /// <summary>
         /// Make call to server and return raw response (if HTTP Response is OK)

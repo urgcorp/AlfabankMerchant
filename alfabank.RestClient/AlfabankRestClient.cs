@@ -24,6 +24,8 @@ namespace alfabank.RestClient
 
         private readonly HttpClient _client;
 
+        public string? Merchant => _config.Merchant;
+
         public AlfabankRestClient(TConfig config)
         {
             _config = config;
