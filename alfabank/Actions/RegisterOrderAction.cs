@@ -24,11 +24,17 @@ namespace alfabank.Actions
         public int? Amount { get; set; }
 
         /// <summary>
+        /// Валюта платежа
+        /// <para>Если не указана - российский рубль (RUR)</para>
+        /// </summary>
+        public Currency? Currency { get; set; }
+
+        /// <summary>
         /// Код валюты платежа ISO 4217.
         /// <para>Если не указан, считается равным 810 (российские рубли)</para>
         /// </summary>
         [ActionProperty("currency", Type = "N3")]
-        public string? CurrencyCode { get; set; }
+        private string? CurrencyCode => Currency?.CurrencyCode.ToString();
 
         /// <summary>
         /// Адрес, на который требуется перенаправить пользователя в случае успешной оплаты.

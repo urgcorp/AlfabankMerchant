@@ -26,6 +26,17 @@ namespace alfabank.Actions
         public int Amount { get; set; }
 
         /// <summary>
+        /// Валюта платежа
+        /// </summary>
+        public Currency? Currency { get; set; }
+
+        /// <summary>
+        /// Код валюты платежа ISO 4217
+        /// </summary>
+        [ActionProperty("currency", Type = "N3")]
+        private string? CurrencyCode => Currency?.CurrencyCode.ToString();
+
+        /// <summary>
         /// <para>Дополнительные параметры мерчанта</para>
         /// Данные поля могут быть переданы в процессинг банка для последующего отображения в реестрах. Включение данной функциональности возможно по согласованию с банком в период интеграции
         /// </summary>

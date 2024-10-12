@@ -38,10 +38,20 @@ namespace alfabank.Models
         public int Amount { get; set; }
 
         /// <summary>
+        /// Валюта платежа
+        /// </summary>
+        [JsonIgnore]
+        public Currency Currency
+        {
+            get => Currency.Parse(CurrencyCode);
+            set => CurrencyCode = value.CurrencyCode;
+        }
+
+        /// <summary>
         /// Код валюты платежа ISO 4217. Если не указан, считается равным валюте по умолчанию.
         /// </summary>
         [JsonProperty("currency")]
-        public int CurrencyCode { get; set; }
+        protected int CurrencyCode { get; set; }
 
         /// <summary>
         /// Unix timestamp дата регистрации заказа в секундах
