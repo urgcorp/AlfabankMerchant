@@ -1,11 +1,11 @@
 # Alfabank-Net
-REST Client and API for Alfabank
+REST and Web-Service (WS / WSDL) Client and API for Alfabank
 
 Target Framework - net6.0
 
 Support DI
 
-## REST Client code example
+## Code example
 
     var cfg = new AlfaBankConfiguration("https://tws.egopay.ru/api/ab/")
     {
