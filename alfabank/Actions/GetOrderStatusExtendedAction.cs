@@ -3,6 +3,9 @@ using alfabank.Models;
 
 namespace alfabank.Actions
 {
+    /// <summary>
+    /// Запроса состояния зарегистрированного заказа
+    /// </summary>
     [LoginAuthorization]
     [RestUrl("rest/getOrderStatusExtended.do")]
     [WSUrl("soap/merchant-ws")]
@@ -20,6 +23,12 @@ namespace alfabank.Actions
         /// </summary>
         [ActionProperty("orderNumber", Type = "AN..32")]
         public string? OrderNumber { get; set; }
+
+        /// <summary>
+        /// Номер (идентификатор) заказа в системе магазина
+        /// </summary>
+        [ActionProperty("merchantOrderNumber", Type = "ANS..32")]
+        public string? MerchantOrderNumber { get; set; }
 
         /// <summary>
         /// <para>Язык в кодировке ISO 639-1. Если не указан, считается, что язык – русский</para>
