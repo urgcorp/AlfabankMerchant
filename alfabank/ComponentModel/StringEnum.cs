@@ -20,7 +20,7 @@ namespace alfabank.ComponentModel
     public abstract class StringEnum<TEnum> : StringEnum
         where TEnum : StringEnum<TEnum>, new()
     {
-        private static Dictionary<string, TEnum> _registredValues = new(StringComparer.OrdinalIgnoreCase);
+        protected static Dictionary<string, TEnum> _registredValues = new(StringComparer.OrdinalIgnoreCase);
 
         protected StringEnum()
         { }
