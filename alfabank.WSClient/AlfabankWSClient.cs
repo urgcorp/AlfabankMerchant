@@ -13,8 +13,10 @@ namespace alfabank.WSClient
     /// </summary>
     /// <typeparam name="TConfig"></typeparam>
     public class AlfabankWSClient<TConfig> : IAlfabankClient
-        where TConfig : AlfaBankConfiguration
+        where TConfig : AlfabankConfiguration
     {
+        protected const string CLIENT_TYPE = "WS";
+
         private readonly ILogger? _logger;
         private readonly TConfig _config;
 
@@ -43,13 +45,22 @@ namespace alfabank.WSClient
             };
         }
 
-        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action) where TResponse : class
+        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null)
         {
+            var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
+            if (string.IsNullOrEmpty(actionUrl))
+                throw new NotImplementedException("Unable to determine action URL to call for");
+
+            _logger?.LogTrace("Calling \"{action}\"", actionUrl);
             throw new NotImplementedException();
         }
 
-        public Task<string> CallActionRawAsync(AlfabankAction action)
+        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null)
+            where TResponse : class
         {
+            var respBody = await CallActionAsync(action, authentication)
+                .ConfigureAwait(false);
+
             throw new NotImplementedException();
         }
     }
