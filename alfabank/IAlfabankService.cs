@@ -10,7 +10,7 @@ namespace alfabank
         /// <summary>
         /// Регистрация заказа с предавторизацией
         /// </summary>
-        Task RegisterPreAuthAsync(RegisterOrderPreAuthAction action, AuthParams? auth = null);
+        Task RegisterOrderPreAuthAsync(RegisterOrderPreAuthAction action, AuthParams? auth = null);
 
         /// <summary>
         /// Списание суммы предавторизации (полной или частичной)
@@ -37,7 +37,7 @@ namespace alfabank
         /// <summary>
         /// Register new order
         /// </summary>
-        Task<RegisterOrderResponse> RegisterAsync(RegisterOrderAction action, AuthParams? auth = null);
+        Task<RegisterOrderResponse> RegisterOrderAsync(RegisterOrderAction action, AuthParams? auth = null);
 
         /// <summary>
         /// Register new order
@@ -52,7 +52,7 @@ namespace alfabank
         /// <param name="clientId">Client ID within shop system</param>
         /// <param name="clientIp">Client IP address</param>
         /// <param name="auth">Override authentication params</param>
-        Task<RegisterOrderResponse> RegisterAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description,
+        Task<RegisterOrderResponse> RegisterOrderAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description,
             string? email = null, string? phone = null, string? clientId = null, string? clientIp = null,
             AuthParams? auth = null);
     }
