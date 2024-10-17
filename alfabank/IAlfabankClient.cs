@@ -22,4 +22,9 @@ namespace alfabank
         /// <exception cref="AlfabankException"></exception>
         Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null) where TResponse : class;
     }
+
+    public interface IAlfabankClient<TConfig> : IAlfabankClient
+        where TConfig : AlfabankConfiguration
+    { 
+    }
 }

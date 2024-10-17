@@ -12,7 +12,7 @@ namespace alfabank.RestClient
     /// <summary>
     /// Client is mainly responible for making the HTTP call to the REST API backend
     /// </summary>
-    public class AlfabankRestClient<TConfig> : IAlfabankClient
+    public class AlfabankRestClient<TConfig> : IAlfabankClient<TConfig>
         where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "REST";
