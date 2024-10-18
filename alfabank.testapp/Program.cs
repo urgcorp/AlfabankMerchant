@@ -1,11 +1,12 @@
-﻿using alfabank;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using alfabank;
 using alfabank.Actions;
 using alfabank.Exceptions;
 using alfabank.Models;
 using alfabank.Models.Response;
 using alfabank.RestClient;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using alfabank.testapp;
 
 var builder = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -40,6 +41,7 @@ AlfabankConfiguration cfg = env switch
 };
 
 var client = new AlfabankRestClient(logger, cfg);
+Services.Init(logger, loggerFactory, cfg, client);
 
 var newOrder = await CreateOrder(client, 5000);
 
@@ -64,20 +66,22 @@ static async Task<RegisterOrderResponse> CreateOrder(AlfabankRestClient client, 
         DynamicCallbackUrl = ""
     };
 
-    if (req.ValidateActionParams(out var errors))
-    {
-        try
-        {
-            var res = await client.CallActionAsync(req);
-            Console.WriteLine($"{res.OrderId} - {res.FormUrl}");
-            return res;
-        }
-        catch (AlfabankException abEx)
-        {
-            Console.WriteLine($"Error: {abEx.Message}");
-            throw;
-        }
-    }
+    var orders = await Services.OrderService.RegisterOrderAsync(req, null);
+
+    //if (req.ValidateActionParams(out var errors))
+    //{
+    //    try
+    //    {
+    //        var res = await client.CallActionAsync(req);
+    //        Console.WriteLine($"{res.OrderId} - {res.FormUrl}");
+    //        return res;
+    //    }
+    //    catch (AlfabankException abEx)
+    //    {
+    //        Console.WriteLine($"Error: {abEx.Message}");
+    //        throw;
+    //    }
+    //}
 
     throw new NotImplementedException();
 }
