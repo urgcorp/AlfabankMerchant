@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\alfabank.RestClient\alfabank.RestClient.csproj" />
+    <ProjectReference Include="..\alfabank.Services\alfabank.Services.csproj" />
+    <ProjectReference Include="..\alfabank.WSClient\alfabank.WSClient.csproj" />
   </ItemGroup>
 
 </Project>
