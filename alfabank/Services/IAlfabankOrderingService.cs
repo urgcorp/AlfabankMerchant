@@ -32,4 +32,13 @@ namespace alfabank.Services
             string? email = null, string? phone = null, string? clientId = null, string? clientIp = null,
             AuthParams? auth = null);
     }
+
+    public interface IAlfabankOrderingService<TConfig, TClient> : IAlfabankOrderingService
+        where TConfig : AlfabankConfiguration
+        where TClient : IAlfabankClient<TConfig>
+    { }
+
+    public interface IAlfabankOrderingService<TClient> : IAlfabankOrderingService<AlfabankConfiguration, TClient>
+        where TClient : IAlfabankClient<AlfabankConfiguration>
+    { }
 }

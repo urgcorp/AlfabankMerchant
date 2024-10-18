@@ -27,4 +27,13 @@ namespace alfabank.Services
         /// </summary>
         Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AuthParams? auth = null);
     }
+
+    public interface IAlfabankService<TConfig, TClient> : IAlfabankService
+        where TConfig : AlfabankConfiguration
+        where TClient : IAlfabankClient<TConfig>
+    { }
+
+    public interface IAlfabankService<TClient> : IAlfabankService<AlfabankConfiguration, TClient>
+        where TClient : IAlfabankClient<AlfabankConfiguration>
+    { }
 }
