@@ -115,7 +115,7 @@ namespace alfabank.Actions
         /// IP-адрес покупателя
         /// </summary>
         [ActionProperty("ip", Type = "ANS..39")]
-        public string? BuyerIpAddress { get; set; }
+        public string? ClientIpAddress { get; set; }
 
         /// <summary>
         /// <para>Продолжительность жизни заказа в секундах</para>
