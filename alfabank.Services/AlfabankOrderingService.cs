@@ -42,9 +42,20 @@ namespace alfabank.Services
             return _client.CallActionAsync(action, auth);
         }
 
-        public Task<RegisterOrderResponse> RegisterOrderAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description, string? email = null, string? phone = null, string? clientId = null, string? clientIp = null, AuthParams? auth = null)
+        public Task<RegisterOrderResponse> RegisterOrderAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description, AuthParams? auth = null, string? email = null, string? phone = null, string? clientId = null, string? clientIp = null)
         {
-            throw new NotImplementedException();
+            var action = new RegisterOrderAction()
+            {
+                OrderNumber = orderNumber,
+                Amount = amount,
+                ReturnUrl = returnUrl,
+                Email = email,
+                Phone = phone,
+                Description = description,
+                ClientId = clientId,
+                ClientIpAddress = clientIp
+            };
+            return RegisterOrderAsync(action, auth);
         }
     }
 
