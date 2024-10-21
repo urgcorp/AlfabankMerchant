@@ -42,11 +42,13 @@ namespace alfabank.Services
             return _client.CallActionAsync(action, auth);
         }
 
-        public Task<RegisterOrderResponse> RegisterOrderAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description, AuthParams? auth = null, string? email = null, string? phone = null, string? clientId = null, string? clientIp = null)
+        public Task<RegisterOrderResponse> RegisterOrderAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description, AuthParams? auth = null,
+            string? email = null, string? phone = null, string? clientId = null, string? clientIp = null)
         {
             var action = new RegisterOrderAction()
             {
                 OrderNumber = orderNumber,
+                Currency = currency,
                 Amount = amount,
                 ReturnUrl = returnUrl,
                 Email = email,
@@ -68,5 +70,4 @@ namespace alfabank.Services
         public AlfabankOrderingService(ILogger<AlfabankOrderingService<AlfabankConfiguration, TClient>> logger, TClient client) : base(logger, client)
         { }
     }
-
 }
