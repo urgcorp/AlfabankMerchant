@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using AlfabankMerchant.Services;
-using AlfabankMerchant.Services.Context;
+using AlfabankMerchant.Services.Components;
 
 namespace AlfabankMerchant.testapp
 {

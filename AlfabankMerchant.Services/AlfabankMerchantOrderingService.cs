@@ -4,8 +4,9 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using AlfabankMerchant.Actions;
 using AlfabankMerchant.Models.Response;
-using AlfabankMerchant.Services.Context;
 using AlfabankMerchant.Common;
+using AlfabankMerchant.Services.Components;
+using AlfabankMerchant.Models;
 
 namespace AlfabankMerchant.Services
 {
@@ -60,6 +61,46 @@ namespace AlfabankMerchant.Services
                 ClientIpAddress = clientIp
             };
             return RegisterOrderAsync(action, auth);
+        }
+
+        public Task RegisterOrderPreAuthAsync(RegisterOrderPreAuthAction action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Order> GetOrderStatusAsync(GetOrderStatusAction action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<LastOrdersForMerchants> GetLastOrdersForMerchantAsync(GetLastOrdersForMerchantsAction action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ReverseOrderAsync(object action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DepositOrderAsync(DepositOrderAction action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RefundOrderAsync(object action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddOrderParamsAsync(object action, AuthParams? auth = null)
+        {
+            throw new NotImplementedException();
         }
     }
 
