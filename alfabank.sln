@@ -16,7 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решен
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "alfabank.WSClient", "alfabank.WSClient\alfabank.WSClient.csproj", "{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alfabank.Services", "alfabank.Services\alfabank.Services.csproj", "{F9274E71-A703-401D-A46A-0C4B19361795}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "alfabank.Services", "alfabank.Services\alfabank.Services.csproj", "{F9274E71-A703-401D-A46A-0C4B19361795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alfabank.BrowserClient", "alfabank.BrowserClient\alfabank.BrowserClient.csproj", "{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +46,10 @@ Global
 		{F9274E71-A703-401D-A46A-0C4B19361795}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9274E71-A703-401D-A46A-0C4B19361795}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9274E71-A703-401D-A46A-0C4B19361795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
