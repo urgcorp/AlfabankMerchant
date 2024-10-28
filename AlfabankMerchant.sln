@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.RestClient", "AlfabankMerchant.RestClient\AlfabankMerchant.RestClient.csproj", "{82AF1E6C-067A-45F8-956E-C5A8F7BFC1D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant", "AlfabankMerchant\AlfabankMerchant.csproj", "{670CBBFA-C396-4282-ACB5-CBA66892A5A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.testapp", "AlfabankMerchant.testapp\AlfabankMerchant.testapp.csproj", "{06AF65FE-BEE2-4B2B-9D37-B74C8490B944}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{FB9C5937-35DE-440B-86C4-F9C32175E3FE}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.WSClient", "AlfabankMerchant.WSClient\AlfabankMerchant.WSClient.csproj", "{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.Services", "AlfabankMerchant.Services\AlfabankMerchant.Services.csproj", "{F9274E71-A703-401D-A46A-0C4B19361795}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.BrowserClient", "AlfabankMerchant.BrowserClient\AlfabankMerchant.BrowserClient.csproj", "{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82AF1E6C-067A-45F8-956E-C5A8F7BFC1D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82AF1E6C-067A-45F8-956E-C5A8F7BFC1D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82AF1E6C-067A-45F8-956E-C5A8F7BFC1D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82AF1E6C-067A-45F8-956E-C5A8F7BFC1D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{670CBBFA-C396-4282-ACB5-CBA66892A5A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{670CBBFA-C396-4282-ACB5-CBA66892A5A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{670CBBFA-C396-4282-ACB5-CBA66892A5A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{670CBBFA-C396-4282-ACB5-CBA66892A5A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AF65FE-BEE2-4B2B-9D37-B74C8490B944}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AF65FE-BEE2-4B2B-9D37-B74C8490B944}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AF65FE-BEE2-4B2B-9D37-B74C8490B944}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AF65FE-BEE2-4B2B-9D37-B74C8490B944}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9274E71-A703-401D-A46A-0C4B19361795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9274E71-A703-401D-A46A-0C4B19361795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9274E71-A703-401D-A46A-0C4B19361795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9274E71-A703-401D-A46A-0C4B19361795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AAB7025-6D0A-43E8-8D8C-B99323DBC581}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {139BDD1E-D397-428C-A18A-3D68F4259D41}
+	EndGlobalSection
+EndGlobal
