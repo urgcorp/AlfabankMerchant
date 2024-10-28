@@ -1,4 +1,5 @@
-﻿using AlfabankMerchant.ComponentModel;
+﻿using AlfabankMerchant.Common;
+using AlfabankMerchant.ComponentModel;
 using AlfabankMerchant.Models.Response;
 
 namespace AlfabankMerchant.Actions

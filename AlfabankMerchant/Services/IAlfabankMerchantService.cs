@@ -1,11 +1,12 @@
-﻿using AlfabankMerchant.Abstractions;
-using AlfabankMerchant.Actions;
+﻿using AlfabankMerchant.Actions;
+using AlfabankMerchant.Common;
 using AlfabankMerchant.Models;
 using AlfabankMerchant.Models.Response;
+using AlfabankMerchant.Services.Context;
 
 namespace AlfabankMerchant.Services
 {
-    public interface IAlfabankService : IAlfabankMerchantService, IAlfabankOrderingService
+    public interface IAlfabankMerchantService : IAlfabankMerchant, IAlfabankMerchantOrderingService
     {
         /// <summary>
         /// Регистрация заказа с предавторизацией
@@ -28,7 +29,7 @@ namespace AlfabankMerchant.Services
         Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AuthParams? auth = null);
     }
 
-    public interface IAlfabankService<TConfig, TClient> : IAlfabankService
+    public interface IAlfabankService<TConfig, TClient> : IAlfabankMerchantService
         where TConfig : AlfabankConfiguration
         where TClient : IAlfabankClient<TConfig>
     { }

@@ -4,10 +4,12 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using AlfabankMerchant.Actions;
 using AlfabankMerchant.Models.Response;
+using AlfabankMerchant.Services.Context;
+using AlfabankMerchant.Common;
 
 namespace AlfabankMerchant.Services
 {
-    public class AlfabankOrderingService<TConfig, TClient> : IAlfabankOrderingService<TConfig, TClient>
+    public class AlfabankMerchantOrderingService<TConfig, TClient> : IAlfabankOrderingService<TConfig, TClient>
         where TConfig : AlfabankConfiguration
         where TClient : IAlfabankClient<TConfig>
     {
@@ -16,13 +18,13 @@ namespace AlfabankMerchant.Services
 
         public string? Merchant => _client.Merchant;
 
-        public AlfabankOrderingService(ILogger<AlfabankOrderingService<TConfig, TClient>> logger, TClient client)
+        public AlfabankMerchantOrderingService(ILogger<AlfabankMerchantOrderingService<TConfig, TClient>> logger, TClient client)
         {
             _logger = logger;
             _client = client;
         }
 
-        public AlfabankOrderingService(TClient client)
+        public AlfabankMerchantOrderingService(TClient client)
         {
             _client = client;
         }
@@ -61,13 +63,13 @@ namespace AlfabankMerchant.Services
         }
     }
 
-    public class AlfabankOrderingService<TClient> : AlfabankOrderingService<AlfabankConfiguration, TClient>, IAlfabankOrderingService<TClient>
+    public class AlfabankOrderingService<TClient> : AlfabankMerchantOrderingService<AlfabankConfiguration, TClient>, IAlfabankOrderingService<TClient>
         where TClient : IAlfabankClient<AlfabankConfiguration>
     {
         public AlfabankOrderingService(TClient client) : base(client)
         { }
 
-        public AlfabankOrderingService(ILogger<AlfabankOrderingService<AlfabankConfiguration, TClient>> logger, TClient client) : base(logger, client)
+        public AlfabankOrderingService(ILogger<AlfabankMerchantOrderingService<AlfabankConfiguration, TClient>> logger, TClient client) : base(logger, client)
         { }
     }
 }

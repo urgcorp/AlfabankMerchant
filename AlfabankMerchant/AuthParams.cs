@@ -1,6 +1,4 @@
-﻿using AlfabankMerchant.ComponentModel;
-
-namespace AlfabankMerchant
+﻿namespace AlfabankMerchant
 {
     public class AuthParams
     {

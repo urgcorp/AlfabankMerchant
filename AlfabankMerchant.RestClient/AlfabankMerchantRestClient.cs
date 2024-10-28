@@ -12,7 +12,7 @@ namespace AlfabankMerchant.RestClient
     /// <summary>
     /// Client is mainly responible for making the HTTP call to the REST API backend
     /// </summary>
-    public class AlfabankRestClient<TConfig> : IAlfabankClient<TConfig>
+    public class AlfabankMerchantRestClient<TConfig> : IAlfabankClient<TConfig>
         where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "REST";
@@ -26,7 +26,7 @@ namespace AlfabankMerchant.RestClient
 
         public string? Merchant => _config.Merchant;
 
-        public AlfabankRestClient(TConfig config)
+        public AlfabankMerchantRestClient(TConfig config)
         {
             _config = config;
 
@@ -36,7 +36,7 @@ namespace AlfabankMerchant.RestClient
             };
         }
 
-        public AlfabankRestClient(ILogger<AlfabankRestClient<TConfig>> logger, TConfig config)
+        public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient<TConfig>> logger, TConfig config)
         {
             _logger = logger;
             _config = config;
@@ -87,12 +87,12 @@ namespace AlfabankMerchant.RestClient
         }
     }
 
-    public class AlfabankRestClient : AlfabankRestClient<AlfabankConfiguration>
+    public class AlfabankRestClient : AlfabankMerchantRestClient<AlfabankConfiguration>
     {
         public AlfabankRestClient(AlfabankConfiguration config) : base(config)
         { }
 
-        public AlfabankRestClient(ILogger<AlfabankRestClient<AlfabankConfiguration>> logger, AlfabankConfiguration config)
+        public AlfabankRestClient(ILogger<AlfabankMerchantRestClient<AlfabankConfiguration>> logger, AlfabankConfiguration config)
             : base(logger, config)
         { }
     }

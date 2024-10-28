@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using AlfabankMerchant.Services;
+using AlfabankMerchant.Services.Context;
 
 namespace AlfabankMerchant.testapp
 {
@@ -12,9 +13,9 @@ namespace AlfabankMerchant.testapp
         private static ILogger _logger;
         private static ILoggerFactory _loggerFactory;
         private static AlfabankConfiguration _config;
-        private static IAlfabankClient _client;
+        private static IAlfabankMerchantClient _client;
 
-        public static IAlfabankOrderingService OrderService { get; private set; }
+        public static IAlfabankMerchantOrderingService OrderService { get; private set; }
 
         public static void Init<TConfig, TClient>(ILogger logger, ILoggerFactory loggerFactory, TConfig cfg, TClient abClient)
             where TConfig : AlfabankConfiguration
@@ -25,8 +26,8 @@ namespace AlfabankMerchant.testapp
             _config = cfg;
             _client = abClient;
 
-            var oSvcLogger = _loggerFactory.CreateLogger<AlfabankOrderingService<TConfig, TClient>>();
-            OrderService = new AlfabankOrderingService<TConfig, TClient>(oSvcLogger, abClient);
+            var oSvcLogger = _loggerFactory.CreateLogger<AlfabankMerchantOrderingService<TConfig, TClient>>();
+            OrderService = new AlfabankMerchantOrderingService<TConfig, TClient>(oSvcLogger, abClient);
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using AlfabankMerchant.Abstractions;
-using AlfabankMerchant.Actions;
+﻿using AlfabankMerchant.Actions;
+using AlfabankMerchant.Common;
 using AlfabankMerchant.Models.Response;
 
-namespace AlfabankMerchant.Services
+namespace AlfabankMerchant.Services.Context
 {
     /// <summary>
     /// Service that provides ability to register new orders
     /// <para>Only method that can be called without permissin (Requires merchant token)</para>
     /// </summary>
-    public interface IAlfabankOrderingService : IAlfabankMerchantService
+    public interface IAlfabankMerchantOrderingService : IAlfabankMerchant
     {
         /// <summary>
         /// Register new order
@@ -32,7 +32,7 @@ namespace AlfabankMerchant.Services
             string? email = null, string? phone = null, string? clientId = null, string? clientIp = null);
     }
 
-    public interface IAlfabankOrderingService<TConfig, TClient> : IAlfabankOrderingService
+    public interface IAlfabankOrderingService<TConfig, TClient> : IAlfabankMerchantOrderingService
         where TConfig : AlfabankConfiguration
         where TClient : IAlfabankClient<TConfig>
     { }

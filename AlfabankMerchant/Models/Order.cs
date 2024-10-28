@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Newtonsoft.Json;
 using AlfabankMerchant.JsonConverter;
+using AlfabankMerchant.Common;
 
 namespace AlfabankMerchant.Models
 {

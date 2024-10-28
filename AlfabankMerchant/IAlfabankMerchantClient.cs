@@ -1,9 +1,9 @@
-﻿using AlfabankMerchant.Abstractions;
+﻿using AlfabankMerchant.Common;
 using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant
 {
-    public interface IAlfabankClient : IAlfabankMerchantService
+    public interface IAlfabankMerchantClient : IAlfabankMerchant
     {
         /// <summary>
         /// Make call to server and return raw response (if HTTP Response is OK)
@@ -23,7 +23,7 @@ namespace AlfabankMerchant
         Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null) where TResponse : class;
     }
 
-    public interface IAlfabankClient<TConfig> : IAlfabankClient
+    public interface IAlfabankClient<TConfig> : IAlfabankMerchantClient
         where TConfig : AlfabankConfiguration
     { 
     }

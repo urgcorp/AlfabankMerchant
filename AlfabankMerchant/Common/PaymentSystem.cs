@@ -1,6 +1,6 @@
 ﻿using AlfabankMerchant.ComponentModel;
 
-namespace AlfabankMerchant
+namespace AlfabankMerchant.Common
 {
     public sealed class PaymentSystem : StringEnum<PaymentSystem>
     {

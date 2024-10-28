@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using AlfabankMerchant.ComponentModel;
 
-namespace AlfabankMerchant
+namespace AlfabankMerchant.Common
 {
     [DebuggerDisplay("{Value} ({CurrencyCode})")]
     public sealed class Currency : StringEnum<Currency>

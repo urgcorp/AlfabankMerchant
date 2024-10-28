@@ -20,7 +20,7 @@ var loggerFactory = LoggerFactory.Create(builder =>
     builder.AddConsole();  // Добавляем логирование в консоль
     builder.SetMinimumLevel(LogLevel.Trace);
 });
-var logger = loggerFactory.CreateLogger<AlfabankRestClient<AlfabankConfiguration>>();
+var logger = loggerFactory.CreateLogger<AlfabankMerchantRestClient<AlfabankConfiguration>>();
 
 string env = appConfig["ENVIRONMENT"]!;
 AlfabankConfiguration cfg = env switch
