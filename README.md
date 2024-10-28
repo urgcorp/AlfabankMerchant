@@ -1,5 +1,5 @@
-# Alfabank-Net
-REST and Web-Service (WS / WSDL) Client and API for Alfabank
+# AlfabankMerchant
+REST and Web-Service (WS / WSDL) C# Client and API for Alfabank
 
 Target Framework - net6.0
 
