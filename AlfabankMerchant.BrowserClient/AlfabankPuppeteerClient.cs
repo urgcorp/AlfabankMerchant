@@ -8,7 +8,7 @@ using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.BrowserClient
 {
-    public class AlfabankPuppeteerClient<TConfig> : IAlfabankClient<TConfig>
+    public class AlfabankPuppeteerClient<TConfig> : IAlfabankMerchantClient<TConfig>
         where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "BROWSER";

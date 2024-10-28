@@ -76,10 +76,10 @@ namespace AlfabankMerchant.Services.Components
 
     public interface IAlfabankOrderingService<TConfig, TClient> : IAlfabankMerchantOrderingService
         where TConfig : AlfabankConfiguration
-        where TClient : IAlfabankClient<TConfig>
+        where TClient : IAlfabankMerchantClient<TConfig>
     { }
 
     public interface IAlfabankOrderingService<TClient> : IAlfabankOrderingService<AlfabankConfiguration, TClient>
-        where TClient : IAlfabankClient<AlfabankConfiguration>
+        where TClient : IAlfabankMerchantClient<AlfabankConfiguration>
     { }
 }

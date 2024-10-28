@@ -19,7 +19,7 @@ namespace AlfabankMerchant.testapp
 
         public static void Init<TConfig, TClient>(ILogger logger, ILoggerFactory loggerFactory, TConfig cfg, TClient abClient)
             where TConfig : AlfabankConfiguration
-            where TClient : class, IAlfabankClient<TConfig>
+            where TClient : class, IAlfabankMerchantClient<TConfig>
         {
             _logger = logger;
             _loggerFactory = loggerFactory;

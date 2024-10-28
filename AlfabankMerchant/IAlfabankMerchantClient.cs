@@ -23,7 +23,7 @@ namespace AlfabankMerchant
         Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null) where TResponse : class;
     }
 
-    public interface IAlfabankClient<TConfig> : IAlfabankMerchantClient
+    public interface IAlfabankMerchantClient<TConfig> : IAlfabankMerchantClient
         where TConfig : AlfabankConfiguration
     { 
     }

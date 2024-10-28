@@ -12,7 +12,7 @@ namespace AlfabankMerchant.Services
 {
     public class AlfabankMerchantOrderingService<TConfig, TClient> : IAlfabankOrderingService<TConfig, TClient>
         where TConfig : AlfabankConfiguration
-        where TClient : IAlfabankClient<TConfig>
+        where TClient : IAlfabankMerchantClient<TConfig>
     {
         private readonly ILogger? _logger;
         private readonly TClient _client;
@@ -105,7 +105,7 @@ namespace AlfabankMerchant.Services
     }
 
     public class AlfabankOrderingService<TClient> : AlfabankMerchantOrderingService<AlfabankConfiguration, TClient>, IAlfabankOrderingService<TClient>
-        where TClient : IAlfabankClient<AlfabankConfiguration>
+        where TClient : IAlfabankMerchantClient<AlfabankConfiguration>
     {
         public AlfabankOrderingService(TClient client) : base(client)
         { }
