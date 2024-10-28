@@ -9,7 +9,6 @@ namespace AlfabankMerchant.Actions
     /// </summary>
     [LoginAuthorization]
     [RestUrl("rest/getLastOrdersForMerchants.do")]
-    [WSUrl("soap/merchant-ws")]
     public sealed class GetLastOrdersForMerchantsAction : AlfabankAction<LastOrdersForMerchants>
     {
         /// <summary>

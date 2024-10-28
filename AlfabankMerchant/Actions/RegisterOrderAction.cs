@@ -9,7 +9,6 @@ namespace AlfabankMerchant.Actions
     /// </summary>
     [LoginAuthorization(true)]
     [RestUrl("rest/register.do")]
-    [WSUrl("soap/merchant-ws")]
     public sealed class RegisterOrderAction : AlfabankAction<RegisterOrderResponse>
     {
         /// <summary>

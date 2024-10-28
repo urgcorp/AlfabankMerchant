@@ -16,6 +16,7 @@ namespace AlfabankMerchant.WSClient
         where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "WS";
+        public const string REQUESTS_PATH = "soap/merchant-ws";
 
         private readonly ILogger? _logger;
         private readonly TConfig _config;

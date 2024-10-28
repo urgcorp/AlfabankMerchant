@@ -13,7 +13,6 @@ namespace AlfabankMerchant.Actions
     /// </summary>
     [LoginAuthorization]
     [RestUrl("rest/refund.do")]
-    [WSUrl("soap/merchant-ws")]
     public sealed class RefundAction : AlfabankAction<RefundResponse>
     {
         /// <summary>

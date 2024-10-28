@@ -19,10 +19,4 @@
         public RestUrlAttribute(string url) : base("REST", url)
         { }
     }
-
-    public sealed class WSUrlAttribute : ActionUrlAttribute
-    {
-        public WSUrlAttribute(string url) : base("WS", url)
-        { }
-    }
 }

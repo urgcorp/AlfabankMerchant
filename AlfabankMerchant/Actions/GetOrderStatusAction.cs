@@ -8,7 +8,6 @@ namespace AlfabankMerchant.Actions
     /// </summary>
     [LoginAuthorization]
     [RestUrl("rest/getOrderStatus.do")]
-    [WSUrl("soap/merchant-ws")]
     public class GetOrderStatusAction : AlfabankAction<Order>
     {
         /// <summary>

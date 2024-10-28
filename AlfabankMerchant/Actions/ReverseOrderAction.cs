@@ -13,7 +13,6 @@ namespace AlfabankMerchant.Actions
     /// </summary>
     [LoginAuthorization(true)]
     [RestUrl("rest/reverse.do")]
-    [WSUrl("soap/merchant-ws")]
     public class ReverseOrderAction : AlfabankAction
     {
         /// <summary>
