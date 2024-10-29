@@ -87,12 +87,12 @@ namespace AlfabankMerchant.RestClient
         }
     }
 
-    public class AlfabankRestClient : AlfabankMerchantRestClient<AlfabankConfiguration>
+    public class AlfabankMerchantRestClient : AlfabankMerchantRestClient<AlfabankConfiguration>
     {
-        public AlfabankRestClient(AlfabankConfiguration config) : base(config)
+        public AlfabankMerchantRestClient(AlfabankConfiguration config) : base(config)
         { }
 
-        public AlfabankRestClient(ILogger<AlfabankMerchantRestClient<AlfabankConfiguration>> logger, AlfabankConfiguration config)
+        public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient<AlfabankConfiguration>> logger, AlfabankConfiguration config)
             : base(logger, config)
         { }
     }
