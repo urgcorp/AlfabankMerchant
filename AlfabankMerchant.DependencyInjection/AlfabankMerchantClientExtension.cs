@@ -12,7 +12,7 @@ namespace AlfabankMerchant.DependencyInjection
         /// </summary>
         /// <param name="client">Alfabank client</param>
         /// <param name="config">Client configuration</param>
-        public static void AddAlfabankClient<TClient, TConfig>(this IServiceCollection services, TClient client, TConfig config)
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, TClient client, TConfig config)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration
         {
@@ -25,7 +25,7 @@ namespace AlfabankMerchant.DependencyInjection
         /// Register alfabank client and configuration as singletone
         /// </summary>
         /// <param name="config">Client configuration</param>
-        public static void AddAlfabankClient<TClient, TConfig>(this IServiceCollection services, TConfig config)
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, TConfig config)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration
         {
@@ -33,7 +33,7 @@ namespace AlfabankMerchant.DependencyInjection
             services.AddSingleton<IAlfabankMerchantClient, TClient>();
         }
 
-        public static void AddAlfabankClient<TClient, TConfig>(this IServiceCollection services, Action<TConfig> configureOptions)
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, Action<TConfig> configureOptions)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration, new()
         {
@@ -43,7 +43,7 @@ namespace AlfabankMerchant.DependencyInjection
             services.AddSingleton<IAlfabankMerchantClient, TClient>();
         }
 
-        public static void AddAlfabankClient<TClient, TConfig>(this IServiceCollection services, IConfiguration configuration)
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, IConfiguration configuration)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration, new()
         {
