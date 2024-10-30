@@ -40,7 +40,7 @@ AlfabankConfiguration cfg = env switch
     _ => throw new NotImplementedException()
 };
 
-var client = new AlfabankRestClient(logger, cfg);
+var client = new AlfabankMerchantRestClient(logger, cfg);
 Services.Init(logger, loggerFactory, cfg, client);
 
 //var newOrder = await CreateOrder(client, 5000);
@@ -53,7 +53,7 @@ var orders = await GetOrders(client);
 
 Console.WriteLine("Exit");
 
-static async Task<RegisterOrderResponse> CreateOrder(AlfabankRestClient client, int amount)
+static async Task<RegisterOrderResponse> CreateOrder(AlfabankMerchantRestClient client, int amount)
 {
     //int orderId = 1;
     var req = new RegisterOrderAction()
@@ -86,7 +86,7 @@ static async Task<RegisterOrderResponse> CreateOrder(AlfabankRestClient client, 
     throw new NotImplementedException();
 }
 
-static async Task<LastOrdersForMerchants> GetOrders(AlfabankRestClient client)
+static async Task<LastOrdersForMerchants> GetOrders(AlfabankMerchantRestClient client)
 {
     var req = new GetLastOrdersForMerchantsAction()
     {
@@ -112,7 +112,7 @@ static async Task<LastOrdersForMerchants> GetOrders(AlfabankRestClient client)
     throw new NotImplementedException();
 };
 
-static async Task<Order> GetOrderExtended(AlfabankRestClient client, string? orderId, string? orderNumber)
+static async Task<Order> GetOrderExtended(AlfabankMerchantRestClient client, string? orderId, string? orderNumber)
 {
     var req = new GetOrderStatusExtendedAction()
     {
@@ -131,7 +131,7 @@ static async Task<Order> GetOrderExtended(AlfabankRestClient client, string? ord
     }
 }
 
-static async Task RefundOrder(AlfabankRestClient client, string orderId)
+static async Task RefundOrder(AlfabankMerchantRestClient client, string orderId)
 {
     var order = await GetOrderExtended(client, orderId, null);
 
