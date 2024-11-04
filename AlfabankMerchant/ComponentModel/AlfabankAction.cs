@@ -22,14 +22,15 @@ namespace AlfabankMerchant.ComponentModel
 
         public virtual string? ActionUrl { get; set; }
 
-        public ActionAuthorizationAttribute? GetAuthorizationConfig() => (ActionAuthorizationAttribute?)Attribute.GetCustomAttribute(GetType(), typeof(ActionAuthorizationAttribute));
+        public ActionAuthorizationAttribute GetAuthorizationConfig() 
+            => (ActionAuthorizationAttribute?)Attribute.GetCustomAttribute(GetType(), typeof(ActionAuthorizationAttribute))
+            ?? throw new InvalidOperationException($"Authorization attribute is not defined for {GetType().Name}.");
 
         /// <summary></summary>
         /// <param name="authorization">Override authorization properties</param>
         /// <returns>Set or parameters to send with request</returns>
-        public Dictionary<string, string> GetActionParams(AuthParams? authorization = null)
+        public Dictionary<string, string> GetActionParams()
         {
-            var authAttribute = GetAuthorizationConfig();
             var queryParams = new Dictionary<string, string>();
 
             var properties = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -38,44 +39,11 @@ namespace AlfabankMerchant.ComponentModel
                 var propAttr = property.GetCustomAttribute<ActionPropertyAttribute>();
                 if (propAttr != null)
                 {
-                    if (authAttribute != null)
-                    {
-                        if (propAttr.Name == "token")
-                        {
-                            if (!authAttribute.Allowed.Contains(AuthMethod.TOKEN))
-                                continue;
-                            if (!string.IsNullOrEmpty(authorization?.Token))
-                            {
-                                if (authAttribute.Priority == AuthMethod.LOGIN && !string.IsNullOrEmpty(authorization.Login))
-                                    continue;
-
-                                queryParams[propAttr.Name] = authorization.Token;
-                                continue;
-                            }
-
-                        }
-                        else if (propAttr.Name == "userName" || propAttr.Name == "password")
-                        {
-                            if (!authAttribute.Allowed.Contains(AuthMethod.LOGIN))
-                                continue;
-                            if (!string.IsNullOrEmpty(authorization?.Login))
-                            {
-                                if (authAttribute.Priority == AuthMethod.TOKEN && !string.IsNullOrEmpty(authorization.Token))
-                                    continue;
-
-                                if (propAttr.Name == "userName")
-                                    queryParams[propAttr.Name] = authorization.Login;
-                                else
-                                    queryParams[propAttr.Name] = authorization.Password ?? "";
-                            }
-                        }
-                    }
-
                     var value = property.GetValue(this);
                     if (value != null)
                     {
-                        if (value is string)
-                            queryParams[propAttr.Name] = (string)value;
+                        if (value is string valueStr)
+                            queryParams[propAttr.Name] = valueStr;
                         else
                             queryParams[propAttr.Name] = value.ToString()!;
                     }

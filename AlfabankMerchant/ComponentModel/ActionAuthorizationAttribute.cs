@@ -11,28 +11,8 @@
         /// </summary>
         public AuthMethod[] Allowed { get; protected set; } = AuthMethod.LOGIN; // By default only login authorization supported
 
-        /// <summary>
-        /// Preferred authorization method for action request
-        /// </summary>
-        public AuthMethod Priority { get; protected set; } = AuthMethod.LOGIN; // Prioritize login and password credentials if multiple
-
         protected ActionAuthorizationAttribute()
         { }
-
-        /// <summary>
-        /// Allow authorization in any available method
-        /// <para>Available methods in <see cref="AuthMethod"/></para>
-        /// </summary>
-        /// <param name="priority">Preferable authorization method for action</param>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public ActionAuthorizationAttribute(string priority = AuthMethod.LOGIN_METHOD)
-        {
-            if (!AuthMethod.Exists(priority))
-                throw new ArgumentOutOfRangeException(nameof(priority));
-
-            Allowed = AuthMethod.AVAILABLE;
-            Priority = AuthMethod.Parse(priority);
-        }
 
         /// <summary>
         /// Allow authorization with defined methods
@@ -42,20 +22,13 @@
         /// <param name="priority">Preferable authorization method for action</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public ActionAuthorizationAttribute(string[] allowed, string priority = AuthMethod.LOGIN_METHOD)
+        public ActionAuthorizationAttribute(string[] allowed)
         {
             if (allowed == null)
                 throw new ArgumentNullException(nameof(allowed));
             if (!allowed.All(x => AuthMethod.Exists(x)))
                 throw new ArgumentOutOfRangeException(nameof(allowed));
 
-            if (priority != null)
-            {
-                if (!AuthMethod.Exists(priority))
-                    throw new ArgumentOutOfRangeException(nameof(priority));
-
-                Priority = AuthMethod.Parse(priority);
-            }
             Allowed = allowed.Select(x => AuthMethod.Parse(x)).ToArray();
         }
     }

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using AlfabankMerchant.Exceptions;
 using AlfabankMerchant.ComponentModel;
 
@@ -20,11 +19,11 @@ namespace AlfabankMerchant.RestClient
         private readonly ILogger? _logger;
         private readonly TConfig _config;
 
-        public readonly Dictionary<string, string> DefaultHeaders = new();
-
         private readonly HttpClient _client;
 
         public string? Merchant => _config.Merchant;
+
+        public readonly Dictionary<string, string> DefaultHeaders = new();
 
         public AlfabankMerchantRestClient(TConfig config)
         {
@@ -51,26 +50,37 @@ namespace AlfabankMerchant.RestClient
         {
             var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
             if (string.IsNullOrEmpty(actionUrl))
-                throw new NotImplementedException("Unable to determine action URL to call for");
+                throw new InvalidOperationException($"Unable to determine URL to call for action {action.GetType().Name}.");
 
-            _logger?.LogTrace("Calling \"{action}\"", actionUrl);
+            var authConf = action.GetAuthorizationConfig();
+            var auth = authentication ?? _config;
 
-            Dictionary<string, string> queryParams = action.GetActionParams(authentication ?? new AuthParams()
+            // TODO: Validate authentication
+            // TODO: Validate action properties
+
+            Dictionary<string, string> queryParams = action.GetActionParams();
+            if (string.IsNullOrEmpty(auth.Login) || string.IsNullOrEmpty(auth.Password))
             {
-                Login = _config.Login,
-                Password = _config.Password,
-                Token = _config.Token
-            });
+                if (!string.IsNullOrEmpty(auth.Token))
+                    queryParams["token"] = auth.Token;
+                else
+                    throw new InvalidOperationException($"Action \"{actionUrl}\" require authorization: {authConf.Allowed.ToString(",")}.");
+            }
+            else
+            {
+                queryParams["userName"] = auth.Login;
+                queryParams["password"] = auth.Password;
+            }
+
             var content = new FormUrlEncodedContent(queryParams);
 
+            _logger?.LogTrace("Calling \"{action}\" for merchant \"{merchant}\".", actionUrl, Merchant);
             var response = await _client.PostAsync(actionUrl, content)
                 .ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync()
                 .ConfigureAwait(false);
         }
-
-        protected static readonly Regex _errorRegex = new Regex("\"errorCode\"\\s*:\\s*\"(\\d+)\"\\s*,\\s*\"errorMessage\"\\s*:\\s*\"(.*?)\"", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary></summary>
         /// <param name="action">Request</param>
@@ -79,9 +89,10 @@ namespace AlfabankMerchant.RestClient
             where TResponse : class
         {
             var respJson = await CallActionRawAsync(action, authentication).ConfigureAwait(false);
-            var errorMatch = _errorRegex.Match(respJson);
-            if (errorMatch.Success && errorMatch.Groups[1].Value != "0")
-                throw new AlfabankException(int.Parse(errorMatch.Groups[1].Value), errorMatch.Groups[2].Value);
+            
+            var resp = JObject.Parse(respJson);
+            if (resp.ContainsKey("errorCode") && resp["errorCode"]!.ToString() != "0")
+                throw new AlfabankException(resp["errorCode"]!.Value<int>(), resp["errorMessage"]!.Value<string>() ?? "");
 
             return JsonConvert.DeserializeObject<TResponse>(respJson)!;
         }
