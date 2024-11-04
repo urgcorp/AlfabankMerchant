@@ -8,7 +8,7 @@ namespace AlfabankMerchant.Actions
     /// Запрос получения статистики по платежам за определённый период
     /// </summary>
     [LoginAuthorization]
-    [RestUrl("rest/getLastOrdersForMerchants.do")]
+    [RestUrl(AlfabankRestActions.GetLastOrdersForMerchants)]
     public sealed class GetLastOrdersForMerchantsAction : AlfabankAction<LastOrdersForMerchants>
     {
         /// <summary>
@@ -78,9 +78,9 @@ namespace AlfabankMerchant.Actions
         private string? MerchantsParam => Merchants != null ? string.Join(",", Merchants) : null;
 
         /// <summary>
-        /// · true – поиск заказов, дата создания которых попадает в заданный период.
-        /// <para></para>· false – поиск заказов, дата оплаты которых попадает в заданный период (таким образом, в отчёте не могут присутствовать заказы в статусе CREATED и DECLINED).
-        /// <para></para>Значение по умолчанию – false .
+        /// true – поиск заказов, дата создания которых попадает в заданный период
+        /// <para></para>false – поиск заказов, дата оплаты которых попадает в заданный период (таким образом, в отчёте не могут присутствовать заказы в статусе CREATED и DECLINED).
+        /// <para></para>Значение по умолчанию – false
         /// </summary>
         public bool? SearchByCreatedDate { get; set; }
 

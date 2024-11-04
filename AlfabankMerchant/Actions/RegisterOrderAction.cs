@@ -8,7 +8,7 @@ namespace AlfabankMerchant.Actions
     /// Запрос регистрации заказа
     /// </summary>
     [LoginAuthorization(true)]
-    [RestUrl("rest/register.do")]
+    [RestUrl(AlfabankRestActions.RegisterOrder)]
     public sealed class RegisterOrderAction : AlfabankAction<RegisterOrderResponse>
     {
         /// <summary>

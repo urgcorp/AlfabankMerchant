@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AlfabankMerchant.ComponentModel;
+﻿using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.Actions
 {
@@ -13,7 +10,7 @@ namespace AlfabankMerchant.Actions
     /// указанные в настройках личного кабинета
     /// </summary>
     [LoginAuthorization(true)]
-    [RestUrl("rest/registerPreAuth.do")]
+    [RestUrl(AlfabankRestActions.RegisterOrderPreAuth)]
     public class RegisterOrderPreAuthAction : AlfabankAction
     {
 

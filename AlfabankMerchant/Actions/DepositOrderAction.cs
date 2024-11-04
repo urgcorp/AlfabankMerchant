@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AlfabankMerchant.ComponentModel;
+﻿using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.Actions
 {
@@ -10,7 +7,7 @@ namespace AlfabankMerchant.Actions
     /// <para>Данную операцию можно осуществлять, если есть соответствующие права в системе</para>
     /// </summary>
     [LoginAuthorization]
-    [RestUrl("rest/deposit.do")]
+    [RestUrl(AlfabankRestActions.DepositOrder)]
     public class DepositOrderAction : AlfabankAction
     {
     }

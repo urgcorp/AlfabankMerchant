@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AlfabankMerchant.ComponentModel;
+﻿using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.Actions
 {
@@ -12,7 +9,7 @@ namespace AlfabankMerchant.Actions
     /// <para>Данная функция доступна магазинам по согласованию с Банком. Для выполнения операции отмены пользователь должен обладать соответствующими правами</para>
     /// </summary>
     [LoginAuthorization(true)]
-    [RestUrl("rest/reverse.do")]
+    [RestUrl(AlfabankRestActions.ReverseOrder)]
     public class ReverseOrderAction : AlfabankAction
     {
         /// <summary>

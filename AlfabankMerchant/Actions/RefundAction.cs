@@ -12,7 +12,7 @@ namespace AlfabankMerchant.Actions
     /// <para>Для выполнения операции возврата необходимоналичие соответствующих права в системе</para>
     /// </summary>
     [LoginAuthorization]
-    [RestUrl("rest/refund.do")]
+    [RestUrl(AlfabankRestActions.Refund)]
     public sealed class RefundAction : AlfabankAction<RefundResponse>
     {
         /// <summary>

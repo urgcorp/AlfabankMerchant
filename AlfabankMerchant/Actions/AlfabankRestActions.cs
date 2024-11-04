@@ -3,25 +3,19 @@
     public static class AlfabankRestActions
     {
         /// <summary>
-        ///  Запросы, используемые при двухстадийной оплате
+        /// Регистрация заказа с предавторизацией
         /// </summary>
-        public static class PreAuth
-        {
-            /// <summary>
-            /// Регистрация заказа с предавторизацией
-            /// </summary>
-            public const string RegisterOrderPreAuth = "rest/registerPreAuth.do";
-
-            /// <summary>
-            /// Запрос завершения оплаты заказа
-            /// </summary>
-            public const string DepositOrder = "rest/deposit.do";
-        }
+        public const string RegisterOrderPreAuth = "rest/registerPreAuth.do";
 
         /// <summary>
         /// Регистрация заказа
         /// </summary>
         public const string RegisterOrder = "rest/register.do";
+
+        /// <summary>
+        /// Запрос завершения оплаты заказа
+        /// </summary>
+        public const string DepositOrder = "rest/deposit.do";
 
         /// <summary>
         /// Запрос отмены оплаты заказа
@@ -103,10 +97,10 @@
         /// </summary>
         public const string RecurrentPayment = "recurrentPayment.do";
 
-        public static class SBP
+        public static class SBP_C2B
         {
             /// <summary>
-            /// Запрос получения QR кода по СБП
+            /// Запрос получения зарегистрированного в СБП QR-кода
             /// </summary>
             public const string GetPaymentQr = "rest/sbp/c2b/qr/dynamic/get.do";
 
