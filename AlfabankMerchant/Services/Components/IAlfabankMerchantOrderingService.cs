@@ -22,22 +22,6 @@ namespace AlfabankMerchant.Services.Components
         Task<RegisterOrderResponse> RegisterOrderAsync(RegisterOrderAction action, AuthParams? auth = null);
 
         /// <summary>
-        /// Register new order
-        /// </summary>
-        /// <param name="orderNumber">Order number within the shop</param>
-        /// <param name="currency">Payment currency</param>
-        /// <param name="amount">Payment amount in cents or kopecks</param>
-        /// <param name="returnUrl">Address where client will be redirected after successfull payment (like https://example.com/payment_success)</param>
-        /// <param name="description">Free form order description</param>
-        /// <param name="email">Payer email</param>
-        /// <param name="phone">Payer phone number</param>
-        /// <param name="clientId">Client ID within shop system</param>
-        /// <param name="clientIp">Client IP address</param>
-        /// <param name="auth">Override authentication params</param>
-        Task<RegisterOrderResponse> RegisterOrderAsync(string orderNumber, Currency currency, int amount, string returnUrl, string? description, AuthParams? auth = null,
-            string? email = null, string? phone = null, string? clientId = null, string? clientIp = null);
-
-        /// <summary>
         /// Запрос состояния заказа
         /// </summary>
         Task<Order> GetOrderStatusAsync(GetOrderStatusAction action, AuthParams? auth = null);
@@ -73,13 +57,4 @@ namespace AlfabankMerchant.Services.Components
         /// </summary>
         Task AddOrderParamsAsync(object action, AuthParams? auth = null);
     }
-
-    public interface IAlfabankOrderingService<TConfig, TClient> : IAlfabankMerchantOrderingService
-        where TConfig : AlfabankConfiguration
-        where TClient : IAlfabankMerchantClient<TConfig>
-    { }
-
-    public interface IAlfabankOrderingService<TClient> : IAlfabankOrderingService<AlfabankConfiguration, TClient>
-        where TClient : IAlfabankMerchantClient<AlfabankConfiguration>
-    { }
 }
