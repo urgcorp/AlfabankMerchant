@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AlfabankMerchant.RestClient\AlfabankMerchant.RestClient.csproj" />
-    <ProjectReference Include="..\AlfabankMerchant.Services\AlfabankMerchant.Services.csproj" />
     <ProjectReference Include="..\AlfabankMerchant.WSClient\AlfabankMerchant.WSClient.csproj" />
   </ItemGroup>
 

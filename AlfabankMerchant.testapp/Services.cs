@@ -15,7 +15,7 @@ namespace AlfabankMerchant.testapp
         private static AlfabankConfiguration _config;
         private static IAlfabankMerchantClient _client;
 
-        public static IAlfabankMerchantOrderingService OrderService { get; private set; }
+        // public static IAlfabankMerchantOrderingService OrderService { get; private set; }
 
         public static void Init<TConfig, TClient>(ILogger logger, ILoggerFactory loggerFactory, TConfig cfg, TClient abClient)
             where TConfig : AlfabankConfiguration
@@ -25,9 +25,6 @@ namespace AlfabankMerchant.testapp
             _loggerFactory = loggerFactory;
             _config = cfg;
             _client = abClient;
-
-            var oSvcLogger = _loggerFactory.CreateLogger<AlfabankMerchantOrderingService<TConfig, TClient>>();
-            OrderService = new AlfabankMerchantOrderingService<TConfig, TClient>(oSvcLogger, abClient);
         }
     }
 }
