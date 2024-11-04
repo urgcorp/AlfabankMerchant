@@ -10,12 +10,12 @@ namespace AlfabankMerchant.Services
         IAlfabankMerchantSBPService
     { }
 
-    public interface IAlfabankService<TConfig, TClient> : IAlfabankMerchantService
+    public interface IAlfabankMerchantService<TConfig, TClient> : IAlfabankMerchantService
         where TConfig : AlfabankConfiguration
         where TClient : IAlfabankMerchantClient<TConfig>
     { }
 
-    public interface IAlfabankService<TClient> : IAlfabankService<AlfabankConfiguration, TClient>
+    public interface IAlfabankMerchantService<TClient> : IAlfabankMerchantService<AlfabankConfiguration, TClient>
         where TClient : IAlfabankMerchantClient<AlfabankConfiguration>
     { }
 }
