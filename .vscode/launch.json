@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+         {
+             "name": "testapp [TEST]",
+             "type": "coreclr",
+             "request": "launch",
+             "preLaunchTask": "build all",
+             "cwd": "${workspaceFolder}/AlfabankMerchant.testapp",
+             // If you have changed target frameworks, make sure to update the program path.
+             "program": "${workspaceFolder}/AlfabankMerchant.testapp/bin/Debug/net6.0/AlfabankMerchant.testapp.dll",
+             "launchSettingsProfile": "testapp: TEST"
+         },
+         {
+            "name": "testapp [PROD]",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build all",
+            "cwd": "${workspaceFolder}/AlfabankMerchant.testapp",
+            // If you have changed target frameworks, make sure to update the program path.
+            "program": "${workspaceFolder}/AlfabankMerchant.testapp/bin/Debug/net6.0/AlfabankMerchant.testapp.dll",
+            "launchSettingsProfile": "testapp: PROD"
+        }
+     ]
+ }
