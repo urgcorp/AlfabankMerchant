@@ -46,7 +46,7 @@ namespace AlfabankMerchant.RestClient
             };
         }
 
-        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null)
+        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
         {
             var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
             if (string.IsNullOrEmpty(actionUrl))
@@ -75,20 +75,21 @@ namespace AlfabankMerchant.RestClient
             var content = new FormUrlEncodedContent(queryParams);
 
             _logger?.LogTrace("Calling \"{action}\" for merchant \"{merchant}\".", actionUrl, Merchant);
-            var response = await _client.PostAsync(actionUrl, content)
+            var response = await _client.PostAsync(actionUrl, content, cancellationToken)
                 .ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync()
+            return await response.Content.ReadAsStringAsync(cancellationToken)
                 .ConfigureAwait(false);
         }
 
         /// <summary></summary>
         /// <param name="action">Request</param>
         /// <exception cref="AlfabankException"></exception>
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null)
+        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
             where TResponse : class
         {
-            var respJson = await CallActionRawAsync(action, authentication).ConfigureAwait(false);
+            var respJson = await CallActionRawAsync(action, authentication, cancellationToken)
+                .ConfigureAwait(false);
             
             var resp = JObject.Parse(respJson);
             if (resp.ContainsKey("errorCode") && resp["errorCode"]!.ToString() != "0")

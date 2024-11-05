@@ -12,7 +12,7 @@ namespace AlfabankMerchant
         /// <param name="action">Action request</param>
         /// <returns>Deserialized response</returns>
         /// <exception cref="AlfabankException"></exception>
-        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null)
+        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
             where TResponse : class;
     }
 

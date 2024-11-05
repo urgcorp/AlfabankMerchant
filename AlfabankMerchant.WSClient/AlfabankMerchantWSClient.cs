@@ -48,7 +48,7 @@ namespace AlfabankMerchant.WSClient
             };
         }
 
-        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null)
+        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
         {
             var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
             if (string.IsNullOrEmpty(actionUrl))
@@ -58,10 +58,10 @@ namespace AlfabankMerchant.WSClient
             throw new NotImplementedException();
         }
 
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null)
+        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
             where TResponse : class
         {
-            var respBody = await CallActionAsync(action, authentication)
+            var respBody = await CallActionAsync(action, authentication, cancellationToken)
                 .ConfigureAwait(false);
 
             throw new NotImplementedException();

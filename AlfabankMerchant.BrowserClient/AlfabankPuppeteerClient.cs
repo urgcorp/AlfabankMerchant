@@ -30,12 +30,12 @@ namespace AlfabankMerchant.BrowserClient
             _browserProvider = _services.GetService<IBrowserProvider>() ?? throw new NotImplementedException("TODO: create default provider");
         }
 
-        public Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null)
+        public Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null)
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
             where TResponse : class
         {
             throw new NotImplementedException();
