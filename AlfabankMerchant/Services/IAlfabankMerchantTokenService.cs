@@ -13,13 +13,13 @@ namespace AlfabankMerchant.Services
         /// <summary>
         /// Register new order
         /// </summary>
-        Task<RegisterOrderResponse> RegisterOrderAsync(RegisterOrderAction action, AuthParams? auth = null);
+        Task<RegisterOrderResponse> RegisterOrderAsync(RegisterOrderAction action, AlfabankConfiguration? configuration = null);
 
 
         /// <summary>
         /// Расширенный запрос состояния заказа
         /// </summary>
-        Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AuthParams? auth = null);
+        Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AlfabankConfiguration? configuration = null);
     }
 
     public interface IAlfabankMerchantTokenService<TConfig, TClient> : IAlfabankMerchantTokenService

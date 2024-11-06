@@ -7,26 +7,26 @@ namespace AlfabankMerchant.Services.Components
         /// <summary>
         /// Запрос списка связок клиента
         /// </summary>
-        Task GetBindingsAsync(object action, AuthParams? authParams = null);
+        Task GetBindingsAsync(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос списка связок определённой банковской карты
         /// </summary>
-        Task GetBindingsByCardOrIdAsync(object action, AuthParams? authParams = null);
+        Task GetBindingsByCardOrIdAsync(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос активации связки
         /// </summary>
-        Task BindCardAsync(object action, AuthParams? authParams = null);
+        Task BindCardAsync(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос деактивации связки
         /// </summary>
-        Task UnbindCardAsync(object action, AuthParams? authParams = null);
+        Task UnbindCardAsync(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос изменения срока действия связки
         /// </summary>
-        Task ExtendBindingAsync(object action, AuthParams? authParams = null);
+        Task ExtendBindingAsync(object action, AlfabankConfiguration? configuration = null);
     }
 }

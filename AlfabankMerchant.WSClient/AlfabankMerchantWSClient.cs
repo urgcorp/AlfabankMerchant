@@ -19,7 +19,7 @@ namespace AlfabankMerchant.WSClient
         public const string REQUESTS_PATH = "soap/merchant-ws";
 
         private readonly ILogger? _logger;
-        private readonly TConfig _config;
+        private readonly TConfig? _config;
 
         public readonly Dictionary<string, string> DefaultHeaders = new();
 
@@ -48,7 +48,7 @@ namespace AlfabankMerchant.WSClient
             };
         }
 
-        public async Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
+        public async Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
         {
             var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
             if (string.IsNullOrEmpty(actionUrl))
@@ -58,13 +58,16 @@ namespace AlfabankMerchant.WSClient
             throw new NotImplementedException();
         }
 
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
+        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
             where TResponse : class
         {
-            var respBody = await CallActionAsync(action, authentication, cancellationToken)
+            var respBody = await CallActionAsync(action, configuration, cancellationToken)
                 .ConfigureAwait(false);
 
             throw new NotImplementedException();
         }
+
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, CancellationToken cancellationToken = default) where TResponse : class
+            => CallActionAsync(action, null, cancellationToken);
     }
 }

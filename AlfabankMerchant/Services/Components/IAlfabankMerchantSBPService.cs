@@ -7,11 +7,11 @@ namespace AlfabankMerchant.Services.Components
         /// <summary>
         /// Запрос получения QR кода по СБП
         /// </summary>
-        Task GetQrCode(object action, AuthParams? authParams = null);
+        Task GetQrCode(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос получения статуса платежа по QR коду по СБП
         /// </summary>
-        Task GetQrCodePaymentStatus(object action, AuthParams? authParams = null);
+        Task GetQrCodePaymentStatus(object action, AlfabankConfiguration? configuration = null);
     }
 }

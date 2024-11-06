@@ -14,47 +14,47 @@ namespace AlfabankMerchant.Services.Components
         /// <summary>
         /// Регистрация заказа с предавторизацией
         /// </summary>
-        Task RegisterOrderPreAuthAsync(RegisterOrderPreAuthAction action, AuthParams? auth = null);
+        Task RegisterOrderPreAuthAsync(RegisterOrderPreAuthAction action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Register new order
         /// </summary>
-        Task<RegisterOrderResponse> RegisterOrderAsync(RegisterOrderAction action, AuthParams? auth = null);
+        Task<RegisterOrderResponse> RegisterOrderAsync(RegisterOrderAction action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос состояния заказа
         /// </summary>
-        Task<Order> GetOrderStatusAsync(GetOrderStatusAction action, AuthParams? auth = null);
+        Task<Order> GetOrderStatusAsync(GetOrderStatusAction action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Расширенный запрос состояния заказа
         /// </summary>
-        Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AuthParams? auth = null);
+        Task<Order> GetOrderStatusExtendedAsync(GetOrderStatusExtendedAction action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос статистики по платежам за период
         /// </summary>
-        Task<LastOrdersForMerchants> GetLastOrdersForMerchantAsync(GetLastOrdersForMerchantsAction action, AuthParams? auth = null);
+        Task<LastOrdersForMerchants> GetLastOrdersForMerchantAsync(GetLastOrdersForMerchantsAction action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос отмены оплаты заказа
         /// </summary>
-        Task ReverseOrderAsync(object action, AuthParams? auth = null);
+        Task ReverseOrderAsync(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// <para>Запрос завершения оплаты заказа</para>
         /// Списание суммы предавторизации (полной или частичной)
         /// </summary>
-        Task DepositOrderAsync(DepositOrderAction action, AuthParams? auth = null);
+        Task DepositOrderAsync(DepositOrderAction action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос возврата средств оплаты заказа
         /// </summary>
-        Task RefundOrderAsync(object action, AuthParams? auth = null);
+        Task RefundOrderAsync(object action, AlfabankConfiguration? configuration = null);
 
         /// <summary>
         /// Запрос добавления дополнительных параметров к заказу
         /// </summary>
-        Task AddOrderParamsAsync(object action, AuthParams? auth = null);
+        Task AddOrderParamsAsync(object action, AlfabankConfiguration? configuration = null);
     }
 }

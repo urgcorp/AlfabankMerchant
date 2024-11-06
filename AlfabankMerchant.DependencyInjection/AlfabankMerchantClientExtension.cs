@@ -33,6 +33,10 @@ namespace AlfabankMerchant.DependencyInjection
             services.AddSingleton<IAlfabankMerchantClient, TClient>();
         }
 
+        /// <summary>
+        /// Register alfabank client and configuration as singletone
+        /// </summary>
+        /// <param name="configureOptions">Client configuration definition</param>
         public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, Action<TConfig> configureOptions)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration, new()
@@ -43,12 +47,26 @@ namespace AlfabankMerchant.DependencyInjection
             services.AddSingleton<IAlfabankMerchantClient, TClient>();
         }
 
+        /// <summary>
+        /// Register alfabank client and configuration as singletone
+        /// </summary>
+        /// <param name="configuration">Configuration section with configuration data</param>
         public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, IConfiguration configuration)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration, new()
         {
             services.Configure<TConfig>(configuration);
             services.AddSingleton(s => s.GetRequiredService<IOptions<TConfig>>().Value);
+            services.AddSingleton<IAlfabankMerchantClient, TClient>();
+        }
+
+        /// <summary>
+        /// Register alfabank client as sigleton without own configuration
+        /// </summary>
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services)
+            where TClient : class, IAlfabankMerchantClient<TConfig>
+            where TConfig : AlfabankConfiguration
+        {
             services.AddSingleton<IAlfabankMerchantClient, TClient>();
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace AlfabankMerchant
 {
-    public class AlfabankConfiguration : AuthParams
+    public class AlfabankConfiguration
     {
         /// <summary>
         /// Base server URL to send requests
@@ -16,13 +16,27 @@
 
         public string? Password { get; set; }
 
+        /// <summary>
+        /// Merchant payment token
+        /// </summary>
+        public string? Token { get; set; }
+
         public AlfabankConfiguration()
         { }
 
-        public AlfabankConfiguration(string basePath, string merchant)
+        public AlfabankConfiguration(string basePath, string merchant, string login, string password)
         {
             BasePath = basePath;
             Merchant = merchant;
+            Login = login;
+            Password = password;
+        }
+
+        public AlfabankConfiguration(string basePath, string merchant, string token)
+        {
+            BasePath = basePath;
+            Merchant = merchant;
+            Token = token;
         }
 
         public AlfabankConfiguration(string basePath)
