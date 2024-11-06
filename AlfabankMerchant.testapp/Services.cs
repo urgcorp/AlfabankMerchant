@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.Extensions.Logging;
-using AlfabankMerchant.Services;
-using AlfabankMerchant.Services.Components;
 
 namespace AlfabankMerchant.testapp
 {
@@ -19,7 +16,7 @@ namespace AlfabankMerchant.testapp
 
         public static void Init<TConfig, TClient>(ILogger logger, ILoggerFactory loggerFactory, TConfig cfg, TClient abClient)
             where TConfig : AlfabankConfiguration
-            where TClient : class, IAlfabankMerchantClient<TConfig>
+            where TClient : class, IAlfabankMerchantClient
         {
             _logger = logger;
             _loggerFactory = loggerFactory;

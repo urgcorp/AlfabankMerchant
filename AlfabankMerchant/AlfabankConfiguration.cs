@@ -1,4 +1,6 @@
-﻿namespace AlfabankMerchant
+﻿using AlfabankMerchant.ComponentModel;
+
+namespace AlfabankMerchant
 {
     public class AlfabankConfiguration
     {
@@ -21,8 +23,11 @@
         /// </summary>
         public string? Token { get; set; }
 
-        public AlfabankConfiguration()
-        { }
+        private AuthMethod _authMethod;
+        /// <summary>
+        /// Authorization method provided by this configuration
+        /// </summary>
+        public AuthMethod AuthMethod => _authMethod ?? AuthMethod.UNDEFINED;
 
         public AlfabankConfiguration(string basePath, string merchant, string login, string password)
         {
@@ -30,6 +35,7 @@
             Merchant = merchant;
             Login = login;
             Password = password;
+            _authMethod = AuthMethod.LOGIN;
         }
 
         public AlfabankConfiguration(string basePath, string merchant, string token)
@@ -37,11 +43,17 @@
             BasePath = basePath;
             Merchant = merchant;
             Token = token;
+            _authMethod = AuthMethod.TOKEN;
         }
 
         public AlfabankConfiguration(string basePath)
         {
             BasePath = basePath;
         }
+
+        public AlfabankConfiguration()
+        { }
+
+        public void DefineAuthMethod(AuthMethod authMethod) => _authMethod = authMethod;
     }
 }

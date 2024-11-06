@@ -25,7 +25,7 @@ namespace AlfabankMerchant.WSClient
 
         private readonly HttpClient _client;
 
-        public string? Merchant => _config.Merchant;
+        public string? Merchant => _config?.Merchant;
 
         public AlfabankMerchantWSClient(TConfig config)
         {
@@ -58,8 +58,7 @@ namespace AlfabankMerchant.WSClient
             throw new NotImplementedException();
         }
 
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
-            where TResponse : class
+        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig configuration, CancellationToken cancellationToken = default) where TResponse : class
         {
             var respBody = await CallActionAsync(action, configuration, cancellationToken)
                 .ConfigureAwait(false);
@@ -67,7 +66,11 @@ namespace AlfabankMerchant.WSClient
             throw new NotImplementedException();
         }
 
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+            where TResponse : class
+            => CallActionAsync(action, configuration, cancellationToken);
+
         public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, CancellationToken cancellationToken = default) where TResponse : class
-            => CallActionAsync(action, null, cancellationToken);
+            => CallActionAsync(action, _config, cancellationToken);
     }
 }

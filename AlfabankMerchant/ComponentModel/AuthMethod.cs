@@ -5,16 +5,20 @@
     /// </summary>
     public sealed class AuthMethod : StringEnum<AuthMethod>
     {
-        public const string NOAUTH_METHOD = "NONE";
+        public const string UNDEFINED_METHOD = "UNDEFINED";
+
+        public const string PUBLIC_METHOD = "NONE";
 
         public const string LOGIN_METHOD = "LOGIN";
 
         public const string TOKEN_METHOD = "TOKEN";
 
+        public static readonly AuthMethod UNDEFINED = RegisterEnum("UNDEFINED");
+
         /// <summary>
         /// Without authorization
         /// </summary>
-        public static readonly AuthMethod NONE = RegisterEnum(NOAUTH_METHOD);
+        public static readonly AuthMethod PUBLIC = RegisterEnum(PUBLIC_METHOD);
 
         /// <summary>
         /// Login and password from alfabank

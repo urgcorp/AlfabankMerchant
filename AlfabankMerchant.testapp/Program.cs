@@ -40,20 +40,20 @@ AlfabankConfiguration cfg = env switch
     _ => throw new NotImplementedException()
 };
 
-var client = new AlfabankMerchantRestClient(logger, cfg);
+var client = new AlfabankMerchantRestClient(logger);
 Services.Init(logger, loggerFactory, cfg, client);
 
-//var newOrder = await CreateOrder(client, 5000);
+//var newOrder = await CreateOrder(client, cfg, 5000);
 
-var orders = await GetOrders(client);
+var orders = await GetOrders(client, cfg);
 
-//var order = await GetOrderExtended(client, null, "");
+//var order = await GetOrderExtended(client, cfg, null, "");
 
-//await RefundOrder(client, "");
+//await RefundOrder(client, cfg, "");
 
 Console.WriteLine("Exit");
 
-static async Task<RegisterOrderResponse> CreateOrder(AlfabankMerchantRestClient client, int amount)
+static async Task<RegisterOrderResponse> CreateOrder(AlfabankMerchantRestClient client, AlfabankConfiguration config, int amount)
 {
     //int orderId = 1;
     var req = new RegisterOrderAction()
@@ -66,41 +66,40 @@ static async Task<RegisterOrderResponse> CreateOrder(AlfabankMerchantRestClient 
         DynamicCallbackUrl = ""
     };
 
-    var orders = await Services.OrderService.RegisterOrderAsync(req, null);
-
-    //if (req.ValidateActionParams(out var errors))
-    //{
-    //    try
-    //    {
-    //        var res = await client.CallActionAsync(req);
-    //        Console.WriteLine($"{res.OrderId} - {res.FormUrl}");
-    //        return res;
-    //    }
-    //    catch (AlfabankException abEx)
-    //    {
-    //        Console.WriteLine($"Error: {abEx.Message}");
-    //        throw;
-    //    }
-    //}
+    if (req.ValidateActionParams(out var errors))
+    {
+        try
+        {
+            var res = await client.CallActionAsync(req, config);
+            Console.WriteLine($"{res.OrderId} - {res.FormUrl}");
+            return res;
+        }
+        catch (AlfabankException abEx)
+        {
+            Console.WriteLine($"Error: {abEx.Message}");
+            throw;
+        }
+    }
 
     throw new NotImplementedException();
 }
 
-static async Task<LastOrdersForMerchants> GetOrders(AlfabankMerchantRestClient client)
+static async Task<LastOrdersForMerchants> GetOrders(AlfabankMerchantRestClient client, AlfabankConfiguration config)
 {
     var req = new GetLastOrdersForMerchantsAction()
     {
         Size = 100,
         FromDate = DateTime.Today.AddDays(-30),
         ToDate = DateTime.Today.AddDays(1),
-        TransactionStates = TransactionState.ALL
+        TransactionStates = TransactionState.ALL,
+        SearchByCreatedDate = true
     };
 
     if (req.ValidateActionParams(out var errors))
     {
         try
         {
-            var res = await client.CallActionAsync(req);
+            var res = await client.CallActionAsync(req, config);
             return res;
         }
         catch (Exception ex)
@@ -112,17 +111,17 @@ static async Task<LastOrdersForMerchants> GetOrders(AlfabankMerchantRestClient c
     throw new NotImplementedException();
 };
 
-static async Task<Order> GetOrderExtended(AlfabankMerchantRestClient client, string? orderId, string? orderNumber)
+static async Task<Order> GetOrderExtended(AlfabankMerchantRestClient client, AlfabankConfiguration config, string? orderId, string? orderNumber)
 {
     var req = new GetOrderStatusExtendedAction()
     {
         OrderId = orderId,
-        OrderNumber = orderNumber
+        OrderNumber = orderNumber,
     };
 
     try
     {
-        var res = await client.CallActionAsync(req);
+        var res = await client.CallActionAsync(req, config);
         return res;
     }
     catch (Exception ex)
@@ -131,9 +130,9 @@ static async Task<Order> GetOrderExtended(AlfabankMerchantRestClient client, str
     }
 }
 
-static async Task RefundOrder(AlfabankMerchantRestClient client, string orderId)
+static async Task RefundOrder(AlfabankMerchantRestClient client, AlfabankConfiguration config, string orderId)
 {
-    var order = await GetOrderExtended(client, orderId, null);
+    var order = await GetOrderExtended(client, config, orderId, null);
 
     var req = new RefundAction()
     {
@@ -143,7 +142,7 @@ static async Task RefundOrder(AlfabankMerchantRestClient client, string orderId)
 
     try
     {
-        await client.CallActionAsync(req);
+        await client.CallActionAsync(req, config);
     }
     catch (Exception ex)
     {

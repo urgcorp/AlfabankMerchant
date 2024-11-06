@@ -4,7 +4,7 @@ using AlfabankMerchant.Exceptions;
 
 namespace AlfabankMerchant
 {
-    public interface IAlfabankMerchantClient : IAlfabankMerchant
+    public interface IAlfabankMerchantClient
     {
         /// <summary>
         /// Make call to server
@@ -13,13 +13,23 @@ namespace AlfabankMerchant
         /// <param name="configuration">Configuration to use with this request</param>
         /// <returns>Deserialized response</returns>
         /// <exception cref="AlfabankException"></exception>
-        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration? configuration = null, CancellationToken cancellationToken = default)
+        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
             where TResponse : class;
     }
 
-    public interface IAlfabankMerchantClient<TConfig> : IAlfabankMerchantClient
+    public interface IAlfabankMerchantClient<TConfig> : IAlfabankMerchantClient, IAlfabankMerchant
         where TConfig : AlfabankConfiguration
     {
+        /// <summary>
+        /// Make call to server
+        /// </summary>
+        /// <param name="action">Action request</param>
+        /// <param name="configuration">Configuration to use with this request</param>
+        /// <returns>Deserialized response</returns>
+        /// <exception cref="AlfabankException"></exception>
+        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig configuration, CancellationToken cancellationToken = default)
+            where TResponse : class;
+
         /// <summary>
         /// Make call to server
         /// </summary>

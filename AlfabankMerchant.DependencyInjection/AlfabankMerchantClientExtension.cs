@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.DependencyInjection
 {
@@ -18,6 +19,7 @@ namespace AlfabankMerchant.DependencyInjection
         {
             services.AddSingleton(config);
             services.AddSingleton(client);
+            services.AddSingleton<IAlfabankMerchantClient<TConfig>>(s => s.GetRequiredService<TClient>());
             services.AddSingleton<IAlfabankMerchantClient>(s => s.GetRequiredService<TClient>());
         }
 
@@ -30,44 +32,76 @@ namespace AlfabankMerchant.DependencyInjection
             where TConfig : AlfabankConfiguration
         {
             services.AddSingleton(config);
-            services.AddSingleton<IAlfabankMerchantClient, TClient>();
+            services.AddSingleton<TClient>();
+            services.AddSingleton<IAlfabankMerchantClient<TConfig>, TClient>(s => s.GetRequiredService<TClient>());
+            services.AddSingleton<IAlfabankMerchantClient>(s => s.GetRequiredService<TClient>());
         }
 
         /// <summary>
         /// Register alfabank client and configuration as singletone
         /// </summary>
         /// <param name="configureOptions">Client configuration definition</param>
-        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, Action<TConfig> configureOptions)
+        /// <param name="authMethod">Authorization method that expected to be provided by this configuration</param>
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, Action<TConfig> configureOptions, AuthMethod? authMethod = null)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration, new()
         {
             var cfg = new TConfig();
+            if (authMethod != null)
+                cfg.DefineAuthMethod(authMethod);
+            else
+                cfg.DefineAuthMethod(AuthMethod.UNDEFINED);
+
             configureOptions(cfg);
             services.AddSingleton(cfg);
-            services.AddSingleton<IAlfabankMerchantClient, TClient>();
+            services.AddSingleton<TClient>();
+            services.AddSingleton<IAlfabankMerchantClient<TConfig>>(s => s.GetRequiredService<TClient>());
+            services.AddSingleton<IAlfabankMerchantClient>(s => s.GetRequiredService<TClient>());
         }
 
         /// <summary>
         /// Register alfabank client and configuration as singletone
         /// </summary>
         /// <param name="configuration">Configuration section with configuration data</param>
-        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, IConfiguration configuration)
+        /// <param name="authMethod">Authorization method that expected to be provided by this configuration</param>
+        public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, IConfiguration configuration, AuthMethod? authMethod = null)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration, new()
         {
             services.Configure<TConfig>(configuration);
+            services.PostConfigure<TConfig>(cfg =>
+            {
+                if (authMethod != null)
+                    cfg.DefineAuthMethod(authMethod);
+                else
+                    cfg.DefineAuthMethod(AuthMethod.UNDEFINED);
+            });
             services.AddSingleton(s => s.GetRequiredService<IOptions<TConfig>>().Value);
-            services.AddSingleton<IAlfabankMerchantClient, TClient>();
+            services.AddSingleton<TClient>();
+            services.AddSingleton<IAlfabankMerchantClient<TConfig>, TClient>(s => s.GetRequiredService<TClient>());
+            services.AddSingleton<IAlfabankMerchantClient>(s => s.GetRequiredService<TClient>());
         }
 
         /// <summary>
-        /// Register alfabank client as sigleton without own configuration
+        /// Register alfabank client for certain configuration type as sigleton without own configuration
         /// </summary>
         public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services)
             where TClient : class, IAlfabankMerchantClient<TConfig>
             where TConfig : AlfabankConfiguration
         {
-            services.AddSingleton<IAlfabankMerchantClient, TClient>();
+            services.AddSingleton<TClient>();
+            services.AddSingleton<IAlfabankMerchantClient<TConfig>, TClient>(s => s.GetRequiredService<TClient>());
+            services.AddSingleton<IAlfabankMerchantClient>(s => s.GetRequiredService<TClient>());
+        }
+
+        /// <summary>
+        /// Registre alfabank client with no configuration as singletone
+        /// </summary>
+        public static void AddAlfabankMerchantClient<TClient>(this IServiceCollection services)
+            where TClient : class, IAlfabankMerchantClient
+        {
+            services.AddSingleton<TClient>();
+            services.AddSingleton<IAlfabankMerchantClient>(s => s.GetRequiredService<TClient>());
         }
     }
 }
