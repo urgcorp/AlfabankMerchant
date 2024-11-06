@@ -33,15 +33,35 @@ namespace AlfabankMerchant.RestClient
             _client = new();
         }
 
-        public async Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+        protected async Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration configuration, CancellationToken cancellationToken)
         {
+            var content = new FormUrlEncodedContent(queryParams);
+            if (!string.IsNullOrEmpty(configuration.Merchant))
+                _logger?.LogTrace("Calling \"{action}\" for merchant \"{merchant}\".", actionUrl, configuration.Merchant);
+            else
+                _logger?.LogTrace("Calling \"{action}\".", actionUrl);
+
+            var callUrl = new Uri(new Uri(configuration.BasePath), actionUrl);
+            HttpResponseMessage? response;
+            response = await _client.PostAsync(callUrl, content, cancellationToken)
+                .ConfigureAwait(false);
+
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        public Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
             if (configuration == null)
-                throw ConfigRequiredException();
+                throw new ArgumentNullException(nameof(configuration));
             if (string.IsNullOrEmpty(configuration.BasePath))
-                throw new InvalidOperationException("Client gateway URL not provided. Define client BasePath in configuration.");
+                throw new ArgumentException("Client gateway URL not provided. Define client BasePath in configuration.", nameof(configuration));
             var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
             if (string.IsNullOrEmpty(actionUrl))
-                throw new InvalidOperationException($"Unable to determine URL to call for action {action.GetType().Name}.");
+                throw new ArgumentException($"Unable to determine URL to call for action {action.GetType().Name}.", nameof(action));
             var actionAuth = action.GetAuthorizationConfig();
 
             // TODO: Validate authentication
@@ -60,26 +80,13 @@ namespace AlfabankMerchant.RestClient
                 queryParams["password"] = configuration.Password!;
             }
 
-            var content = new FormUrlEncodedContent(queryParams);
-            if (!string.IsNullOrEmpty(configuration.Merchant))
-                _logger?.LogTrace("Calling \"{action}\" for merchant \"{merchant}\".", actionUrl, configuration.Merchant);
-            else
-                _logger?.LogTrace("Calling \"{action}\".", actionUrl);
-
-            var callUrl = new Uri(new Uri(configuration.BasePath), actionUrl);
-            HttpResponseMessage? response;
-            response = await _client.PostAsync(callUrl, content, cancellationToken)
-                .ConfigureAwait(false);
-
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
+            return CallRawAsync(actionUrl, queryParams, configuration, cancellationToken);
         }
 
         /// <summary></summary>
         /// <param name="action">Request</param>
         /// <exception cref="AlfabankException"></exception>
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+        public virtual async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
             where TResponse : class
         {
             var respJson = await CallActionRawAsync(action, configuration, cancellationToken)
@@ -91,14 +98,13 @@ namespace AlfabankMerchant.RestClient
 
             return JsonConvert.DeserializeObject<TResponse>(respJson)!;
         }
-
-        protected InvalidOperationException ConfigRequiredException() => new InvalidOperationException($"Client was not initialized with configuration. Use method with configuration parameter instead.");
     }
 
     public class AlfabankMerchantRestClient<TConfig> : AlfabankMerchantRestClient, IAlfabankMerchantClient<TConfig>
         where TConfig : AlfabankConfiguration
     {
         protected readonly TConfig? _config;
+        public string? Merchant => _config?.Merchant;
 
         public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient>? logger = null, TConfig? config = null)
         {
@@ -114,20 +120,30 @@ namespace AlfabankMerchant.RestClient
                 _client = new();
         }
 
-        public string? Merchant => _config?.Merchant;
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration = null, CancellationToken cancellationToken = default)
+            where TResponse : class
+        {
+            if (configuration == null && _config == null)
+                throw new ArgumentNullException(nameof(configuration), "CLient was not initialized with default configuration.");
+
+            return base.CallActionAsync(action, configuration ?? _config!, cancellationToken);
+        }
 
         public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, CancellationToken cancellationToken = default) where TResponse : class
         {
             if (_config == null)
-                throw ConfigRequiredException();
+                throw new InvalidOperationException("CLient was not initialized with default configuration.");
 
-            return CallActionAsync(action, _config, cancellationToken);
+            return base.CallActionAsync(action, _config, cancellationToken);
         }
 
-        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration = null, CancellationToken cancellationToken = default) 
-            where TResponse : class
+        public override Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
         {
-            return CallActionAsync(action, configuration, cancellationToken);
+            if (configuration == null && _config == null)
+                throw new ArgumentNullException(nameof(configuration), "CLient was not initialized with default configuration.");
+
+
+            return base.CallActionAsync(action, configuration ?? _config!, cancellationToken);
         }
     }
 }

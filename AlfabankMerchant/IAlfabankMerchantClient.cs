@@ -27,7 +27,7 @@ namespace AlfabankMerchant
         /// <param name="configuration">Configuration to use with this request</param>
         /// <returns>Deserialized response</returns>
         /// <exception cref="AlfabankException"></exception>
-        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig configuration, CancellationToken cancellationToken = default)
+        Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration, CancellationToken cancellationToken = default)
             where TResponse : class;
 
         /// <summary>
