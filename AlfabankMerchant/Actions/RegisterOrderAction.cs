@@ -139,6 +139,19 @@ namespace AlfabankMerchant.Actions
         private string? ExpirationDateParam => ExpirationDate?.ToString("yyyy-MM-ddTHH:mm:ss");
 
         /// <summary>
+        /// <para>Время автозавершения заказа</para>
+        /// Если заказ не был завершен к указанному времени, то он завершится автоматически
+        /// </summary>
+        public DateTime? AutocompletionDate { get; set; }
+
+        /// <summary>
+        /// <see cref="AutocompletionDate"/>
+        /// <para>Формат: yyyy-MM-ddTHH:mm:ss</para>
+        /// </summary>
+        [ActionProperty("autocompletionDate", Type = "ANS")]
+        private string? AutocompletionDateParam => AutocompletionDate?.ToString("yyyy-MM-ddTHH:mm:ss");
+
+        /// <summary>
         /// <para>Идентификатор связки, созданной ранее</para>
         /// <para>Может использоваться, только если у магазина есть разрешение на работу со связками. Если этот параметр передаётся в данном запросе, то это означает:</para>
         /// <para>1. Данный заказ может быть оплачен только с помощью связки</para>
@@ -148,11 +161,29 @@ namespace AlfabankMerchant.Actions
         public string? BindingId { get; set; }
 
         /// <summary>
+        /// Имя владельца карты
+        /// </summary>
+        [ActionProperty("cardholderName")]
+        public string? CardholderName { get; set; }
+
+        /// <summary>
         /// <para>AUTO_PAYMENT - Если запрос на регистрацию заказа инициирует проведение автоплатежей</para>
         /// <para>VERIFY - Если указать это значение после запроса на регистрацию заказа произойдёт верификация держателя карты без списания средств с его счёта, поэтому в запросе можно передавать нулевую сумму</para>
         /// </summary>
         [ActionProperty("features", Type = "ANS..255")]
         public string? Features { get; set; }
+
+        /// <summary>
+        /// Номер заказа в платежной системе с типом расчета Предоплата или Аванс
+        /// </summary>
+        [ActionProperty("prepaymentMdOrder")]
+        public string? PrepaymentOrderId { get; set; }
+
+        /// <summary>
+        /// Размер комиссии мерчанта в минимальных единицах валюты
+        /// </summary>
+        [ActionProperty("feeInput")]
+        public int? Fee { get; set; }
 
         /// <summary>
         /// Электронная почта покупателя
@@ -168,5 +199,11 @@ namespace AlfabankMerchant.Actions
         /// </summary>
         [ActionProperty("phone", Type = "ANS.12")]
         public string? Phone { get; set; }
+
+        /// <summary>
+        /// Адрес доставки
+        /// </summary>
+        [ActionProperty("postAddress", Type = "ANS…598")]
+        public string? PostAddress { get; set; }
     }
 }
