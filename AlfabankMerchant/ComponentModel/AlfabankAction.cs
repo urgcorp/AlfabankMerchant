@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 namespace AlfabankMerchant.ComponentModel
 {
@@ -20,6 +21,7 @@ namespace AlfabankMerchant.ComponentModel
             return null;
         }
 
+        [JsonIgnore]
         public virtual string? ActionUrl { get; set; }
 
         public ActionAuthorizationAttribute GetAuthorizationConfig() 
@@ -53,7 +55,7 @@ namespace AlfabankMerchant.ComponentModel
             return queryParams;
         }
 
-        public bool ValidateActionParams(out Dictionary<string, string> errors)
+        public bool ValidateActionParams(out Dictionary<string, string> errors, IEnumerable<string>? ignore = null)
         {
             var res = new Dictionary<string, string>();
             var properties = GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -63,6 +65,9 @@ namespace AlfabankMerchant.ComponentModel
                 var propAttr = property.GetCustomAttribute<ActionPropertyAttribute>();
                 if (propAttr != null)
                 {
+                    if (ignore != null && ignore.Contains(propAttr.Name, StringComparer.Ordinal))
+                        continue;
+
                     var value = property.GetValue(this);
                     if (propAttr.Required)
                     {
@@ -92,9 +97,11 @@ namespace AlfabankMerchant.ComponentModel
         }
 
         [ActionProperty("userName", Type = "AN..30")]
+        [JsonPropertyName("userName")]
         protected string? Login { get; set; }
 
         [ActionProperty("password", Type = "AN..30")]
+        [JsonPropertyName("password")]
         protected string? Password { get; set; }
 
         /// <summary>
@@ -102,6 +109,7 @@ namespace AlfabankMerchant.ComponentModel
         /// <para>Если для аутентификации при регистрации заказа используются логин и пароль, параметр token передавать не нужно</para>
         /// </summary>
         [ActionProperty("token", Type = "AN..30")]
+        [JsonPropertyName("token")]
         protected string? Token { get; set; }
 
         /// <summary>
