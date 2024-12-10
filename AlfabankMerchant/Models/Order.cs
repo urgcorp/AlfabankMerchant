@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Newtonsoft.Json;
-using AlfabankMerchant.JsonConverter;
 using AlfabankMerchant.Common;
+using AlfabankMerchant.JsonConverter.Newtonsoft;
 
 namespace AlfabankMerchant.Models
 {
@@ -89,6 +89,7 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("merchantOrderParams")]
         [JsonConverter(typeof(NameValuePropertyConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.NameValuePropertyConverter))]
         public Dictionary<string, string>? MerchantOrderParams { get; set; }
 
         /// <summary>
@@ -96,6 +97,7 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("attributes")]
         [JsonConverter(typeof(NameValuePropertyConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.NameValuePropertyConverter))]
         public Dictionary<string, string>? Attributes { get; set; }
 
         /// <summary>
