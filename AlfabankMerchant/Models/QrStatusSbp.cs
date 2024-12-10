@@ -4,29 +4,32 @@ namespace AlfabankMerchant.Models
 {
     public class QrStatusSbp : StringEnum<QrStatusSbp>
     {
+        public QrStatusSbp(string value) : base(value)
+        { }
+
         /// <summary>
         /// QR-код cформирован
         /// </summary>
-        public static readonly QrStatusSbp STARTED = RegisterEnum("STARTED");
+        public static readonly QrStatusSbp STARTED = RegisterEnum(new QrStatusSbp("STARTED"));
 
         /// <summary>
         /// Заказ принят к оплате
         /// </summary>
-        public static readonly QrStatusSbp CONFIRMED = RegisterEnum("CONFIRMED");
+        public static readonly QrStatusSbp CONFIRMED = RegisterEnum(new QrStatusSbp("CONFIRMED"));
 
         /// <summary>
         /// Оплата отклонена
         /// </summary>
-        public static readonly QrStatusSbp REJECTED = RegisterEnum("REJECTED");
+        public static readonly QrStatusSbp REJECTED = RegisterEnum(new QrStatusSbp("REJECTED"));
 
         /// <summary>
         /// Оплата по QR-коду отклонена мерчантом
         /// </summary>
-        public static readonly QrStatusSbp REJECTED_BY_USER = RegisterEnum("REJECTED_BY_USER");
+        public static readonly QrStatusSbp REJECTED_BY_USER = RegisterEnum(new QrStatusSbp("REJECTED_BY_USER"));
 
         /// <summary>
         /// Заказ оплачен
         /// </summary>
-        public static readonly QrStatusSbp ACCEPTED = RegisterEnum("ACCEPTED");
+        public static readonly QrStatusSbp ACCEPTED = RegisterEnum(new QrStatusSbp("ACCEPTED"));
     }
 }

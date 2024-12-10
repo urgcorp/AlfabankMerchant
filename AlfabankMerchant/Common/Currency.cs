@@ -1,12 +1,20 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using AlfabankMerchant.ComponentModel;
+using AlfabankMerchant.JsonConverter;
 
 namespace AlfabankMerchant.Common
 {
     [DebuggerDisplay("{Value} ({CurrencyCode})")]
+    [JsonConverter(typeof(StringEnumConverter<Currency>))]
     public sealed class Currency : StringEnum<Currency>
     {
         private static readonly Dictionary<int, Currency> _currencies = new Dictionary<int, Currency>();
+
+        private Currency(string value, int currencyCode) : base(value)
+        {
+            CurrencyCode = currencyCode;
+        }
 
         /// <summary>
         /// Код валюты платежа ISO 4217
@@ -30,7 +38,7 @@ namespace AlfabankMerchant.Common
 
         private static Currency RegisterCurrency(string value, int code)
         {
-            var cur = RegisterEnum(value);
+            var cur = RegisterEnum(new Currency(value, code));
             cur.CurrencyCode = code;
             _currencies[code] = cur;
             return cur;
@@ -65,7 +73,7 @@ namespace AlfabankMerchant.Common
                 throw new ArgumentNullException();
 
             if (_registredValues.ContainsKey(value))
-                return _registredValues[value];
+                return (Currency)_registredValues[value];
 
             if (int.TryParse(value, out int currencyCode) && Exists(currencyCode))
                 return _currencies[currencyCode];
@@ -77,7 +85,7 @@ namespace AlfabankMerchant.Common
         {
             if (Exists(value))
             {
-                currency = _registredValues[value];
+                currency = (Currency)_registredValues[value];
                 return true;
             }
 

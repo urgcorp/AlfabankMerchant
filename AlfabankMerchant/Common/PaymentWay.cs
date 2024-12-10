@@ -1,4 +1,5 @@
 ﻿using AlfabankMerchant.ComponentModel;
+using AlfabankMerchant.Models;
 
 namespace AlfabankMerchant.Common
 {
@@ -7,6 +8,9 @@ namespace AlfabankMerchant.Common
     /// </summary>
     public sealed class PaymentWay : StringEnum<PaymentWay>
     {
+        public PaymentWay(string value) : base(value)
+        { }
+
         /// <summary>
         /// Оплата с вводом карточных данных
         /// </summary>
@@ -98,5 +102,7 @@ namespace AlfabankMerchant.Common
         /// <para>BNPL (Buy Now Pay Later)</para>
         /// </summary>
         public static readonly PaymentWay PODELI = RegisterEnum("PODELI");
+
+        private static PaymentWay RegisterEnum(string value) => RegisterEnum(new PaymentWay(value));
     }
 }

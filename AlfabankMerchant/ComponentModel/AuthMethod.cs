@@ -13,22 +13,26 @@
 
         public const string TOKEN_METHOD = "TOKEN";
 
-        public static readonly AuthMethod UNDEFINED = RegisterEnum("UNDEFINED");
+        public AuthMethod(string value) : base(value)
+        { }
+
+
+        public static readonly AuthMethod UNDEFINED = RegisterEnum(new AuthMethod("UNDEFINED"));
 
         /// <summary>
         /// Without authorization
         /// </summary>
-        public static readonly AuthMethod PUBLIC = RegisterEnum(PUBLIC_METHOD);
+        public static readonly AuthMethod PUBLIC = RegisterEnum(new AuthMethod(PUBLIC_METHOD));
 
         /// <summary>
         /// Login and password from alfabank
         /// </summary>
-        public static readonly AuthMethod LOGIN = RegisterEnum(LOGIN_METHOD);
+        public static readonly AuthMethod LOGIN = RegisterEnum(new AuthMethod(LOGIN_METHOD));
 
         /// <summary>
         /// Payment token from alfabank
         /// </summary>
-        public static readonly AuthMethod TOKEN = RegisterEnum(TOKEN_METHOD);
+        public static readonly AuthMethod TOKEN = RegisterEnum(new AuthMethod(TOKEN_METHOD));
 
         /// <summary>
         /// Avaliable authorization methods
