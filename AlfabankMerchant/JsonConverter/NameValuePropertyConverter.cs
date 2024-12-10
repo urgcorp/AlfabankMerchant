@@ -1,24 +1,33 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.JsonConverter
 {
     public class NameValuePropertyConverter : JsonConverter<Dictionary<string, string>>
     {
-        public override Dictionary<string, string>? ReadJson(JsonReader reader, Type objectType, Dictionary<string, string>? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override Dictionary<string, string>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            // Чтение JSON-массива и его преобразование в Dictionary
-            var nameValueList = serializer.Deserialize<List<NameValueProperty>>(reader);
-            return nameValueList?.ToDictionary(item => item.Name, item => item.Value) ?? new Dictionary<string, string>();
+            if (reader.TokenType != JsonTokenType.StartArray)
+                throw new JsonException("Expected StartArray token");
+
+            var result = new Dictionary<string, string>();
+            while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
+            {
+                var element = JsonSerializer.Deserialize<NameValueProperty>(ref reader, options);
+                result[element.Name] = element.Value;
+            }
+            return result;
         }
 
-        public override void WriteJson(JsonWriter writer, Dictionary<string, string>? value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, Dictionary<string, string> value, JsonSerializerOptions options)
         {
-            // Преобразование Dictionary в JSON-массив объектов NameValueProperty
             if (value != null)
             {
                 var nameValueList = value?.Select(kvp => new NameValueProperty(kvp.Key, kvp.Value)).ToList();
-                serializer.Serialize(writer, nameValueList);
+                writer.WriteStartArray();
+                JsonSerializer.Serialize(writer, nameValueList, options);
+                writer.WriteEndArray();
             }
         }
     }
