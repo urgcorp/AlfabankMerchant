@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PuppeteerSharp;
 using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.BrowserClient
@@ -30,13 +29,17 @@ namespace AlfabankMerchant.BrowserClient
             _browserProvider = _services.GetService<IBrowserProvider>() ?? throw new NotImplementedException("TODO: create default provider");
         }
 
-        public Task<string> CallActionRawAsync(AlfabankAction action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration, CancellationToken cancellationToken = default) where TResponse : class
         {
             throw new NotImplementedException();
         }
 
-        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AuthParams? authentication = null, CancellationToken cancellationToken = default)
-            where TResponse : class
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, CancellationToken cancellationToken = default) where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default) where TResponse : class
         {
             throw new NotImplementedException();
         }
