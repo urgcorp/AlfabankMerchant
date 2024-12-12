@@ -1,12 +1,11 @@
 ﻿using System.Diagnostics;
-using System.Text.Json.Serialization;
 using AlfabankMerchant.ComponentModel;
-using AlfabankMerchant.JsonConverter;
 
 namespace AlfabankMerchant.Common
 {
     [DebuggerDisplay("{Value} ({CurrencyCode})")]
-    [JsonConverter(typeof(StringEnumConverter<Currency>))]
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<Currency>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<Currency>))]
     public sealed class Currency : StringEnum<Currency>
     {
         private static readonly Dictionary<int, Currency> _currencies = new Dictionary<int, Currency>();

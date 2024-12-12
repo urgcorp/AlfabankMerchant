@@ -3,6 +3,8 @@ using Newtonsoft.Json.Linq;
 
 namespace AlfabankMerchant.Common
 {
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<PaymentSystem>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<PaymentSystem>))]
     public sealed class PaymentSystem : StringEnum<PaymentSystem>
     {
         public PaymentSystem(string value) : base(value)

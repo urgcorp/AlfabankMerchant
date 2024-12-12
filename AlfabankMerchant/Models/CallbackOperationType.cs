@@ -5,6 +5,8 @@ namespace AlfabankMerchant.Models
     /// <summary>
     /// Тип операции, о которой пришло уведомление
     /// </summary>
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<CallbackOperationType>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<CallbackOperationType>))]
     public class CallbackOperationType : StringEnum<CallbackOperationType>
     {
         public CallbackOperationType(string value) : base(value)

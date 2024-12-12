@@ -6,6 +6,8 @@ namespace AlfabankMerchant.Common
     /// <summary>
     /// Способ совершения платежа
     /// </summary>
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<PaymentWay>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<PaymentWay>))]
     public sealed class PaymentWay : StringEnum<PaymentWay>
     {
         public PaymentWay(string value) : base(value)

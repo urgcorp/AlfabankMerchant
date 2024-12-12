@@ -3,6 +3,8 @@
     /// <summary>
     /// Method of authorization when calling actions
     /// </summary>
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<AuthMethod>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<AuthMethod>))]
     public sealed class AuthMethod : StringEnum<AuthMethod>
     {
         public const string UNDEFINED_METHOD = "UNDEFINED";

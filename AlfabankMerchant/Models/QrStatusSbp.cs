@@ -2,6 +2,8 @@
 
 namespace AlfabankMerchant.Models
 {
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<QrStatusSbp>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<QrStatusSbp>))]
     public class QrStatusSbp : StringEnum<QrStatusSbp>
     {
         public QrStatusSbp(string value) : base(value)

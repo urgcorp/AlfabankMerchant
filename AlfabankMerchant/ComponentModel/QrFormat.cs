@@ -3,6 +3,8 @@
     /// <summary>
     /// Формат QR кода
     /// </summary>
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<QrFormat>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<QrFormat>))]
     public class QrFormat : StringEnum<QrFormat>
     {
         public QrFormat(string value) : base(value)

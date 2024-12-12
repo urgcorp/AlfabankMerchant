@@ -2,6 +2,8 @@
 
 namespace AlfabankMerchant.Models
 {
+    [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<TransactionState>))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<TransactionState>))]
     public sealed class TransactionState : StringEnum<TransactionState>
     {
         public TransactionState(string value) : base(value)
