@@ -9,7 +9,9 @@
         { }
 
         public AlfabankBrowserConfiguration(string loginPageUrl, string merchant)
-            : base(loginPageUrl, merchant)
-        { }
+            : base(loginPageUrl)
+        {
+            Merchant = merchant;
+        }
     }
 }
