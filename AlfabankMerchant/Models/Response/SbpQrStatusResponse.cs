@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AlfabankMerchant.Models.Response
 {
@@ -14,12 +15,14 @@ namespace AlfabankMerchant.Models.Response
         /// <para>В настоящее время всегда возвращается значение DYNAMIC</para>
         /// </summary>
         [JsonProperty("qrType")]
+        [JsonPropertyName("qrType")]
         public string? QrType { get; set; }
 
         /// <summary>
         /// Состояние запроса QR-кода
         /// </summary>
         [JsonProperty("qrStatus")]
+        [JsonPropertyName("qrStatus")]
         public QrStatusSbp? Status { get; set; }
 
         /// <summary>
@@ -29,6 +32,7 @@ namespace AlfabankMerchant.Models.Response
         /// <para>DEPOSITED - оплачен</para>
         /// </summary>
         [JsonProperty("transactionState")]
+        [JsonPropertyName("transactionState")]
         public string? TransactionState { get; set; }
     }
 }

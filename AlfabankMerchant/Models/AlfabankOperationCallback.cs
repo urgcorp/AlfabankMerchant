@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using static AlfabankMerchant.Models.AlfabankOperationCallback;
 
 namespace AlfabankMerchant.Models
@@ -27,33 +28,39 @@ namespace AlfabankMerchant.Models
         /// Уникальный номер заказа в платёжной системе
         /// </summary>
         [JsonProperty("mdOrder")]
+        [JsonPropertyName("mdOrder")]
         public string OrderId { get; set; }
 
         /// <summary>
         /// Уникальный номер (идентификатор) заказа в системе магазина
         /// </summary>
         [JsonProperty("orderNumber")]
+        [JsonPropertyName("orderNumber")]
         public string OrderNumber { get; set; }
 
         /// <summary>
         /// Аутентификационный код, или контрольная сумма, полученная из набора параметров
         /// </summary>
         [JsonProperty("checksum")]
+        [JsonPropertyName("checksum")]
         public string? Checksum { get; set; }
 
         /// <summary>
         /// Тип операции, о которой пришло уведомление
         /// </summary>
         [JsonProperty("operation")]
+        [JsonPropertyName("operation")]
         public CallbackOperationType Operation { get; set; }
 
         /// <summary>
         /// Индикатор успешности операции, указанной в параметре <see cref="Operation"/>
         /// </summary>
         [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public bool Status { get; set; }
 
         [JsonProperty("amount")]
+        [JsonPropertyName("amount")]
         public int? Amount { get; set; }
 
         protected AlfabankOperationCallback()

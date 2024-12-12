@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AlfabankMerchant.ComponentModel
 {
@@ -21,7 +22,8 @@ namespace AlfabankMerchant.ComponentModel
             return null;
         }
 
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public virtual string? ActionUrl { get; set; }
 
         public ActionAuthorizationAttribute GetAuthorizationConfig() 
@@ -97,10 +99,12 @@ namespace AlfabankMerchant.ComponentModel
         }
 
         [ActionProperty("userName", Type = "AN..30")]
+        [JsonProperty("userName")]
         [JsonPropertyName("userName")]
         protected string? Login { get; set; }
 
         [ActionProperty("password", Type = "AN..30")]
+        [JsonProperty("password")]
         [JsonPropertyName("password")]
         protected string? Password { get; set; }
 
@@ -109,6 +113,7 @@ namespace AlfabankMerchant.ComponentModel
         /// <para>Если для аутентификации при регистрации заказа используются логин и пароль, параметр token передавать не нужно</para>
         /// </summary>
         [ActionProperty("token", Type = "AN..30")]
+        [JsonProperty("token")]
         [JsonPropertyName("token")]
         protected string? Token { get; set; }
 
