@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using AlfabankMerchant.Common;
 using AlfabankMerchant.JsonConverter.Newtonsoft;
-using System.Text.Json.Serialization;
 
 namespace AlfabankMerchant.Models
 {
@@ -38,6 +38,13 @@ namespace AlfabankMerchant.Models
         public string? ActionCodeDescription { get; set; }
 
         /// <summary>
+        /// Код ответа процессинга.
+        /// </summary>
+        [JsonProperty("originalActionCode")]
+        [JsonPropertyName("originalActionCode")]
+        public string? OriginalActionCode { get; set; }
+
+        /// <summary>
         /// Сумма платежа в копейках (или центах)
         /// </summary>
         [JsonProperty("amount")]
@@ -60,6 +67,7 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("currency")]
         [JsonPropertyName("currency")]
+        [JsonInclude]
         protected int CurrencyCode { get; set; }
 
         /// <summary>
@@ -67,14 +75,30 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("date")]
         [JsonPropertyName("date")]
-        protected string? DateUnixTS { get; set; }
+        [JsonInclude]
+        protected long? DateUnixTS { get; set; }
 
         /// <summary>
         /// Дата регистрации заказа
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public DateTime? DateUtc => DateUnixTS != null ? DateTimeOffset.FromUnixTimeSeconds(long.Parse(DateUnixTS)).UtcDateTime : null;
+        public DateTime? DateUtc => DateUnixTS != null ? DateTimeOffset.FromUnixTimeSeconds(DateUnixTS.Value).UtcDateTime : null;
+
+        /// <summary>
+        /// Дата оплаты заказа в формате UNIX-времени
+        /// </summary>
+        [JsonProperty("depositedDate")]
+        [JsonPropertyName("depositedDate")]
+        [JsonInclude]
+        protected long? DepositedDateUnixTs { get; set; }
+
+        /// <summary>
+        /// Дата оплаты заказа
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public DateTime? DepositedDateUtc => DepositedDateUnixTs != null ? DateTimeOffset.FromUnixTimeSeconds(DepositedDateUnixTs.Value).UtcDateTime : null;
 
         /// <summary>
         /// Описание заказа, переданное при его регистрации
@@ -145,22 +169,6 @@ namespace AlfabankMerchant.Models
         public BindingInfo? BindingInfo { get; set; }
 
         /// <summary>
-        /// Unix timestamp даты/времени авторизации в секундах
-        /// </summary>
-        [JsonProperty("authDateTime")]
-        [JsonPropertyName("authDateTime")]
-        protected string? AuthDateUnixTS { get; set; }
-
-        /// <summary>
-        /// Дата/время авторизации
-        /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public DateTime? AuthDateUtc => AuthDateUnixTS != null
-            ? DateTimeOffset.FromUnixTimeSeconds(long.Parse(AuthDateUnixTS)).UtcDateTime
-            : null;
-
-        /// <summary>
         /// Id терминала
         /// </summary>
         [JsonProperty("terminalId")]
@@ -175,6 +183,126 @@ namespace AlfabankMerchant.Models
         public string? AuthRefNumber { get; set; }
 
         /// <summary>
+        /// Дата и время возврата средств.
+        /// </summary>
+        [JsonProperty("refundedDate")]
+        [JsonPropertyName("refundedDate")]
+        public string? RefundDate { get; set; }
+
+        /// <summary>
+        /// Дата и время отмены платежа.
+        /// </summary>
+        [JsonProperty("reversedDate")]
+        [JsonPropertyName("reversedDate")]
+        public string? ReversedDate { get; set; }
+
+        /// <summary>
+        /// Способ совершения платежа
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public PaymentWay? PaymentWay
+        {
+            get => PaymentWayValue != null ? PaymentWay.Parse(PaymentWayValue) : null;
+            set => PaymentWayValue = value?.Value;
+        }
+
+        [JsonProperty("paymentWay")]
+        [JsonPropertyName("paymentWay")]
+        [JsonInclude]
+        protected string? PaymentWayValue { get; set; }
+
+        /// <summary>
+        /// Уникальный идентификатор заказа на предоплату в Платёжном Шлюзе.
+        /// <para>Используется для привязки заказа с предоплатой с чеком на постоплату.</para>
+        /// </summary>
+        [JsonProperty("prepaymentMdOrder")]
+        [JsonPropertyName("prepaymentMdOrder")]
+        public string? PrepaymentMdOrder { get; set; }
+
+        /// <summary>
+        /// mdOrder последующих заказов на частичную оплату
+        /// </summary>
+        [JsonProperty("partpaymentMdOrders")]
+        [JsonPropertyName("partpaymentMdOrders")]
+        public string? PartpaymentMdOrders { get; set; }
+
+        /// <summary>
+        /// Код ответа AVS-проверки (проверка адреса и почтового индекса держателя карты)
+        /// </summary>
+        [JsonProperty("avsCode")]
+        [JsonPropertyName("avsCode")]
+        public string? AVSCode { get; set; }
+
+        /// <summary>
+        /// Были ли средства принудительно возвращены клиенту банком.
+        /// </summary>
+        [JsonProperty("chargeback")]
+        [JsonPropertyName("chargeback")]
+        [JsonInclude]
+        protected string? ChargebackValue { get; set; }
+
+        /// <summary>
+        /// Были ли средства принудительно возвращены клиенту банком
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public bool? Chargeback
+        {
+            get
+            {
+                switch (ChargebackValue)
+                {
+                    case "true":
+                        return true;
+                    case "false":
+                        return false;
+                    default:
+                        return null;
+                }
+            }
+            set
+            {
+                switch (value)
+                {
+                    case true:
+                        ChargebackValue = "true";
+                        break;
+                    case false:
+                        ChargebackValue = "false";
+                        break;
+                    default:
+                        ChargebackValue = null;
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Дата и время авторизации в формате UNIX-времени
+        /// </summary>
+        [JsonProperty("authDateTime")]
+        [JsonPropertyName("authDateTime")]
+        [JsonInclude]
+        protected long? AuthTS { get; set; }
+
+        /// <summary>
+        /// Дата и время авторизации
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public DateTime? AuthDateTimeUtc => AuthTS != null
+            ? DateTimeOffset.FromUnixTimeSeconds(AuthTS.Value).UtcDateTime
+            : null;
+
+        /// <summary>
+        /// Номер транзакции FE.
+        /// </summary>
+        [JsonProperty("feUtrnno")]
+        [JsonPropertyName("feUtrnno")]
+        public long? FEUTransaction { get; set; }
+
+        /// <summary>
         /// Тэг с информацией о суммах подтверждения, списания, возврата
         /// </summary>
         [JsonProperty("paymentAmountInfo")]
@@ -187,5 +315,9 @@ namespace AlfabankMerchant.Models
         [JsonProperty("bankInfo")]
         [JsonPropertyName("bankInfo")]
         public BankInfo? BankInfo { get; set; }
+        
+        [JsonProperty("customerDetails")]
+        [JsonPropertyName("customerDetails")]
+        public CustomerDetails? CustomerDetails { get; set; }
     }
 }
