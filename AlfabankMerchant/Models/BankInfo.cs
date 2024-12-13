@@ -12,14 +12,14 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("bankName")]
         [JsonPropertyName("bankName")]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Код страны Банка-эмитента
         /// </summary>
         [JsonProperty("bankCountryCode")]
         [JsonPropertyName("bankCountryCode")]
-        public string CountryCode { get; set; }
+        public string? CountryCode { get; set; }
 
         /// <summary>
         /// Наименование страны банка-эмитента на языке, переданном в параметре language в запросе, или на языке пользователя, вызвавшего метод, если язык в запросе не указан

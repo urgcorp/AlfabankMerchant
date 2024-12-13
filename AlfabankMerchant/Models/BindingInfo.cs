@@ -9,17 +9,27 @@ namespace AlfabankMerchant.Models
     {
         /// <summary>
         /// Номер (идентификатор) клиента в системе магазина
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("clientId")]
         [JsonPropertyName("clientId")]
-        public string ClientId { get; set; }
+        public string? ClientId { get; set; }
 
         /// <summary>
         /// Идентификатор связки, использованной для оплаты
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("bindingId")]
         [JsonPropertyName("bindingId")]
-        public string BindingId { get; set; }
+        public string? BindingId { get; set; }
+
+        /// <summary>
+        /// Появляется только при создании связки во внешнем сервисе (к примеру, Masterpass)
+        /// <para>v: 20+</para>
+        /// </summary>
+        [JsonProperty("externalCreated")]
+        [JsonPropertyName("externalCreated")]
+        public bool? External { get; set; }
 
         /// <summary>
         /// 

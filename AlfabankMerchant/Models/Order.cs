@@ -199,18 +199,12 @@ namespace AlfabankMerchant.Models
         /// <summary>
         /// Способ совершения платежа
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public PaymentWay? PaymentWay
-        {
-            get => PaymentWayValue != null ? PaymentWay.Parse(PaymentWayValue) : null;
-            set => PaymentWayValue = value?.Value;
-        }
-
         [JsonProperty("paymentWay")]
         [JsonPropertyName("paymentWay")]
-        [JsonInclude]
-        protected string? PaymentWayValue { get; set; }
+        public PaymentWay? PaymentWay { get; set; }
+
+        //[JsonInclude]
+        //protected string? PaymentWayValue { get; set; }
 
         /// <summary>
         /// Уникальный идентификатор заказа на предоплату в Платёжном Шлюзе.
@@ -232,51 +226,28 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("avsCode")]
         [JsonPropertyName("avsCode")]
-        public string? AVSCode { get; set; }
+        [JsonInclude]
+        protected string? AVSCodeValue { get; set; }
 
         /// <summary>
-        /// Были ли средства принудительно возвращены клиенту банком.
+        /// Код ответа AVS-проверки (проверка адреса и почтового индекса держателя карты)
         /// </summary>
-        [JsonProperty("chargeback")]
-        [JsonPropertyName("chargeback")]
-        [JsonInclude]
-        protected string? ChargebackValue { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
+        public AVSCode? AVSCode
+        {
+            get => AVSCodeValue != null ? AVSCode.Parse(AVSCodeValue) : null;
+            set => AVSCodeValue = value?.Value;
+        }
 
         /// <summary>
         /// Были ли средства принудительно возвращены клиенту банком
         /// </summary>
-        [Newtonsoft.Json.JsonIgnore]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public bool? Chargeback
-        {
-            get
-            {
-                switch (ChargebackValue)
-                {
-                    case "true":
-                        return true;
-                    case "false":
-                        return false;
-                    default:
-                        return null;
-                }
-            }
-            set
-            {
-                switch (value)
-                {
-                    case true:
-                        ChargebackValue = "true";
-                        break;
-                    case false:
-                        ChargebackValue = "false";
-                        break;
-                    default:
-                        ChargebackValue = null;
-                        break;
-                }
-            }
-        }
+        [JsonProperty("chargeback")]
+        [JsonPropertyName("chargeback")]
+        [Newtonsoft.Json.JsonConverter(typeof(BooleanStringConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.BooleanStringConverter))]
+        public bool? Chargeback { get; set; }
 
         /// <summary>
         /// Дата и время авторизации в формате UNIX-времени
@@ -302,15 +273,40 @@ namespace AlfabankMerchant.Models
         [JsonPropertyName("feUtrnno")]
         public long? FEUTransaction { get; set; }
 
+        [JsonProperty("payerData")]
+        [JsonPropertyName("payerData")]
+        public PayerData? PayerData { get; set; }
+
+        /// <summary>
+        /// <para>v: 01+</para>
+        /// </summary>
+        [JsonProperty("secureAuthInfo")]
+        [JsonPropertyName("secureAuthInfo")]
+        public SecureAuthInfo? SecureAuthInfo { get; set; }
+
         /// <summary>
         /// Тэг с информацией о суммах подтверждения, списания, возврата
+        /// <para>v: 03+</para>
         /// </summary>
         [JsonProperty("paymentAmountInfo")]
         [JsonPropertyName("paymentAmountInfo")]
         public PaymentAmountInfo? PaymentAmountInfo { get; set; }
 
         /// <summary>
+        /// <para>Дополнительные параметры транзакции</para>
+        /// <para>bindingOriginalNetRefNum — идентификатор первого платежа по созданию связки</para>
+        /// <para>paymentNetRefNum — идентификатор, полученный в ходе последней оплаты по связке</para>
+        /// <para>originalPaymentNetRefNum — идентификатор инициирующей транзакции по созданию связки, передаётся мерчантами, хранящих связки на своей стороне (передаётся в paymentOrder)</para>
+        /// </summary>
+        [JsonProperty("transactionAttributes")]
+        [JsonPropertyName("transactionAttributes")]
+        [Newtonsoft.Json.JsonConverter(typeof(NameValuePropertyConverter))]
+        [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.NameValuePropertyConverter))]
+        public Dictionary<string, string>? TransactionAttributes { get; set; }
+
+        /// <summary>
         /// Тэг с информацией о Банке-эмитенте
+        /// <para>v: 03+</para>
         /// </summary>
         [JsonProperty("bankInfo")]
         [JsonPropertyName("bankInfo")]
@@ -319,5 +315,14 @@ namespace AlfabankMerchant.Models
         [JsonProperty("customerDetails")]
         [JsonPropertyName("customerDetails")]
         public CustomerDetails? CustomerDetails { get; set; }
+
+        [JsonProperty("deliveryInfo")]
+        [JsonPropertyName("deliveryInfo")]
+        public DeliveryInfo? DeliveryInfo { get; set; }
+
+        // TODO: add converters for NameParamsProperty
+        //[JsonProperty("pluginInfo")]
+        //[JsonPropertyName("pluginInfo")]
+        //public Dictionary<string, string>? PluginInfo { get; set; }
     }
 }

@@ -7,6 +7,7 @@ namespace AlfabankMerchant.Models
     {
         /// <summary>
         /// Электронная почта покупателя.
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("email")]
         [JsonPropertyName("email")]
@@ -16,6 +17,7 @@ namespace AlfabankMerchant.Models
         /// <para>Номер телефона покупателя.</para>
         /// <para>Если в телефон включён код страны, номер должен начинаться со знака плюс («+»).</para>
         /// <para>Если телефон передаётся без знака плюс («+»), то код страны указывать не следует.</para>
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("phone")]
         [JsonPropertyName("phone")]
@@ -24,6 +26,7 @@ namespace AlfabankMerchant.Models
         /// <summary>
         /// <para>Фамилия, имя и отчество плательщика.</para>
         /// Параметр возвращается только в том случае, если был передан партнёром при регистрации.
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("fullName")]
         [JsonPropertyName("fullName")]
@@ -32,6 +35,7 @@ namespace AlfabankMerchant.Models
         /// <summary>
         /// Серия и номер паспорта плательщика в следующем формате: 2222888888.
         /// <para>Только для запросов по платежам с фискализацией.</para>
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("passport")]
         [JsonPropertyName("passport")]
@@ -40,6 +44,7 @@ namespace AlfabankMerchant.Models
         /// <summary>
         /// Идентификационный номер налогоплательщика.
         /// <para>Допускается передавать 10 или 12 символов.</para>
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("inn")]
         [JsonPropertyName("inn")]
@@ -47,6 +52,7 @@ namespace AlfabankMerchant.Models
 
         /// <summary>
         /// Способ связи с покупателем.
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("contact")]
         [JsonPropertyName("contact")]
@@ -54,6 +60,7 @@ namespace AlfabankMerchant.Models
 
         /// <summary>
         /// Блок с атрибутами адреса для доставки.
+        /// <para>v: 01+</para>
         /// </summary>
         [JsonProperty("deliveryInfo")]
         [JsonPropertyName("deliveryInfo")]

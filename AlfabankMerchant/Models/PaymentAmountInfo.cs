@@ -9,6 +9,7 @@ namespace AlfabankMerchant.Models
     {
         /// <summary>
         /// Состояние платежа
+        /// <para>v: 03+</para>
         /// </summary>
         [JsonProperty("paymentState")]
         [JsonPropertyName("paymentState")]
@@ -16,30 +17,42 @@ namespace AlfabankMerchant.Models
 
         /// <summary>
         /// Сумма, подтверждённая к списанию
+        /// <para>v: 03+</para>
         /// </summary>
         [JsonProperty("approvedAmount")]
         [JsonPropertyName("approvedAmount")]
-        public int? ApprovedAmount { get; set; }
+        public long? ApprovedAmount { get; set; }
 
         /// <summary>
         /// Сумма списания с карты
+        /// <para>v: 03+</para>
         /// </summary>
         [JsonProperty("depositedAmount")]
         [JsonPropertyName("depositedAmount")]
-        public int? DepositedAmount { get; set; }
+        public long? DepositedAmount { get; set; }
 
         /// <summary>
         /// Сумма возврата
+        /// <para>v: 03+</para>
         /// </summary>
         [JsonProperty("refundedAmount")]
         [JsonPropertyName("refundedAmount")]
-        public int? RefundedAmount { get; set; }
+        public long? RefundedAmount { get; set; }
 
         /// <summary>
         /// Сумма комиссии
+        /// <para>v: 11+</para>
         /// </summary>
         [JsonProperty("feeAmount")]
         [JsonPropertyName("feeAmount")]
-        public int? FeeAmount { get; set; }
+        public long? FeeAmount { get; set; }
+
+        /// <summary>
+        /// Сумма заказа + комиссия, если она была использована в заказе
+        /// <para>v: 18+</para>
+        /// </summary>
+        [JsonProperty("totalAmount")]
+        [JsonPropertyName("totalAmount")]
+        public long? TotalAmount { get; set; }
     }
 }
