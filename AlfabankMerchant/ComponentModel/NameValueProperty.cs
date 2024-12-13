@@ -9,10 +9,12 @@ namespace AlfabankMerchant.ComponentModel
     {
         [JsonProperty("name")]
         [JsonPropertyName("name")]
+        [JsonInclude]
         public string Name { get; private set; }
 
         [JsonProperty("value")]
         [JsonPropertyName("value")]
+        [JsonInclude]
         public string Value { get; set; }
 
         public NameValueProperty(string name, string value)
