@@ -78,6 +78,31 @@ namespace AlfabankMerchant.ComponentModel
             return false;
         }
 
+        private static bool findConstructor(System.Reflection.ConstructorInfo ctor)
+        {
+            var parameters = ctor.GetParameters();
+            return parameters.Length == 1 && parameters[0].ParameterType == typeof(string);
+        }
+
+        public static TEnum ForceParse(string value, out bool registred)
+        {
+            EnsureTypeInitialized();
+            if (_registredValues.ContainsKey(value))
+            {
+                registred = true;
+                return (TEnum)_registredValues[value];
+            }
+            registred = false;
+
+            var type = typeof(TEnum);
+            var ctor = type.GetConstructors()
+                .FirstOrDefault(findConstructor);
+            if (ctor != null)
+                return (TEnum)ctor.Invoke(new object[] { value });
+
+            throw new NotSupportedException($"Type '{type.FullName}' cannot be parsed from string value.");
+        }
+
         public static string ToString(IEnumerable<TEnum> values, string? separator = null)
         {
             return ((IEnumerable<StringEnum>)values).ToString(separator);
