@@ -7,7 +7,7 @@ using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.BrowserClient
 {
-    public class AlfabankPuppeteerClient<TConfig> : IAlfabankMerchantClient<TConfig>
+    public class AlfabankPuppeteerClient<TConfig> : IAlfabankMerchantClient<TConfig>, IAlfabankMerchantRawClient
         where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "BROWSER";
@@ -27,6 +27,11 @@ namespace AlfabankMerchant.BrowserClient
             _services = services;
 
             _browserProvider = _services.GetService<IBrowserProvider>() ?? throw new NotImplementedException("TODO: create default provider");
+        }
+
+        public Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration, CancellationToken cancellationToken = default) where TResponse : class

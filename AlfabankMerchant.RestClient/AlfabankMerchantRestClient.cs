@@ -11,7 +11,7 @@ namespace AlfabankMerchant.RestClient
     /// <summary>
     /// Client is mainly responible for making the HTTP call to the REST API backend
     /// </summary>
-    public class AlfabankMerchantRestClient : IAlfabankMerchantClient
+    public class AlfabankMerchantRestClient : IAlfabankMerchantClient, IAlfabankMerchantRawClient
     {
         protected const string CLIENT_TYPE = "REST";
 
@@ -33,7 +33,7 @@ namespace AlfabankMerchant.RestClient
             _client = new();
         }
 
-        protected async Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration configuration, CancellationToken cancellationToken)
+        public async Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
         {
             var content = new FormUrlEncodedContent(queryParams);
             if (!string.IsNullOrEmpty(configuration.Merchant))
@@ -51,6 +51,14 @@ namespace AlfabankMerchant.RestClient
                 .ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Make call to server
+        /// </summary>
+        /// <param name="action">Action request</param>
+        /// <param name="configuration">Configuration to use with this request</param>
+        /// <returns>JSON result in from Alfabank</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
         {
             if (action == null)
@@ -83,9 +91,6 @@ namespace AlfabankMerchant.RestClient
             return CallRawAsync(actionUrl, queryParams, configuration, cancellationToken);
         }
 
-        /// <summary></summary>
-        /// <param name="action">Request</param>
-        /// <exception cref="AlfabankException"></exception>
         public virtual async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
             where TResponse : class
         {
@@ -94,7 +99,7 @@ namespace AlfabankMerchant.RestClient
             
             var resp = JObject.Parse(respJson);
             if (resp.ContainsKey("errorCode") && resp["errorCode"]!.ToString() != "0")
-                throw new AlfabankException(resp["errorCode"]!.Value<int>(), resp["errorMessage"]!.Value<string>() ?? "");
+                throw new AlfabankException(resp["errorCode"]!.Value<int>(), resp["errorMessage"]?.Value<string>() ?? "");
 
             return JsonConvert.DeserializeObject<TResponse>(respJson)!;
         }

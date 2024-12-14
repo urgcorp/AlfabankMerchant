@@ -12,7 +12,7 @@ namespace AlfabankMerchant.WSClient
     /// Client is mainly responible for making the HTTP call to the Web-Service (WSDL) API backend
     /// </summary>
     /// <typeparam name="TConfig"></typeparam>
-    public class AlfabankMerchantWSClient<TConfig> : IAlfabankMerchantClient<TConfig>
+    public class AlfabankMerchantWSClient<TConfig> : IAlfabankMerchantClient<TConfig>, IAlfabankMerchantRawClient
         where TConfig : AlfabankConfiguration
     {
         protected const string CLIENT_TYPE = "WS";
