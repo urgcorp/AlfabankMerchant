@@ -6,7 +6,6 @@ namespace AlfabankMerchant.Actions
     /// <summary>
     /// Запрос получения текущего состояния заказа
     /// </summary>
-    [LoginAuthorization]
     [RestUrl(AlfabankRestActions.GetOrderStatus)]
     public class GetOrderStatusAction : AlfabankAction<Order>
     {

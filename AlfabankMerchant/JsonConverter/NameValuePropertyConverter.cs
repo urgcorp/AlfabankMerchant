@@ -20,14 +20,12 @@ namespace AlfabankMerchant.JsonConverter
             return result;
         }
 
-        public override void Write(Utf8JsonWriter writer, Dictionary<string, string> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, Dictionary<string, string>? value, JsonSerializerOptions? options)
         {
             if (value != null)
             {
                 var nameValueList = value?.Select(kvp => new NameValueProperty(kvp.Key, kvp.Value)).ToList();
-                writer.WriteStartArray();
                 JsonSerializer.Serialize(writer, nameValueList, options);
-                writer.WriteEndArray();
             }
         }
     }

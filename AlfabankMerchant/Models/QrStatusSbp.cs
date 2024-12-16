@@ -6,7 +6,7 @@ namespace AlfabankMerchant.Models
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<QrStatusSbp>))]
     public class QrStatusSbp : StringEnum<QrStatusSbp>
     {
-        public QrStatusSbp(string value) : base(value)
+        private QrStatusSbp(string value) : base(value)
         { }
 
         /// <summary>

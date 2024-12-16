@@ -6,7 +6,7 @@ namespace AlfabankMerchant.Models
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<TransactionState>))]
     public sealed class TransactionState : StringEnum<TransactionState>
     {
-        public TransactionState(string value) : base(value)
+        private TransactionState(string value) : base(value)
         { }
 
         public static readonly TransactionState CREATED = RegisterEnum(new TransactionState("CREATED"));
@@ -21,7 +21,7 @@ namespace AlfabankMerchant.Models
 
         public static readonly TransactionState REFUNDED = RegisterEnum(new TransactionState("REFUNDED"));
 
-        public static readonly TransactionState[] ALL = new[] { CREATED, APPROVED, DEPOSITED, DECLINED, REVERSED, REFUNDED };
+        public static readonly TransactionState[] ALL = { CREATED, APPROVED, DEPOSITED, DECLINED, REVERSED, REFUNDED };
 
         public static implicit operator TransactionState[](TransactionState obj) => new[] { obj };
     }

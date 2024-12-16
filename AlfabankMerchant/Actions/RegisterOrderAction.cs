@@ -8,7 +8,6 @@ namespace AlfabankMerchant.Actions
     /// <summary>
     /// Запрос регистрации заказа
     /// </summary>
-    [LoginAuthorization(true)]
     [RestUrl(AlfabankRestActions.RegisterOrder)]
     public sealed class RegisterOrderAction : AlfabankAction<RegisterOrderResponse>
     {
@@ -124,7 +123,7 @@ namespace AlfabankMerchant.Actions
         /// </summary>
         [ActionProperty("jsonParams", Type = "AN..1024")]
         [JsonIgnore]
-        private string? MerchantParamsJson => GetJsonParamsString(MerchantParams);
+        private string? MerchantParamsJson => FormatJsonParamsString(MerchantParams);
 
         /// <summary>
         /// IP-адрес покупателя
@@ -173,8 +172,9 @@ namespace AlfabankMerchant.Actions
         private string? AutocompletionDateParam => AutocompletionDate?.ToString("yyyy-MM-ddTHH:mm:ss");
 
         /// <summary>
-        /// <para>Идентификатор связки, созданной ранее</para>
-        /// <para>Может использоваться, только если у магазина есть разрешение на работу со связками. Если этот параметр передаётся в данном запросе, то это означает:</para>
+        /// <para>Идентификатор связки, созданной ранее.</para>
+        /// <para>Может использоваться, только если у магазина есть разрешение на работу со связками.
+        /// Если этот параметр передаётся в данном запросе, то это означает:</para>
         /// <para>1. Данный заказ может быть оплачен только с помощью связки</para>
         /// <para>2. Плательщик будет перенаправлен на платёжную страницу, где требуется только ввод CVC</para>
         /// </summary>
@@ -206,6 +206,7 @@ namespace AlfabankMerchant.Actions
 
         /// <summary>
         /// Размер комиссии мерчанта в минимальных единицах валюты
+        /// <para>Параметр передается только при включении соответствующей пермиссии: Разрешена передача комиссии Мерчанта.</para>
         /// </summary>
         [ActionProperty("feeInput")]
         [JsonPropertyName("feeInput")]

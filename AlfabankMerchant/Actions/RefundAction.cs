@@ -11,7 +11,6 @@ namespace AlfabankMerchant.Actions
     /// <para>При выполнении возврата за оплаты жилищно-коммунальных услуг возможен только полный возврат</para>
     /// <para>Для выполнения операции возврата необходимоналичие соответствующих права в системе</para>
     /// </summary>
-    [LoginAuthorization]
     [RestUrl(AlfabankRestActions.Refund)]
     public sealed class RefundAction : AlfabankAction<RefundResponse>
     {
@@ -46,7 +45,7 @@ namespace AlfabankMerchant.Actions
         /// JSON string <see cref="MerchantParams"/>
         /// </summary>
         [ActionProperty("jsonParams", Type = "AN..1024")]
-        private string? MerchantParamsJson => GetJsonParamsString(MerchantParams);
+        private string? MerchantParamsJson => FormatJsonParamsString(MerchantParams);
 
         #region MerchantParams
         public string? SubscriptionPurpose

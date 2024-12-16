@@ -23,11 +23,11 @@ namespace AlfabankMerchant
         /// </summary>
         public string? Token { get; set; }
 
-        private AuthMethod _authMethod;
+        private AuthMethod _authMethod = AuthMethod.UNDEFINED;
         /// <summary>
         /// Authorization method provided by this configuration
         /// </summary>
-        public AuthMethod AuthMethod => _authMethod ?? AuthMethod.UNDEFINED;
+        public AuthMethod AuthMethod => _authMethod;
 
         public AlfabankConfiguration(string basePath, string merchant, string login, string password)
         {
@@ -52,7 +52,9 @@ namespace AlfabankMerchant
         }
 
         public AlfabankConfiguration()
-        { }
+        {
+            BasePath = null!;
+        }
 
         public void DefineAuthMethod(AuthMethod authMethod) => _authMethod = authMethod;
     }

@@ -21,11 +21,11 @@ namespace AlfabankMerchant.ComponentModel
 
         public static implicit operator string(StringEnum obj) => obj.Value;
     }
-
+    
     public abstract class StringEnum<TEnum> : StringEnum
         where TEnum : StringEnum<TEnum>
     {
-        protected static Dictionary<string, StringEnum> _registredValues = new(StringComparer.OrdinalIgnoreCase);
+        protected static readonly Dictionary<string, TEnum> RegisteredValues = new(StringComparer.OrdinalIgnoreCase);
         private static bool _isInitialized = false;
 
         protected StringEnum(string value) : base(value)
@@ -34,7 +34,7 @@ namespace AlfabankMerchant.ComponentModel
         public static bool Exists(string value)
         {
             EnsureTypeInitialized();
-            return _registredValues.ContainsKey(value);
+            return RegisteredValues.ContainsKey(value);
         }
 
         protected static TEnum RegisterEnum<T>(T value)
@@ -45,12 +45,12 @@ namespace AlfabankMerchant.ComponentModel
             if (string.IsNullOrEmpty(value))
                 throw new ArgumentException();
 
-            if (!_registredValues.ContainsKey(value))
+            if (!RegisteredValues.ContainsKey(value))
             {
-                _registredValues.Add(value.Value, value);
+                RegisteredValues.Add(value.Value, value);
                 return value;
             }
-            throw new ArgumentException($"Value \"{value}\" already registred");
+            throw new ArgumentException($"Value \"{value}\" already registered");
         }
 
         public static TEnum Parse(string value)
@@ -59,8 +59,8 @@ namespace AlfabankMerchant.ComponentModel
                 throw new ArgumentNullException();
 
             EnsureTypeInitialized();
-            if (_registredValues.ContainsKey(value))
-                return (TEnum)_registredValues[value];
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
+                return registeredValue;
 
             throw new ArgumentOutOfRangeException();
         }
@@ -68,13 +68,13 @@ namespace AlfabankMerchant.ComponentModel
         public static bool TryParse(string value, out TEnum res)
         {
             EnsureTypeInitialized();
-            if (_registredValues.ContainsKey(value))
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
             {
-                res = (TEnum)_registredValues[value];
+                res = registeredValue;
                 return true;
             }
 
-            res = default!;
+            res = null!;
             return false;
         }
 
@@ -84,15 +84,15 @@ namespace AlfabankMerchant.ComponentModel
             return parameters.Length == 1 && parameters[0].ParameterType == typeof(string);
         }
 
-        public static TEnum ForceParse(string value, out bool registred)
+        public static TEnum ForceParse(string value, out bool registered)
         {
             EnsureTypeInitialized();
-            if (_registredValues.ContainsKey(value))
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
             {
-                registred = true;
-                return (TEnum)_registredValues[value];
+                registered = true;
+                return registeredValue;
             }
-            registred = false;
+            registered = false;
 
             var type = typeof(TEnum);
             var ctor = type.GetConstructors()
@@ -104,27 +104,17 @@ namespace AlfabankMerchant.ComponentModel
         }
 
         public static string ToString(IEnumerable<TEnum> values, string? separator = null)
-        {
-            return ((IEnumerable<StringEnum>)values).ToString(separator);
-        }
+            => values.ToString(separator);
 
         private static void EnsureTypeInitialized()
         {
-            if (!_isInitialized)
+            if (_isInitialized) return;
+            lock (RegisteredValues)
             {
-                RuntimeHelpers.RunClassConstructor(typeof(TEnum).TypeHandle);
+                if (_isInitialized) return;
                 _isInitialized = true;
+                RuntimeHelpers.RunClassConstructor(typeof(TEnum).TypeHandle);   
             }
-        }
-    }
-
-    public static class StringEnumExtension
-    {
-        public static string ToString(this IEnumerable<StringEnum>? values, string? separator = null)
-        {
-            return values != null
-                ? string.Join(separator ?? ",", values.Select(x => x.ToString()))
-                : "";
         }
     }
 }

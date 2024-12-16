@@ -1,4 +1,6 @@
-﻿namespace AlfabankMerchant.ComponentModel
+﻿using AlfabankMerchant.ComponentModel;
+
+namespace AlfabankMerchant.Models
 {
     /// <summary>
     /// Формат QR кода
@@ -6,8 +8,8 @@
     [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<QrFormat>))]
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<QrFormat>))]
     public class QrFormat : StringEnum<QrFormat>
-    {
-        public QrFormat(string value) : base(value)
+    {   
+        private QrFormat(string value) : base(value)
         { }
 
         /// <summary>

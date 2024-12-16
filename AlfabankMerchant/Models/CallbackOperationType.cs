@@ -9,7 +9,7 @@ namespace AlfabankMerchant.Models
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<CallbackOperationType>))]
     public class CallbackOperationType : StringEnum<CallbackOperationType>
     {
-        public CallbackOperationType(string value) : base(value)
+        private CallbackOperationType(string value) : base(value)
         { }
 
         /// <summary>

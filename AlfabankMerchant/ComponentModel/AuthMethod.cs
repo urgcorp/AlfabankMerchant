@@ -15,11 +15,10 @@
 
         public const string TOKEN_METHOD = "TOKEN";
 
-        public AuthMethod(string value) : base(value)
+        private AuthMethod(string value) : base(value)
         { }
 
-
-        public static readonly AuthMethod UNDEFINED = RegisterEnum(new AuthMethod("UNDEFINED"));
+        public static readonly AuthMethod UNDEFINED = RegisterEnum(new AuthMethod(UNDEFINED_METHOD));
 
         /// <summary>
         /// Without authorization
@@ -37,7 +36,7 @@
         public static readonly AuthMethod TOKEN = RegisterEnum(new AuthMethod(TOKEN_METHOD));
 
         /// <summary>
-        /// Avaliable authorization methods
+        /// Available authorization methods
         /// </summary>
         public static readonly AuthMethod[] AVAILABLE = new[] { LOGIN, TOKEN };
 

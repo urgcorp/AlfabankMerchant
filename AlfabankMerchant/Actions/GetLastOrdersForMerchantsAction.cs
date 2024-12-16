@@ -7,7 +7,6 @@ namespace AlfabankMerchant.Actions
     /// <summary>
     /// Запрос получения статистики по платежам за определённый период
     /// </summary>
-    [LoginAuthorization]
     [RestUrl(AlfabankRestActions.GetLastOrdersForMerchants)]
     public sealed class GetLastOrdersForMerchantsAction : AlfabankAction<LastOrdersForMerchants>
     {
@@ -41,7 +40,7 @@ namespace AlfabankMerchant.Actions
         /// <see cref="FromDate"/>
         /// </summary>
         [ActionProperty("from", true, Type = "ANS")]
-        private string? FromDateParam => GetDTParamValue(FromDate);
+        private string? FromDateParam => FormatDateTime(FromDate);
 
         /// <summary>
         /// Дата и время окончания периода для выборки заказов в формате YYYYMMDDHHmmss.
@@ -52,7 +51,7 @@ namespace AlfabankMerchant.Actions
         /// <see cref="ToDate"/>
         /// </summary>
         [ActionProperty("to", true, Type = "ANS")]
-        private string? ToDateParam => GetDTParamValue(ToDate);
+        private string? ToDateParam => FormatDateTime(ToDate);
 
         /// <summary>
         /// transactionStates
@@ -88,6 +87,6 @@ namespace AlfabankMerchant.Actions
         /// <see cref="SearchByCreatedDate"/>
         /// </summary>
         [ActionProperty("searchByCreatedDate", Type = "A..5")]
-        private string? SearchByCreatedDateParam => GetBoolParamVal(SearchByCreatedDate);
+        private string? SearchByCreatedDateParam => FormatBool(SearchByCreatedDate);
     }
 }

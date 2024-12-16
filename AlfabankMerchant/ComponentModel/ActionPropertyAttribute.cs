@@ -15,7 +15,7 @@
         public bool Required { get; }
 
         /// <summary>
-        /// Property allow empty value if if required
+        /// Property allow empty value if is required
         /// </summary>
         public bool AllowEmpty { get; set; }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
-using AlfabankMerchant.Exceptions;
 using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.WSClient
@@ -48,29 +47,37 @@ namespace AlfabankMerchant.WSClient
             };
         }
 
-        public async Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
+        public Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration? configuration,
+            CancellationToken cancellationToken = default)
         {
-            var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
-            if (string.IsNullOrEmpty(actionUrl))
-                throw new NotImplementedException("Unable to determine action URL to call for");
-
-            _logger?.LogTrace("Calling \"{action}\"", actionUrl);
             throw new NotImplementedException();
         }
 
-        public async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig configuration, CancellationToken cancellationToken = default) where TResponse : class
+        public Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
         {
-            var respBody = await CallActionAsync(action, configuration, cancellationToken)
-                .ConfigureAwait(false);
+            // var actionUrl = action.FindDefaultActionUrl(CLIENT_TYPE);
+            // if (string.IsNullOrEmpty(actionUrl))
+            //     throw new NotImplementedException("Unable to determine action URL to call for");
 
+            // _logger?.LogTrace("Calling \"{action}\"", actionUrl);
             throw new NotImplementedException();
         }
 
-        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
-            where TResponse : class
-            => CallActionAsync(action, configuration, cancellationToken);
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration,
+            CancellationToken cancellationToken = default) where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration,
+            CancellationToken cancellationToken = default) where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, CancellationToken cancellationToken = default) where TResponse : class
-            => CallActionAsync(action, _config, cancellationToken);
+        {
+            throw new NotImplementedException();
+        }
     }
 }

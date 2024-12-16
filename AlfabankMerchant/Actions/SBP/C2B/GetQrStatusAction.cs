@@ -6,7 +6,6 @@ namespace AlfabankMerchant.Actions.SBP.C2B
     /// <summary>
     /// Получение состояния запроса в СБП
     /// </summary>
-    [LoginAuthorization]
     [RestUrl(AlfabankRestActions.SBP_C2B.GetPaymentStatus)]
     public class GetQrStatusAction : AlfabankAction<SbpQrStatusResponse>
     {

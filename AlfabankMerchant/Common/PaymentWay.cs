@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using AlfabankMerchant.ComponentModel;
+﻿using AlfabankMerchant.ComponentModel;
 
 namespace AlfabankMerchant.Common
 {
@@ -8,9 +7,9 @@ namespace AlfabankMerchant.Common
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<PaymentWay>))]
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<PaymentWay>))]
-    public sealed class PaymentWay : StringEnum<PaymentWay>
+    public class PaymentWay : StringEnum<PaymentWay>
     {
-        public PaymentWay(string value) : base(value)
+        private PaymentWay(string value) : base(value)
         { }
 
         /// <summary>
@@ -24,7 +23,7 @@ namespace AlfabankMerchant.Common
         public static readonly PaymentWay CARD_BINDING = RegisterPW("CARD_BINDING");
 
         /// <summary>
-        /// Оплата с помощью "Альфа-Клик" (через систему PayByClik)
+        /// Оплата с помощью "Альфа-Клик" (через систему PayByClick)
         /// </summary>
         public static readonly PaymentWay ALFA_ALFACLICK = RegisterPW("ALFA_ALFACLICK");
 

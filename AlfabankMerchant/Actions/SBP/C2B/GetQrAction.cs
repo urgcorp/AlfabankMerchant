@@ -3,7 +3,6 @@ using AlfabankMerchant.Models;
 
 namespace AlfabankMerchant.Actions.SBP.C2B
 {
-    [LoginAuthorization]
     [RestUrl(AlfabankRestActions.SBP_C2B.GetPaymentQr)]
     public class GetQrAction : AlfabankAction<QrSbp>
     {

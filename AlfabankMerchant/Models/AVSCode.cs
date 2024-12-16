@@ -9,7 +9,7 @@ namespace AlfabankMerchant.Models
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<AVSCode>))]
     public class AVSCode : StringEnum<AVSCode>
     {
-        public AVSCode(string value) : base(value)
+        private AVSCode(string value) : base(value)
         { }
 
         /// <summary>

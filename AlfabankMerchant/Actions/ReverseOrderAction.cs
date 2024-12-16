@@ -8,7 +8,6 @@ namespace AlfabankMerchant.Actions
     /// <para>Операция отмены оплаты может быть совершена только один раз. Если она закончится ошибкой, то повторная операция отмены платежа не пройдет</para>
     /// <para>Данная функция доступна магазинам по согласованию с Банком. Для выполнения операции отмены пользователь должен обладать соответствующими правами</para>
     /// </summary>
-    [LoginAuthorization(true)]
     [RestUrl(AlfabankRestActions.ReverseOrder)]
     public class ReverseOrderAction : AlfabankAction
     {

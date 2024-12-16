@@ -14,7 +14,7 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [JsonProperty("orderNumber")]
         [JsonPropertyName("orderNumber")]
-        public string OrderNumber { get; set; }
+        public string OrderNumber { get; set; } = null!;
 
         /// <summary>
         /// Состояние заказа в платёжной системе.
@@ -148,8 +148,8 @@ namespace AlfabankMerchant.Models
         {
             get
             {
-                if (Attributes != null && Attributes.ContainsKey("mdOrder"))
-                    return Attributes["mdOrder"];
+                if (Attributes != null && Attributes.TryGetValue("mdOrder", out var number))
+                    return number;
                 return null;
             }
         }
@@ -208,7 +208,7 @@ namespace AlfabankMerchant.Models
 
         /// <summary>
         /// Уникальный идентификатор заказа на предоплату в Платёжном Шлюзе.
-        /// <para>Используется для привязки заказа с предоплатой с чеком на постоплату.</para>
+        /// <para>Используется для привязки заказа с предоплатой с чеком на пост-оплату.</para>
         /// </summary>
         [JsonProperty("prepaymentMdOrder")]
         [JsonPropertyName("prepaymentMdOrder")]

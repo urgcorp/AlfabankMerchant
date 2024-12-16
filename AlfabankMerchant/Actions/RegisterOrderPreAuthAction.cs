@@ -9,7 +9,6 @@ namespace AlfabankMerchant.Actions
     /// оператору фискальных данных передаются значения по умолчанию,
     /// указанные в настройках личного кабинета
     /// </summary>
-    [LoginAuthorization(true)]
     [RestUrl(AlfabankRestActions.RegisterOrderPreAuth)]
     public class RegisterOrderPreAuthAction : AlfabankAction
     {

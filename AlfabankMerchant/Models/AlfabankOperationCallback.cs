@@ -6,7 +6,7 @@ namespace AlfabankMerchant.Models
 {
     public class AlfabankOperationCallback
     {
-        public struct OperationCallbackParameter
+        public readonly struct OperationCallbackParameter
         {
             public string Name { get; init; }
 

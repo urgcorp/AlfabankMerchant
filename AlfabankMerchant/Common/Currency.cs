@@ -6,19 +6,19 @@ namespace AlfabankMerchant.Common
     [DebuggerDisplay("{Value} ({CurrencyCode})")]
     [Newtonsoft.Json.JsonConverter(typeof(JsonConverter.Newtonsoft.StringEnumConverter<Currency>))]
     [System.Text.Json.Serialization.JsonConverter(typeof(JsonConverter.StringEnumConverter<Currency>))]
-    public sealed class Currency : StringEnum<Currency>
+    public class Currency : StringEnum<Currency>
     {
-        private static readonly Dictionary<int, Currency> _currencies = new Dictionary<int, Currency>();
-
-        private Currency(string value, int currencyCode) : base(value)
-        {
-            CurrencyCode = currencyCode;
-        }
+        private static readonly Dictionary<int, Currency> _currencies = new();
 
         /// <summary>
         /// Код валюты платежа ISO 4217
         /// </summary>
         public int CurrencyCode { get; private set; }
+        
+        private Currency(string value, int currencyCode) : base(value)
+        {
+            CurrencyCode = currencyCode;
+        }
 
         /// <summary>
         /// Российский рубль до деноминации 1998 года;
@@ -48,10 +48,10 @@ namespace AlfabankMerchant.Common
 
         public static Currency Parse(int currencyCode)
         {
-            if (!_currencies.ContainsKey(currencyCode))
+            if (!_currencies.TryGetValue(currencyCode, out var currency))
                 throw new ArgumentOutOfRangeException();
 
-            return _currencies[currencyCode];
+            return currency;
         }
 
         public static bool TryParse(int currencyCode, out Currency currency)
@@ -62,39 +62,39 @@ namespace AlfabankMerchant.Common
                 return true;
             }
 
-            currency = default!;
+            currency = null!;
             return false;
         }
 
-        public static new Currency Parse(string value)
+        public new static Currency Parse(string value)
         {
             if (value == null)
                 throw new ArgumentNullException();
 
-            if (_registredValues.ContainsKey(value))
-                return (Currency)_registredValues[value];
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
+                return registeredValue;
 
-            if (int.TryParse(value, out int currencyCode) && Exists(currencyCode))
+            if (int.TryParse(value, out var currencyCode) && Exists(currencyCode))
                 return _currencies[currencyCode];
 
             throw new ArgumentOutOfRangeException();
         }
 
-        public static new bool TryParse(string value, out Currency currency)
+        public new static bool TryParse(string value, out Currency currency)
         {
             if (Exists(value))
             {
-                currency = (Currency)_registredValues[value];
+                currency = RegisteredValues[value];
                 return true;
             }
 
-            if (int.TryParse(value, out int currencyCode) && Exists(currencyCode))
+            if (int.TryParse(value, out var currencyCode) && Exists(currencyCode))
             {
                 currency = _currencies[currencyCode];
                 return true;
             }
 
-            currency = default!;
+            currency = null!;
             return false;
         }
 

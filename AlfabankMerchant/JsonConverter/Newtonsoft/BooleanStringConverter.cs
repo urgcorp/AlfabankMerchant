@@ -6,10 +6,11 @@ namespace AlfabankMerchant.JsonConverter.Newtonsoft
     {
         public override bool? ReadJson(JsonReader reader, Type objectType, bool? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
+            if (reader.Value == null)
+                return null;
+            
             if (reader.Value is string val)
             {
-                if (val == null)
-                    return null;
                 if (val.Equals("true", StringComparison.OrdinalIgnoreCase))
                     return true;
                 if (val.Equals("false", StringComparison.OrdinalIgnoreCase))
