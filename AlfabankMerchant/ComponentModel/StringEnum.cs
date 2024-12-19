@@ -113,7 +113,7 @@ namespace AlfabankMerchant.ComponentModel
             {
                 if (_isInitialized) return;
                 _isInitialized = true;
-                RuntimeHelpers.RunClassConstructor(typeof(TEnum).TypeHandle);   
+                RuntimeHelpers.RunClassConstructor(typeof(TEnum).TypeHandle);
             }
         }
     }
