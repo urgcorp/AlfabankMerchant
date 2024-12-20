@@ -55,7 +55,7 @@ namespace AlfabankMerchant.DependencyInjection
         }
 
         /// <summary>
-        /// Register alfabank client and configuration as singletone
+        /// Register alfabank client and configuration as singleton
         /// </summary>
         /// <param name="config">Client configuration</param>
         public static void AddAlfabankMerchantClient<TClient, TConfig>(this IServiceCollection services, TConfig config)
@@ -67,7 +67,7 @@ namespace AlfabankMerchant.DependencyInjection
         }
 
         /// <summary>
-        /// Register alfabank client and configuration as singletone
+        /// Register alfabank client and configuration as singleton
         /// </summary>
         /// <param name="configureOptions">Client configuration definition</param>
         /// <param name="authMethod">Authorization method that expected to be provided by this configuration</param>
@@ -82,6 +82,7 @@ namespace AlfabankMerchant.DependencyInjection
             configureOptions(cfg);
             services.AddSingleton(cfg);
             services.AddSingleton<TClient>();
+            services.AddSingleton<IAlfabankMerchantClient<TConfig>>(s => s.GetRequiredService<TClient>());
         }
 
         /// <summary>
