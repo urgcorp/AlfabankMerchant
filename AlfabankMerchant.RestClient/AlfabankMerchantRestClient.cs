@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using AlfabankMerchant.Exceptions;
@@ -48,26 +49,43 @@ namespace AlfabankMerchant.RestClient
 
         #region IAlfabankMerchantRawClient
 
-        public async Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
+        public virtual async Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrEmpty(actionUrl))
+                throw new AggregateException(nameof(actionUrl));
+            
             if (!string.IsNullOrEmpty(configuration?.Merchant))
                 _logger?.LogTrace("Calling \"{action}\" for merchant \"{merchant}\".", actionUrl, configuration.Merchant);
             else
                 _logger?.LogTrace("Calling \"{action}\".", actionUrl);
-
+            
             Uri callUrl;
-            if (string.IsNullOrEmpty(configuration?.BasePath))
+            try
             {
-                callUrl = new Uri(actionUrl);
-                if (!callUrl.IsAbsoluteUri)
-                    throw new InvalidOperationException("When configuration not provided actionUrl must be an absolute URI.");
+                if (!Uri.IsWellFormedUriString(actionUrl, UriKind.Absolute))
+                {
+                    if (!string.IsNullOrEmpty(configuration?.BasePath))
+                        callUrl = new Uri(new Uri(configuration.BasePath), actionUrl);
+                    else
+                        throw new InvalidOperationException("When configuration not provided actionUrl must be an absolute URI.");
+                }
+                else
+                    callUrl = new Uri(actionUrl);
             }
-            else
-                callUrl = new Uri(new Uri(configuration.BasePath), actionUrl);
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Failed to form URI for action from '{_config!.BasePath}' and '{actionUrl}'.", ex);
+            }
 
             var content = new FormUrlEncodedContent(queryParams);
             var response = await _client.PostAsync(callUrl, content, cancellationToken)
                 .ConfigureAwait(false);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger?.LogWarning("{statucCode} {statusReason} - {endpoint}",
+                    response.StatusCode, response.ReasonPhrase, callUrl);
+            }
 
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync(cancellationToken)
@@ -83,7 +101,7 @@ namespace AlfabankMerchant.RestClient
         /// <returns>JSON result in from Alfabank</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+        public virtual Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
@@ -117,19 +135,19 @@ namespace AlfabankMerchant.RestClient
             return CallRawAsync(actionUrl, queryParams!, configuration, cancellationToken);
         }
 
-        public virtual Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, CancellationToken cancellationToken = default)
+        public Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, CancellationToken cancellationToken = default)
         {
             ThrowIfNoConfiguration();
             return CallRawAsync(actionUrl, queryParams, (AlfabankConfiguration)_config!, cancellationToken);
         }
 
-        public virtual Task<string> CallActionRawAsync(AlfabankAction action, CancellationToken cancellationToken = default)
+        public Task<string> CallActionRawAsync(AlfabankAction action, CancellationToken cancellationToken = default)
         {
             ThrowIfNoConfiguration();
             return CallActionRawAsync(action, (AlfabankConfiguration)_config!, cancellationToken);
         }
 
-        public virtual Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, TConfig? configuration, CancellationToken cancellationToken = default)
+        public Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, TConfig? configuration, CancellationToken cancellationToken = default)
         {
             if (configuration == null)
                 ThrowIfNoConfiguration();
@@ -137,7 +155,7 @@ namespace AlfabankMerchant.RestClient
             return CallRawAsync(actionUrl, queryParams, (AlfabankConfiguration)(configuration ?? _config!), cancellationToken);
         }
 
-        public virtual Task<string> CallActionRawAsync(AlfabankAction action, TConfig? configuration, CancellationToken cancellationToken = default)
+        public Task<string> CallActionRawAsync(AlfabankAction action, TConfig? configuration, CancellationToken cancellationToken = default)
         {
             if (configuration == null)
                 ThrowIfNoConfiguration();
@@ -147,7 +165,9 @@ namespace AlfabankMerchant.RestClient
 
         #endregion
 
-        public virtual async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default)
+        public virtual async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action,
+            AlfabankConfiguration configuration,
+            CancellationToken cancellationToken = default)
             where TResponse : class
         {
             var respJson = await CallActionRawAsync(action, configuration, cancellationToken)
@@ -160,7 +180,9 @@ namespace AlfabankMerchant.RestClient
             return JsonConvert.DeserializeObject<TResponse>(respJson)!;
         }
 
-        public virtual Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, TConfig? configuration = null, CancellationToken cancellationToken = default)
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action,
+            TConfig? configuration = null,
+            CancellationToken cancellationToken = default)
             where TResponse : class
         {
             if (configuration == null)
@@ -169,7 +191,8 @@ namespace AlfabankMerchant.RestClient
             return CallActionAsync(action, (AlfabankConfiguration)(configuration ?? _config!), cancellationToken);
         }
 
-        public virtual Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action, CancellationToken cancellationToken = default) where TResponse : class
+        public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action,
+            CancellationToken cancellationToken = default) where TResponse : class
         {
             ThrowIfNoConfiguration();
             return CallActionAsync(action, (AlfabankConfiguration)_config!, cancellationToken);
