@@ -19,18 +19,18 @@ namespace AlfabankMerchant.Actions
         public string? OrderNumber { get; set; }
 
         /// <summary>
-        /// Сумма платежа в копейках (или центах)
-        /// </summary>
-        [ActionProperty("amount", true, Type = "N..12")]
-        [JsonPropertyName("amount")]
-        public int? Amount { get; set; }
-
-        /// <summary>
         /// Валюта платежа
         /// <para>Если не указана - российский рубль (RUR)</para>
         /// </summary>
         [JsonPropertyName("currency")]
         public Currency? Currency { get; set; }
+
+        /// <summary>
+        /// Сумма платежа в копейках (или центах)
+        /// </summary>
+        [ActionProperty("amount", true, Type = "N..12")]
+        [JsonPropertyName("amount")]
+        public int? Amount { get; set; }
 
         /// <summary>
         /// Код валюты платежа ISO 4217.
