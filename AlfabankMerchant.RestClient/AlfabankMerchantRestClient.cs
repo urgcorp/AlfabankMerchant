@@ -65,6 +65,8 @@ namespace AlfabankMerchant.RestClient
                 {
                     if (!string.IsNullOrEmpty(configuration?.BasePath))
                         callUrl = new Uri(new Uri(configuration.BasePath), actionUrl);
+                    else if (!string.IsNullOrEmpty(_config?.BasePath))
+                        callUrl = new Uri(new Uri(_config.BasePath), actionUrl);
                     else
                         throw new InvalidOperationException("When configuration not provided actionUrl must be an absolute URI.");
                 }
@@ -106,7 +108,7 @@ namespace AlfabankMerchant.RestClient
                 throw new ArgumentNullException(nameof(action));
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
-            if (string.IsNullOrEmpty(configuration.BasePath))
+            if (string.IsNullOrEmpty(configuration.BasePath) && string.IsNullOrEmpty(_config?.BasePath))
                 throw new ArgumentException("Client gateway URL not provided. Define client BasePath in configuration.", nameof(configuration));
             var actionUrl = action.FindActionUrl(CLIENT_TYPE);
             if (string.IsNullOrEmpty(actionUrl))

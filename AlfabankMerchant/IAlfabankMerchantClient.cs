@@ -1,5 +1,4 @@
 ﻿using AlfabankMerchant.Common;
-using AlfabankMerchant.ComponentModel;
 using AlfabankMerchant.Exceptions;
 
 namespace AlfabankMerchant
