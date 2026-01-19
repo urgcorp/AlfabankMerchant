@@ -1,5 +1,6 @@
 using AlfabankMerchant.ComponentModel;
 
+// ReSharper disable once CheckNamespace
 namespace AlfabankMerchant;
 
 public static class StringEnumExtension

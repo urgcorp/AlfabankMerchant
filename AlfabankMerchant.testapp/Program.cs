@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using AlfabankMerchant;
 using AlfabankMerchant.Actions;
+using AlfabankMerchant.Common;
 using AlfabankMerchant.Exceptions;
 using AlfabankMerchant.Models;
 using AlfabankMerchant.Models.Response;
@@ -43,7 +44,7 @@ AlfabankConfiguration cfg = env switch
 var client = new AlfabankMerchantRestClient(logger);
 Services.Init(logger, loggerFactory, cfg, client);
 
-//var newOrder = await CreateOrder(client, cfg, 5000);
+var newOrder = await CreateOrder(client, cfg, 5000);
 
 var orders = await GetOrders(client, cfg);
 
@@ -58,12 +59,13 @@ static async Task<RegisterOrderResponse> CreateOrder(AlfabankMerchantRestClient 
     //int orderId = 1;
     var req = new RegisterOrderAction()
     {
-        OrderNumber = $"0-0001",
+        OrderNumber = $"TEST-1-0003",
         Amount = amount,
-        ReturnUrl = "",
-        Email = "",
-        Description = "Тестовый заказ созданный через API",
-        DynamicCallbackUrl = ""
+        // Currency = Currency.RUB,
+        ReturnUrl = "https://urg.su/pay",
+        Email = "test@example.com",
+        Description = "Тестовый заказ созданный через API с DynamicCallback",
+        DynamicCallbackUrl = "https://orderman.urg.su/providers/alfabank/callback"
     };
 
     if (req.ValidateActionParams(out var errors))

@@ -5,20 +5,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-      <!-- NuGet Package Settings -->
-      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-      <PackageId>AlfabankMerchant</PackageId>
-      <Version>0.5.0</Version>
-      <Authors>CaCTuCaTu4ECKuu</Authors>
-      <Company>urgcorp</Company>
-      <Description>Core Alfabank Merchant library</Description>
-      <RepositoryUrl>https://github.com/urgcorp/AlfabankMerchant</RepositoryUrl>
-      <PackageProjectUrl>https://github.com/urgcorp/AlfabankMerchant</PackageProjectUrl>
-      <PackageTags>alfabank;merchant;payment;api</PackageTags>
+    <!-- NuGet Package Settings -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>AlfabankMerchant</PackageId>
+    <Version>0.5.0.1</Version>
+    <Authors>CaCTuCaTu4ECKuu</Authors>
+    <Company>urgcorp</Company>
+    <Description>Core Alfabank Merchant library</Description>
+    <RepositoryUrl>https://github.com/urgcorp/AlfabankMerchant</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/urgcorp/AlfabankMerchant</PackageProjectUrl>
+    <PackageTags>alfabank;merchant;payment;api</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
 </Project>
