@@ -9,9 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant", "Alfaban
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.testapp", "AlfabankMerchant.testapp\AlfabankMerchant.testapp.csproj", "{06AF65FE-BEE2-4B2B-9D37-B74C8490B944}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{FB9C5937-35DE-440B-86C4-F9C32175E3FE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB9C5937-35DE-440B-86C4-F9C32175E3FE}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		nupkg-contracts-release-push.sh = nupkg-contracts-release-push.sh
+		nupkg-restclient-release-push.sh = nupkg-restclient-release-push.sh
+		nupkg-deps-release-push.sh = nupkg-deps-release-push.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.WSClient", "AlfabankMerchant.WSClient\AlfabankMerchant.WSClient.csproj", "{0DCB2E0C-6C04-45A0-B421-98DFEF2AEB76}"
@@ -21,6 +24,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlfabankMerchant.DependencyInjection", "AlfabankMerchant.DependencyInjection\AlfabankMerchant.DependencyInjection.csproj", "{A9134938-9295-461D-9F56-51C3F119F733}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlfabankMerchant.Test", "AlfabankMerchant.Test\AlfabankMerchant.Test.csproj", "{EB164F54-E2AC-4EB8-8F94-157885FD7FDF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1B4A7557-8ADF-4680-82A0-AFD4316EB170}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Callbacks.pdf = docs\Callbacks.pdf
+		docs\README.md = docs\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,5 +71,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {139BDD1E-D397-428C-A18A-3D68F4259D41}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1B4A7557-8ADF-4680-82A0-AFD4316EB170} = {FB9C5937-35DE-440B-86C4-F9C32175E3FE}
 	EndGlobalSection
 EndGlobal
