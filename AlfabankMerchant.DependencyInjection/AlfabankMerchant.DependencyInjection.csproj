@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlfabankMerchant\AlfabankMerchant.csproj" />
+    <ProjectReference Include="..\AlfabankMerchant\AlfabankMerchant.csproj" Version="0.5.1" />
   </ItemGroup>
 
 </Project>
