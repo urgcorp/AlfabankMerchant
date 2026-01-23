@@ -1,4 +1,5 @@
-﻿using AlfabankMerchant.Common;
+﻿using System.Collections.Generic;
+using AlfabankMerchant.Common;
 using AlfabankMerchant.ComponentModel;
 using AlfabankMerchant.Models.Response;
 

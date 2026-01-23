@@ -1,39 +1,41 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
-namespace AlfabankMerchant.JsonConverter.Newtonsoft;
-
-public class BooleanStringConverter : JsonConverter<bool?>
+namespace AlfabankMerchant.JsonConverter.Newtonsoft
 {
-    public override bool? ReadJson(JsonReader reader, Type objectType, bool? existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public class BooleanStringConverter : JsonConverter<bool?>
     {
-        if (reader.Value == null)
-            return null;
+        public override bool? ReadJson(JsonReader reader, Type objectType, bool? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            if (reader.Value == null)
+                return null;
             
-        if (reader.Value is string val)
-        {
-            if (val.Equals("true", StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (val.Equals("false", StringComparison.OrdinalIgnoreCase))
-                return false;
+            if (reader.Value is string val)
+            {
+                if (val.Equals("true", StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (val.Equals("false", StringComparison.OrdinalIgnoreCase))
+                    return false;
 
-            throw new JsonException("Expected values are 'true', 'false' or null.");
+                throw new JsonException("Expected values are 'true', 'false' or null.");
+            }
+            throw new JsonException("Expected string value.");
         }
-        throw new JsonException("Expected string value.");
-    }
 
-    public override void WriteJson(JsonWriter writer, bool? value, JsonSerializer serializer)
-    {
-        switch (value)
+        public override void WriteJson(JsonWriter writer, bool? value, JsonSerializer serializer)
         {
-            case true:
-                writer.WriteValue("true");
-                break;
-            case false:
-                writer.WriteValue("false");
-                break;
-            default:
-                writer.WriteNull();
-                break;
+            switch (value)
+            {
+                case true:
+                    writer.WriteValue("true");
+                    break;
+                case false:
+                    writer.WriteValue("false");
+                    break;
+                default:
+                    writer.WriteNull();
+                    break;
+            }
         }
     }
 }

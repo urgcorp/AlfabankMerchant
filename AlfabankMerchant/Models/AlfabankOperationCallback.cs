@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using static AlfabankMerchant.Models.AlfabankOperationCallback;
 
@@ -8,9 +11,9 @@ namespace AlfabankMerchant.Models
     {
         public readonly struct OperationCallbackParameter
         {
-            public string Name { get; init; }
+            public string Name { get; }
 
-            public string Value { get; init; }
+            public string Value { get; }
 
             public OperationCallbackParameter(string name, string value)
             {
@@ -84,7 +87,7 @@ namespace AlfabankMerchant.Models
 
         public OperationCallbackParameter[] GetParameters()
         {
-            List<OperationCallbackParameter> items = new()
+            var items = new List<OperationCallbackParameter>()
             {
                 new OperationCallbackParameter("mdOrder", OrderId),
                 new OperationCallbackParameter("orderNumber", OrderNumber),

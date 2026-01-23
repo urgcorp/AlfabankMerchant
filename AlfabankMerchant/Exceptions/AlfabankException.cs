@@ -1,12 +1,15 @@
-﻿namespace AlfabankMerchant.Exceptions;
+﻿using System;
 
-public class AlfabankException : Exception
+namespace AlfabankMerchant.Exceptions
 {
-    public int ErrorCode { get; set; }
-
-    public AlfabankException(int errorCode, string errorMessage)
-        : base(errorMessage)
+    public class AlfabankException : Exception
     {
-        this.ErrorCode = errorCode;
+        public int ErrorCode { get; set; }
+
+        public AlfabankException(int errorCode, string errorMessage)
+            : base(errorMessage)
+        {
+            this.ErrorCode = errorCode;
+        }
     }
 }

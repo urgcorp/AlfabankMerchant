@@ -48,7 +48,7 @@ namespace AlfabankMerchant.Actions.SBP.C2B
         public int? QrHeight { get; set; }
 
         /// <summary>
-        /// Ширина QR-кода пикселах
+        /// Ширина QR-кода в пикселах
         /// <para> Укажите, если требуется renderedQR</para>
         /// <para>Минимальное значение: 10. Максимальное значение: 1000 </para>
         /// </summary>
@@ -62,7 +62,7 @@ namespace AlfabankMerchant.Actions.SBP.C2B
         public QrFormat? QrFormat { get; set; }
 
         /// <summary>
-        /// Cсылка для автоматического возврата из приложения банка в приложение или на сайт ТСП
+        /// Ссылка для автоматического возврата из приложения банка в приложение или на сайт ТСП
         /// </summary>
         [ActionProperty("redirectUrl", Type = "ANS..1024")]
         public string? RedirectUrl { get; set; }

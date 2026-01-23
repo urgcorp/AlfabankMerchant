@@ -1,119 +1,123 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace AlfabankMerchant.ComponentModel;
-
-[DebuggerDisplay("{Value}")]
-public abstract class StringEnum
+namespace AlfabankMerchant.ComponentModel
 {
-    public string Value { get; init; }
+    [DebuggerDisplay("{Value}")]
+    public abstract class StringEnum
+    {
+        public string Value { get; private set; }
         
-    protected StringEnum(string value)
-    {
-        Value = value;
+        protected StringEnum(string value)
+        {
+            Value = value;
+        }
+
+        public override bool Equals(object? obj)
+            => Value.Equals((obj as StringEnum)?.Value, StringComparison.OrdinalIgnoreCase);
+        public override int GetHashCode() => Value.GetHashCode();
+
+        public override string ToString() => Value;
+
+        public static implicit operator string(StringEnum obj) => obj.Value;
     }
-
-    public override bool Equals(object? obj)
-        => Value.Equals((obj as StringEnum)?.Value, StringComparison.OrdinalIgnoreCase);
-    public override int GetHashCode() => Value.GetHashCode();
-
-    public override string ToString() => Value;
-
-    public static implicit operator string(StringEnum obj) => obj.Value;
-}
     
-public abstract class StringEnum<TEnum> : StringEnum
-    where TEnum : StringEnum<TEnum>
-{
-    protected static readonly Dictionary<string, TEnum> RegisteredValues = new(StringComparer.OrdinalIgnoreCase);
-    private static bool _isInitialized = false;
-
-    protected StringEnum(string value) : base(value)
-    { }
-
-    public static bool Exists(string value)
+    public abstract class StringEnum<TEnum> : StringEnum
+        where TEnum : StringEnum<TEnum>
     {
-        EnsureTypeInitialized();
-        return RegisteredValues.ContainsKey(value);
-    }
+        protected static readonly Dictionary<string, TEnum> RegisteredValues = new Dictionary<string, TEnum>(StringComparer.OrdinalIgnoreCase);
+        private static bool _isInitialized = false;
 
-    protected static TEnum RegisterEnum<T>(T value)
-        where T : TEnum
-    {
-        if (value == null)
-            throw new ArgumentNullException();
-        if (string.IsNullOrEmpty(value))
-            throw new ArgumentException();
+        protected StringEnum(string value) : base(value)
+        { }
 
-        if (!RegisteredValues.ContainsKey(value))
+        public static bool Exists(string value)
         {
-            RegisteredValues.Add(value.Value, value);
-            return value;
-        }
-        throw new ArgumentException($"Value \"{value}\" already registered");
-    }
-
-    public static TEnum Parse(string value)
-    {
-        if (value == null)
-            throw new ArgumentNullException();
-
-        EnsureTypeInitialized();
-        if (RegisteredValues.TryGetValue(value, out var registeredValue))
-            return registeredValue;
-
-        throw new ArgumentOutOfRangeException();
-    }
-
-    public static bool TryParse(string value, out TEnum res)
-    {
-        EnsureTypeInitialized();
-        if (RegisteredValues.TryGetValue(value, out var registeredValue))
-        {
-            res = registeredValue;
-            return true;
+            EnsureTypeInitialized();
+            return RegisteredValues.ContainsKey(value);
         }
 
-        res = null!;
-        return false;
-    }
-
-    private static bool findConstructor(System.Reflection.ConstructorInfo ctor)
-    {
-        var parameters = ctor.GetParameters();
-        return parameters.Length == 1 && parameters[0].ParameterType == typeof(string);
-    }
-
-    public static TEnum ForceParse(string value, out bool registered)
-    {
-        EnsureTypeInitialized();
-        if (RegisteredValues.TryGetValue(value, out var registeredValue))
+        protected static TEnum RegisterEnum<T>(T value)
+            where T : TEnum
         {
-            registered = true;
-            return registeredValue;
+            if (value == null)
+                throw new ArgumentNullException();
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentException();
+
+            if (!RegisteredValues.ContainsKey(value))
+            {
+                RegisteredValues.Add(value.Value, value);
+                return value;
+            }
+            throw new ArgumentException($"Value \"{value}\" already registered");
         }
-        registered = false;
 
-        var type = typeof(TEnum);
-        var ctor = type.GetConstructors()
-            .FirstOrDefault(findConstructor);
-        if (ctor != null)
-            return (TEnum)ctor.Invoke(new object[] { value });
+        public static TEnum Parse(string value)
+        {
+            if (value == null)
+                throw new ArgumentNullException();
 
-        throw new NotSupportedException($"Type '{type.FullName}' cannot be parsed from string value.");
-    }
+            EnsureTypeInitialized();
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
+                return registeredValue;
 
-    public static string ToString(IEnumerable<TEnum> values, string? separator = null)
-        => values.ToString(separator);
+            throw new ArgumentOutOfRangeException();
+        }
 
-    private static void EnsureTypeInitialized()
-    {
-        if (_isInitialized) return;
-        lock (RegisteredValues)
+        public static bool TryParse(string value, out TEnum res)
+        {
+            EnsureTypeInitialized();
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
+            {
+                res = registeredValue;
+                return true;
+            }
+
+            res = null!;
+            return false;
+        }
+
+        private static bool findConstructor(System.Reflection.ConstructorInfo ctor)
+        {
+            var parameters = ctor.GetParameters();
+            return parameters.Length == 1 && parameters[0].ParameterType == typeof(string);
+        }
+
+        public static TEnum ForceParse(string value, out bool registered)
+        {
+            EnsureTypeInitialized();
+            if (RegisteredValues.TryGetValue(value, out var registeredValue))
+            {
+                registered = true;
+                return registeredValue;
+            }
+            registered = false;
+
+            var type = typeof(TEnum);
+            var ctor = type.GetConstructors()
+                .FirstOrDefault(findConstructor);
+            if (ctor != null)
+                return (TEnum)ctor.Invoke(new object[] { value });
+
+            throw new NotSupportedException($"Type '{type.FullName}' cannot be parsed from string value.");
+        }
+
+        public static string ToString(IEnumerable<TEnum> values, string? separator = null)
+            => values.ToString(separator);
+
+        private static void EnsureTypeInitialized()
         {
             if (_isInitialized) return;
-            _isInitialized = true;
-            RuntimeHelpers.RunClassConstructor(typeof(TEnum).TypeHandle);
+            lock (RegisteredValues)
+            {
+                if (_isInitialized) return;
+                _isInitialized = true;
+                RuntimeHelpers.RunClassConstructor(typeof(TEnum).TypeHandle);
+            }
         }
     }
 }

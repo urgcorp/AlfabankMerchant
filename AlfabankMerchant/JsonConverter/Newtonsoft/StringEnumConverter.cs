@@ -1,30 +1,32 @@
+using System;
 using Newtonsoft.Json;
 using AlfabankMerchant.ComponentModel;
 
-namespace AlfabankMerchant.JsonConverter.Newtonsoft;
-
-public class StringEnumConverter<TEnum> : JsonConverter<TEnum>
-    where TEnum : StringEnum<TEnum>
+namespace AlfabankMerchant.JsonConverter.Newtonsoft
 {
-    public override TEnum? ReadJson(JsonReader reader, Type objectType, TEnum? existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public class StringEnumConverter<TEnum> : JsonConverter<TEnum>
+        where TEnum : StringEnum<TEnum>
     {
-        if (reader.Value is string val)
+        public override TEnum? ReadJson(JsonReader reader, Type objectType, TEnum? existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            if (StringEnum<TEnum>.TryParse(val, out var enumValue))
-                return enumValue;
-            throw new JsonException($"Expect string for {typeof(TEnum).Name}");
-        }
-        throw new JsonException("Expected string for StringEnum");
-    }
-
-    public override void WriteJson(JsonWriter writer, TEnum? value, JsonSerializer serializer)
-    {
-        if (value == null)
-        {
-            writer.WriteNull();
-            return;
+            if (reader.Value is string val)
+            {
+                if (StringEnum<TEnum>.TryParse(val, out var enumValue))
+                    return enumValue;
+                throw new JsonException($"Expect string for {typeof(TEnum).Name}");
+            }
+            throw new JsonException("Expected string for StringEnum");
         }
 
-        writer.WriteValue(value.Value);
+        public override void WriteJson(JsonWriter writer, TEnum? value, JsonSerializer serializer)
+        {
+            if (value == null)
+            {
+                writer.WriteNull();
+                return;
+            }
+
+            writer.WriteValue(value.Value);
+        }
     }
 }

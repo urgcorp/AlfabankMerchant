@@ -1,9 +1,10 @@
-﻿namespace AlfabankMerchant.Common;
-
-public interface IAlfabankMerchant
+﻿namespace AlfabankMerchant.Common
 {
-    /// <summary>
-    /// Merchant that client use
-    /// </summary>
-    string? Merchant { get; }
+    public interface IAlfabankMerchant
+    {
+        /// <summary>
+        /// Merchant that client use
+        /// </summary>
+        string? Merchant { get; }
+    }
 }

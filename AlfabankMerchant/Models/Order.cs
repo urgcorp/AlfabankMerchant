@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using AlfabankMerchant.Common;
@@ -83,7 +85,7 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public DateTime? DateUtc => DateUnixTS != null ? DateTimeOffset.FromUnixTimeSeconds(DateUnixTS.Value).UtcDateTime : null;
+        public DateTime? DateUtc => DateUnixTS != null ? DateTimeOffset.FromUnixTimeSeconds(DateUnixTS.Value).UtcDateTime : (DateTime?)null;
 
         /// <summary>
         /// Дата оплаты заказа в формате UNIX-времени
@@ -98,7 +100,7 @@ namespace AlfabankMerchant.Models
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         [System.Text.Json.Serialization.JsonIgnore]
-        public DateTime? DepositedDateUtc => DepositedDateUnixTs != null ? DateTimeOffset.FromUnixTimeSeconds(DepositedDateUnixTs.Value).UtcDateTime : null;
+        public DateTime? DepositedDateUtc => DepositedDateUnixTs != null ? DateTimeOffset.FromUnixTimeSeconds(DepositedDateUnixTs.Value).UtcDateTime : (DateTime?)null;
 
         /// <summary>
         /// Описание заказа, переданное при его регистрации
@@ -264,7 +266,7 @@ namespace AlfabankMerchant.Models
         [System.Text.Json.Serialization.JsonIgnore]
         public DateTime? AuthDateTimeUtc => AuthTS != null
             ? DateTimeOffset.FromUnixTimeSeconds(AuthTS.Value).UtcDateTime
-            : null;
+            : (DateTime?)null;
 
         /// <summary>
         /// Номер транзакции FE.
