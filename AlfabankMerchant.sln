@@ -27,8 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlfabankMerchant.Test", "Al
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{1B4A7557-8ADF-4680-82A0-AFD4316EB170}"
 	ProjectSection(SolutionItems) = preProject
-		docs\Callbacks.pdf = docs\Callbacks.pdf
 		docs\README.md = docs\README.md
+		docs\Callbacks_2025.11.11.pdf = docs\Callbacks_2025.11.11.pdf
 	EndProjectSection
 EndProject
 Global
