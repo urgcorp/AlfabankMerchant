@@ -71,7 +71,10 @@ namespace AlfabankMerchant.Models
 
         public AlfabankOperationCallback(string mdOrder, string orderNumber, string operation, int status, int? amount = null, string? checksum = null)
         {
-            Operation = CallbackOperationType.Parse(operation);
+            if (!CallbackOperationType.TryParse(operation, out var operationEnum))
+                throw new  ArgumentException($"Invalid operation: {operation}");
+
+            Operation = operationEnum;
 
             if (status == 0)
                 Status = false;
@@ -85,7 +88,7 @@ namespace AlfabankMerchant.Models
             Amount = amount;
         }
 
-        public OperationCallbackParameter[] GetParameters()
+        public virtual List<OperationCallbackParameter> GetParameters()
         {
             var items = new List<OperationCallbackParameter>()
             {
@@ -97,7 +100,7 @@ namespace AlfabankMerchant.Models
             if (Amount.HasValue)
                 items.Add(new OperationCallbackParameter("amount", Amount.Value.ToString()));
 
-            return items.ToArray();
+            return items;
         }
     }
 

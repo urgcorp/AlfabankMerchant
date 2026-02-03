@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>AlfabankMerchant.RestClient</PackageId>
-    <Version>0.8.1</Version>
+    <Version>0.8.2</Version>
     <Authors>CaCTuCaTu4ECKuu</Authors>
     <Company>urgcorp</Company>
     <Description>REST client for Alfabank Merchant API</Description>
@@ -23,7 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlfabankMerchant\AlfabankMerchant.csproj" Version="0.5.1" />
+    <ProjectReference Include="..\AlfabankMerchant\AlfabankMerchant.csproj">
+      <Versiom>0.5.0</Versiom>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>

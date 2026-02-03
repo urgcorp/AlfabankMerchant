@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>AlfabankMerchant</PackageId>
-    <Version>0.5.1</Version>
+    <Version>0.5.2</Version>
     <Authors>CaCTuCaTu4ECKuu</Authors>
     <Company>urgcorp</Company>
     <Description>Core Alfabank Merchant library</Description>

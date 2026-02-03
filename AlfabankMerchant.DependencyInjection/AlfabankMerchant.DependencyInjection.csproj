@@ -9,7 +9,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>AlfabankMerchant.DependencyInjection</PackageId>
-    <Version>0.8.1</Version>
+    <Version>0.8.2</Version>
     <Authors>CaCTuCaTu4ECKuu</Authors>
     <Company>urgcorp</Company>
     <Description>REST client for Alfabank Merchant API Dependecy Injection extension</Description>
@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlfabankMerchant\AlfabankMerchant.csproj" Version="0.5.1" />
+    <ProjectReference Include="..\AlfabankMerchant\AlfabankMerchant.csproj">
+      <Version>0.5.0</Version>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
