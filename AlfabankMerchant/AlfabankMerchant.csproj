@@ -9,7 +9,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>AlfabankMerchant</PackageId>
-    <Version>0.5.3</Version>
+    <AssemblyVersion>0.5.4.3</AssemblyVersion>
+    <Version>0.5.4-beta1</Version>
     <Authors>CaCTuCaTu4ECKuu</Authors>
     <Company>urgcorp</Company>
     <Description>Core Alfabank Merchant library</Description>
