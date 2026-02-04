@@ -29,12 +29,8 @@ namespace AlfabankMerchant.RestClient
 
         protected readonly Dictionary<string, string> _defaultHeaders = new Dictionary<string, string>();
 
+        /// <inheritdoc/>
         public string? Merchant => _config?.Merchant;
-
-        public AlfabankMerchantRestClient(ILogger? logger)
-        {
-            _logger = logger;
-        }
 
         public AlfabankMerchantRestClient(ILogger? logger, TConfig? config = null)
         {
@@ -42,20 +38,19 @@ namespace AlfabankMerchant.RestClient
             _config = config;
         }
 
-        public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient<TConfig>>? logger = null)
-        {
-            _logger = logger;
-        }
+        public AlfabankMerchantRestClient(ILogger? logger) : this(logger, null)
+        { }
+
+        public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient<TConfig>>? logger = null) : this(logger, null)
+        { }
 
         public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient<TConfig>>? logger = null,
-            TConfig? config = null)
-        {
-            _logger = logger;
-            _config = config;
-        }
+            TConfig? config = null) : this((ILogger?)logger, config)
+        { }
 
         #region IAlfabankMerchantRawClient
 
+        /// <inheritdoc/>
         public virtual async Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams,
             AlfabankConfiguration? configuration, CancellationToken cancellationToken = default)
         {
@@ -104,13 +99,8 @@ namespace AlfabankMerchant.RestClient
                 .ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Make call to server
-        /// </summary>
-        /// <param name="action">Action request</param>
-        /// <param name="configuration">Configuration to use with this request</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>JSON result in from Alfabank</returns>
+        /// <inheritdoc/>
+        /// <returns>JSON result from Alfabank</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         public virtual Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration,
@@ -152,6 +142,7 @@ namespace AlfabankMerchant.RestClient
             return CallRawAsync(actionUrl, queryParams!, configuration, cancellationToken);
         }
 
+        /// <inheritdoc/>
         public Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams,
             CancellationToken cancellationToken = default)
         {
@@ -159,12 +150,14 @@ namespace AlfabankMerchant.RestClient
             return CallRawAsync(actionUrl, queryParams, (AlfabankConfiguration)_config!, cancellationToken);
         }
 
+        /// <inheritdoc/>
         public Task<string> CallActionRawAsync(AlfabankAction action, CancellationToken cancellationToken = default)
         {
             ThrowIfNoConfiguration();
             return CallActionRawAsync(action, (AlfabankConfiguration)_config!, cancellationToken);
         }
 
+        /// <inheritdoc/>
         public Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams,
             TConfig? configuration, CancellationToken cancellationToken = default)
         {
@@ -175,6 +168,7 @@ namespace AlfabankMerchant.RestClient
                 cancellationToken);
         }
 
+        /// <inheritdoc/>
         public Task<string> CallActionRawAsync(AlfabankAction action, TConfig? configuration,
             CancellationToken cancellationToken = default)
         {
@@ -186,6 +180,7 @@ namespace AlfabankMerchant.RestClient
 
         #endregion
 
+        /// <inheritdoc/>
         public virtual async Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action,
             AlfabankConfiguration configuration,
             CancellationToken cancellationToken = default)
@@ -202,6 +197,7 @@ namespace AlfabankMerchant.RestClient
             return JsonConvert.DeserializeObject<TResponse>(respJson)!;
         }
 
+        /// <inheritdoc/>
         public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action,
             TConfig? configuration = null,
             CancellationToken cancellationToken = default)
@@ -213,6 +209,7 @@ namespace AlfabankMerchant.RestClient
             return CallActionAsync(action, (AlfabankConfiguration)(configuration ?? _config!), cancellationToken);
         }
 
+        /// <inheritdoc/>
         public Task<TResponse> CallActionAsync<TResponse>(AlfabankAction<TResponse> action,
             CancellationToken cancellationToken = default) where TResponse : class
         {
@@ -234,20 +231,16 @@ namespace AlfabankMerchant.RestClient
     public class AlfabankMerchantRestClient : AlfabankMerchantRestClient<AlfabankConfiguration>
     {
         public AlfabankMerchantRestClient(ILogger? logger) : base(logger)
-        {
-        }
+        { }
 
         public AlfabankMerchantRestClient(ILogger? logger, AlfabankConfiguration? config = null) : base(logger, config)
-        {
-        }
+        { }
 
         public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient>? logger = null) : base(logger)
-        {
-        }
+        { }
 
         public AlfabankMerchantRestClient(ILogger<AlfabankMerchantRestClient>? logger = null,
             AlfabankConfiguration? config = null) : base(logger, config)
-        {
-        }
+        { }
     }
 }

@@ -18,7 +18,6 @@ namespace AlfabankMerchant
         /// </param>
         /// <param name="queryParams"></param>
         /// <param name="configuration">Configuration to use with this request</param>
-        /// <param name="cancellationToken"></param>
         /// <returns>RAW result in client format</returns>
         Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, AlfabankConfiguration? configuration, CancellationToken cancellationToken = default);
 
@@ -27,7 +26,6 @@ namespace AlfabankMerchant
         /// </summary>
         /// <param name="action">Action request</param>
         /// <param name="configuration">Configuration to use with this request</param>
-        /// <param name="cancellationToken"></param>
         /// <returns>RAW result in client format</returns>
         Task<string> CallActionRawAsync(AlfabankAction action, AlfabankConfiguration configuration, CancellationToken cancellationToken = default);
     }
@@ -47,8 +45,7 @@ namespace AlfabankMerchant
         /// <para>Absolute or relative call path</para>
         /// <para>Depends on client configuration provided BasePath</para>
         /// </param>
-        /// <param name="queryParams"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="queryParams">Additional query parameters for request</param>
         /// <returns>RAW result in client format</returns>
         Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, CancellationToken cancellationToken = default);
 
@@ -59,9 +56,8 @@ namespace AlfabankMerchant
         /// <para>Absolute or relative call path</para>
         /// <para>Depends on <see cref="configuration"/> provides BasePath</para>
         /// </param>
-        /// <param name="queryParams"></param>
+        /// <param name="queryParams">Additional query parameters for request</param>
         /// <param name="configuration">Alfabank configuration</param>
-        /// <param name="cancellationToken"></param>
         /// <returns>RAW result in client format</returns>
         Task<string> CallRawAsync(string actionUrl, Dictionary<string, string> queryParams, TConfig? configuration, CancellationToken cancellationToken = default);
 
@@ -69,7 +65,6 @@ namespace AlfabankMerchant
         /// Make call to server using client configuration
         /// </summary>
         /// <param name="action">Action request</param>
-        /// <param name="cancellationToken"></param>
         /// <returns>RAW result in client format</returns>
         Task<string> CallActionRawAsync(AlfabankAction action, CancellationToken cancellationToken = default);
 
@@ -78,7 +73,6 @@ namespace AlfabankMerchant
         /// </summary>
         /// <param name="action">Action request</param>
         /// <param name="configuration">Alfabank configuration</param>
-        /// <param name="cancellationToken"></param>
         /// <returns>RAW result in client format</returns>
         Task<string> CallActionRawAsync(AlfabankAction action, TConfig? configuration, CancellationToken cancellationToken = default);
     }
