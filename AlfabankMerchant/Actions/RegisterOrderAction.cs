@@ -16,7 +16,7 @@ namespace AlfabankMerchant.Actions
         /// <summary>
         /// Номер (идентификатор) заказа в системе магазина, уникален для каждого магазина в пределах системы
         /// </summary>
-        [ActionProperty("orderNumber", true, Type = "AN..32")]
+        [ActionProperty("orderNumber", true, Type = "ANS..36")]
         [JsonPropertyName("orderNumber")]
         public string? OrderNumber { get; set; }
 
@@ -28,19 +28,19 @@ namespace AlfabankMerchant.Actions
         public Currency? Currency { get; set; }
 
         /// <summary>
-        /// Сумма платежа в копейках (или центах)
-        /// </summary>
-        [ActionProperty("amount", true, Type = "N..12")]
-        [JsonPropertyName("amount")]
-        public int? Amount { get; set; }
-
-        /// <summary>
         /// Код валюты платежа ISO 4217.
         /// <para>Если не указан, считается равным 810 (российские рубли)</para>
         /// </summary>
         [ActionProperty("currency", Type = "N3")]
         [JsonIgnore]
         private string? CurrencyCode => Currency?.CurrencyCode.ToString();
+
+        /// <summary>
+        /// Сумма платежа в копейках (или центах)
+        /// </summary>
+        [ActionProperty("amount", true, Type = "N..12")]
+        [JsonPropertyName("amount")]
+        public int? Amount { get; set; }
 
         /// <summary>
         /// <para>Адрес, на который требуется перенаправить пользователя в случае успешной оплаты.</para>
@@ -125,7 +125,7 @@ namespace AlfabankMerchant.Actions
         /// <summary>
         /// JSON string <see cref="MerchantParams"/>
         /// </summary>
-        [ActionProperty("jsonParams", Type = "AN..1024")]
+        [ActionProperty("jsonParams")]
         [JsonIgnore]
         private string? MerchantParamsJson => FormatJsonParamsString(MerchantParams);
 
@@ -212,7 +212,7 @@ namespace AlfabankMerchant.Actions
         /// Размер комиссии мерчанта в минимальных единицах валюты
         /// <para>Параметр передается только при включении соответствующей пермиссии: Разрешена передача комиссии Мерчанта.</para>
         /// </summary>
-        [ActionProperty("feeInput")]
+        [ActionProperty("feeInput", Type = "N..8")]
         [JsonPropertyName("feeInput")]
         public int? Fee { get; set; }
 

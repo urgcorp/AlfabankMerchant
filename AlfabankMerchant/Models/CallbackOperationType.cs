@@ -33,8 +33,23 @@ namespace AlfabankMerchant.Models
         public static readonly CallbackOperationType Refunded = RegisterEnum(new CallbackOperationType("refunded"));
 
         /// <summary>
-        /// Истекло время, отпущенное на оплату заказа
+        /// Платеж был отклонен из-за истечения времени ожидания
         /// </summary>
         public static readonly CallbackOperationType Timeout = RegisterEnum(new CallbackOperationType("declinedByTimeout"));
+
+        /// <summary>
+        /// Карта плательщика сохранена (cвязка создана)
+        /// </summary>
+        public static readonly CallbackOperationType BindingCreated = RegisterEnum(new CallbackOperationType("bindingCreated"));
+
+        /// <summary>
+        /// Существующая связка была активирована/деактивирована
+        /// </summary>
+        public static readonly CallbackOperationType BindingActivity = RegisterEnum(new CallbackOperationType("bindingActivityChanged"));
+
+        /// <summary>
+        /// Отклонена транзакция с предъявлением карты (оплата физической картой)
+        /// </summary>
+        public static readonly CallbackOperationType DeclinedCardPresent = RegisterEnum(new CallbackOperationType("declinedCardpresent"));
     }
 }

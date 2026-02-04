@@ -296,9 +296,9 @@ namespace AlfabankMerchant.Models
 
         /// <summary>
         /// <para>Дополнительные параметры транзакции</para>
-        /// <para>bindingOriginalNetRefNum — идентификатор первого платежа по созданию связки</para>
-        /// <para>paymentNetRefNum — идентификатор, полученный в ходе последней оплаты по связке</para>
-        /// <para>originalPaymentNetRefNum — идентификатор инициирующей транзакции по созданию связки, передаётся мерчантами, хранящих связки на своей стороне (передаётся в paymentOrder)</para>
+        /// <para><c>bindingOriginalNetRefNum</c> — идентификатор первого платежа по созданию связки</para>
+        /// <para><c>paymentNetRefNum</c> — идентификатор, полученный в ходе последней оплаты по связке</para>
+        /// <para><c>originalPaymentNetRefNum</c> — идентификатор инициирующей транзакции по созданию связки, передаётся мерчантами, хранящих связки на своей стороне (передаётся в paymentOrder)</para>
         /// </summary>
         [JsonProperty("transactionAttributes")]
         [JsonPropertyName("transactionAttributes")]

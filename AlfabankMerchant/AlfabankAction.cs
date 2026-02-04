@@ -18,12 +18,12 @@ namespace AlfabankMerchant
         [System.Text.Json.Serialization.JsonIgnore]
         public virtual string? ActionUrl { get; set; }
 
-        [ActionProperty("userName", Type = "AN..30")]
+        [ActionProperty("userName", Type = "AN..100")]
         [JsonProperty("userName")]
         [JsonPropertyName("userName")]
         protected string? Login { get; set; }
 
-        [ActionProperty("password", Type = "AN..30")]
+        [ActionProperty("password", Type = "AN..200")]
         [JsonProperty("password")]
         [JsonPropertyName("password")]
         protected string? Password { get; set; }
@@ -32,7 +32,7 @@ namespace AlfabankMerchant
         /// Открытый ключ, который можно использовать для регистрации заказа.
         /// <para>Если для аутентификации при регистрации заказа используются логин и пароль, параметр token передавать не нужно</para>
         /// </summary>
-        [ActionProperty("token", Type = "AN..30")]
+        [ActionProperty("token", Type = "ANS..256")]
         [JsonProperty("token")]
         [JsonPropertyName("token")]
         protected string? Token { get; set; }
