@@ -10,7 +10,7 @@ namespace AlfabankMerchant.Models
     /// <summary>
     /// Big chungus object that represent callbacks from Alfabank
     /// </summary>
-    [DebuggerDisplay("{Operation} {(Status ? 1 : 0)} | {OrderNumber} | {OrderId}")]
+    [DebuggerDisplay("[{AllParameters.Count}] {(Get(\"callbackCreationDate\") ?? \"-\")} {Status} | {OrderNumber} | {OrderId}")]
     public class AlfabankOperationCallback
     {
         /// <summary>
@@ -27,8 +27,33 @@ namespace AlfabankMerchant.Models
         [DataMember(Name = "sign_alias")]
         public string? SignAlias { get; set; }
 
-        public Dictionary<string, string?> AllParameters { get; } =
-            new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>
+        /// <para>Коллекция всех параметров и значений, что пришли в Callback запросе</para>
+        /// <example>
+        /// <code>
+        /// var callbackData = new AlfabankOperationCallback();
+        /// foreach (var property in HttpContext.Request.Query)
+        /// {
+        ///     switch (property.Key.ToLower())
+        ///     {
+        ///         case "checksum": callbackData.Checksum = property.Value.ToString(); break;
+        ///         case "sign_alias": callbackData.SignAlias = property.Value.ToString(); break;
+        ///         default: callbackData.AllParameters[property.Key] = property.Value.Last(); break;
+        ///     }
+        /// }
+        /// </code></example>
+        /// </summary>
+        public Dictionary<string, string?> AllParameters { get; protected set; }
+
+        /// <summary>
+        /// Создает новое хранилище параметров Callback
+        /// </summary>
+        /// <remarks>Инициализируется с емкостью словаря в 10 элементов <i>по-умолчанию</i>, что больше среднего количества параметров в запросе</remarks>
+        /// <param name="initialCapacity">Начальная емкость коллекции для хранения параметров</param>
+        public AlfabankOperationCallback(int initialCapacity = 10)
+        {
+            AllParameters = new Dictionary<string, string?>(initialCapacity, StringComparer.OrdinalIgnoreCase);
+        }
 
         /// <summary>
         /// Уникальный номер заказа в платёжной системе.
